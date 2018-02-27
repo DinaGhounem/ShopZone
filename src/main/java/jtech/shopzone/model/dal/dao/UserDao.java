@@ -7,28 +7,28 @@ package jtech.shopzone.model.dal.dao;
 
 import jtech.shopzone.model.dal.DataBaseStatusEnum;
 import java.util.ArrayList;
+import jtech.shopzone.model.entity.UserInfoEntity;
 
 /**
  *
  * @author Hanaa
  */
 public interface UserDao {
-     
 
-    DataBaseStatusEnum checkMail(String email);
+    public DataBaseStatusEnum checkEmail(String email);
 
-    DataBaseStatusEnum login(String email, String password);
+    public DataBaseStatusEnum login(String email, String password);
 
-    DataBaseStatusEnum register(User user);
+    public DataBaseStatusEnum register(UserInfoEntity user);
 
-    DataBaseStatusEnum updateUser(User user);
+    public DataBaseStatusEnum updateUser(UserInfoEntity user);
 
-    int getUserId(String mail);
+    public int getUserId(String email);
 
-    User getUserInfo(int userId);
+    public UserInfoEntity getUserInfo(int userId);
 
-    ArrayList<User> getUsers();
+    public ArrayList<UserInfoEntity> getUsers();
 
-    DataBaseStatusEnum updateCreditLimit(int userId, Double value);
+    public DataBaseStatusEnum updateCreditLimit(int userId, Double value);
 
 }
