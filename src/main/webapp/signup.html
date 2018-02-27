@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="signincludes/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="signincludes/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="signincludes/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="signincludes/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="signincludes/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="signincludes/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="signincludes/css/util.css">
+	<link rel="stylesheet" type="text/css" href="signincludes/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="signincludes/images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form">
+					<span class="login100-form-title">
+						Member Sign Up
+					</span>
+					<div class="wrap-input100 validate-input" data-validate = "username is required">
+						<input class="input100" type="text" name="username" placeholder="username">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+					</div>
+                                    <div class="wrap-input100 validate-input" data-validate = "second name is required">
+						<input class="input100" type="text" name="second name" placeholder="second name">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+					</div>
+                                    
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="email" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					<!--
+					<div class="wrap-input100 validate-input" data-validate = "gender is required">
+							<select name="cars"  class="input100" placeholder="gender" >
+									<option value="volvo">male</option>
+									<option value="saab">female</option>
+								  </select>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-genderless" aria-hidden="true"></i>
+						</span>
+					</div>	-->
+					<div class="wrap-input100 validate-input" data-validate = "date is required">
+							<input  class="input100" id="date" type="date" name="datepicker" placeholder="date">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</span>
+					</div>	
+					<div class="wrap-input100 validate-input" data-validate = "Valid number is required">
+							<input class="input100" type="number" name="creditlimit" placeholder="credit limit">
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-credit-card
+								" aria-hidden="true"></i>
+							</span>
+						</div>
+					<div class="wrap-input100 validate-input" data-validate = "address is required">
+							<input class="input100" type="text" name="address" placeholder="address">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-address-book" aria-hidden="true"></i>
+						</span>
+					</div>	
+					
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Sign up
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="signincludes/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="signincludes/vendor/bootstrap/js/popper.js"></script>
+	<script src="signincludes/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="signincludes/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="signincludes/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="signincludes/js/main.js"></script>
+
+</body>
+</html>
