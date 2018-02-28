@@ -9,7 +9,8 @@ package jtech.shopzone.model.dal;
  *
  * @author Hanaa
  */
-public enum DataBaseStatusEnum {
-    //3mltlk enum ya mahros ahoo :P :P :)) emlah b2a 
-    
+public enum DBStatus {
+    success, // action done against database is successfully done
+    fail,    // action done against database is not completed meaning
+    error   //  this represents that SQL Exception happened
 }

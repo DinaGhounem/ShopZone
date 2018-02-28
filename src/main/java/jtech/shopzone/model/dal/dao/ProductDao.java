@@ -5,7 +5,7 @@
  */
 package jtech.shopzone.model.dal.dao;
 
-import jtech.shopzone.model.dal.DataBaseStatusEnum;
+import jtech.shopzone.model.dal.DBStatus;
 import java.util.ArrayList;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
@@ -21,14 +21,14 @@ public interface ProductDao {
 
     public ArrayList<ProductsInfoEntity> getProducts(Double price);
 
-    public DataBaseStatusEnum AddProduct(ProductsInfoEntity product);
+    public DBStatus AddProduct(ProductsInfoEntity product);
 
-    public DataBaseStatusEnum deleteProduct(int productId);
+    public DBStatus deleteProduct(int productId);
 
-    public DataBaseStatusEnum updateProduct(ProductsInfoEntity product);
+    public DBStatus updateProduct(ProductsInfoEntity product);
 
     public int checkProductQuantities(int productId);
 
-    public DataBaseStatusEnum updateProductQuantities(int productId,int quantities);
+    public DBStatus updateProductQuantities(int productId, int quantities);
 
 }
