@@ -9,8 +9,8 @@ package jtech.shopzone.model.dal;
  *
  * @author Hanaa
  */
-public enum DBStatus {
-    success, // action done against database is successfully done
-    fail,    // action done against database is not completed meaning
-    error   //  this represents that SQL Exception happened
+public enum Status {
+    OK, // action is successfully done
+    NOTOK,    // action is not done
+    ERROR   //  error happend while doing the action
 }

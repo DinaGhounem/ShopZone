@@ -1,1 +1,0 @@
-package jtech.shopzone.view;

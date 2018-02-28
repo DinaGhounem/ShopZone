@@ -1,0 +1,49 @@
+package jtech.shopzone.controller.impl;
+
+import jtech.shopzone.controller.CartController;
+import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.dal.dao.CartDao;
+import jtech.shopzone.model.entity.ProductsInfoEntity;
+
+import java.util.ArrayList;
+
+public class CartControllerImpl implements CartController {
+    private CartDao cartDao;
+
+    private CartControllerImpl(){
+        // TODO init cartDao with its factory method
+    }
+
+    public static CartController newInstance(){
+        return new CartControllerImpl();
+    }
+    @Override
+    public Status AddProduct(int userId, ProductsInfoEntity product) {
+        return cartDao.AddProduct(userId,product);
+    }
+
+    @Override
+    public Status deleteProduct(int userId, int productId) {
+        return cartDao.deleteProduct(userId,productId);
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getUserProducts(int userId) {
+        return cartDao.getUserProducts(userId);
+    }
+
+    @Override
+    public Status updateProductQuantities(int userId, int productId, int quantities) {
+        return cartDao.updateProductQuantities(userId,productId,quantities);
+    }
+
+    @Override
+    public int checkProductExistance(int userId, int productId) {
+        return cartDao.checkProductExistance(userId,productId);
+    }
+
+    @Override
+    public int userItemCount(int userId) {
+        return cartDao.userItemCount(userId);
+    }
+}

@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package jtech.shopzone.model.dal.dao;
+package jtech.shopzone.controller;
 
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
 
-import jtech.shopzone.model.entity.UserInfoEntity;
-
-/**
- * @author Hanaa
- */
-public interface UserDao {
+public interface UserController {
 
     Status checkEmail(String email);
 
@@ -31,5 +22,4 @@ public interface UserDao {
     ArrayList<UserInfoEntity> getUsers();
 
     Status updateCreditLimit(int userId, Double value);
-
 }

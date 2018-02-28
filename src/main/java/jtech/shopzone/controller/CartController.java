@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package jtech.shopzone.model.dal.dao;
+package jtech.shopzone.controller;
 
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
 
-import jtech.shopzone.model.entity.ProductsInfoEntity;
-
-/**
- * @author Hanaa
- */
-public interface CartDao {
-
+public interface CartController {
     Status AddProduct(int userId, ProductsInfoEntity product);
 
     Status deleteProduct(int userId, int productId);
@@ -27,5 +17,4 @@ public interface CartDao {
     int checkProductExistance(int userId, int productId);
 
     int userItemCount(int userId);
-
 }
