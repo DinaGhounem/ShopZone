@@ -2,9 +2,7 @@ package jtech.shopzone.model.dal;
 
 import oracle.jdbc.OracleDriver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DbConnection {
     private static Connection connection;
@@ -36,6 +34,23 @@ public class DbConnection {
             }
         }
         return connection;
+    }
+
+    public static PreparedStatement getPreparedStatement(String sql) throws SQLException {
+        Connection connection = DbConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        return preparedStatement;
+    }
+
+    public static Statement getStatement() throws SQLException {
+        Connection connection = DbConnection.getConnection();
+        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        return statement;
+    }
+
+    public static void closeStatementAndResultSet(Statement statement, ResultSet resultSet) throws SQLException {
+        statement.close();
+        resultSet.close();
     }
 
 }
