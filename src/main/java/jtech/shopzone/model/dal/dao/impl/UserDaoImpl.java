@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = null;
         try {
             con = DbConnection.getConnection();
-            ps = con.prepareStatement("select user_id,email from userinfo where email='?'");
+            ps = con.prepareStatement("select user_id,email from userinfo where email=?");
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = null;
         try {
             con = DbConnection.getConnection();
-            ps = con.prepareStatement("select user_id,email,password from userinfo where email='?' and password = ?");
+            ps = con.prepareStatement("select user_id,email,password from userinfo where email=? and password = ?");
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
@@ -99,9 +99,9 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         PreparedStatement ps = null;
         PreparedStatement ps1 = null;
-        ResultSet rs = null;
         ResultSet rs1 = null;
         int user_id = 0;
+        int effectedRows;
         try {
             con = DbConnection.getConnection();
             /**
@@ -110,7 +110,7 @@ public class UserDaoImpl implements UserDao {
             ps1 = con.prepareStatement("select nvl(max(user_id),0) from userinfo");
             rs1 = ps1.executeQuery();
             if (rs1.next()) {
-                user_id = rs.getInt(1) + 1;
+                user_id = rs1.getInt(1) + 1;
             }
             rs1.close();
             ps1.close();
@@ -119,14 +119,22 @@ public class UserDaoImpl implements UserDao {
                     + "(user_id,first_name,Last_name,email,address,birthdate,password,job,credit_limit,user_img) "
                     + "values(?,?,?,?,?,?,?,?,?,?)");
             /**
-             * set values to update statement
+             * set values to insert statement
              */
             ps.setInt(1,user_id);
             ps.setString(2,user.getFirstName());
             ps.setString(3,user.getLastName());
             ps.setString(4,user.getEmail());
-            rs = ps.executeQuery();
-            if (rs.next()) {
+            ps.setString(5,user.getAddress());
+            ps.setDate(6, new java.sql.Date(user.getBirthdate().getTime()));
+            ps.setString(7,user.getPassword());
+            ps.setString(8,user.getJob());
+            ps.setDouble(9,user.getCreditLimit());
+            ps.setString(10,user.getUserImg());
+            
+            effectedRows = ps.executeUpdate();
+            
+            if (effectedRows > 0) {
                 return Status.OK;
             } else {
                 return Status.NOTOK;
@@ -134,6 +142,90 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
             return Status.ERROR;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    @Override
+    public Status updateUser(UserInfoEntity user) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int effectedRows;
+        try {
+            con = DbConnection.getConnection();
+            
+            ps = con.prepareStatement("update userinfo\n" +
+                    "set first_name=?,last_name=?," +
+                    "email=?,address=?,birthdate=?," +
+                    "password=?,job=?,credit_limit=?,user_img=?" +
+                    "where user_id=?");
+            /**
+             * set values to update statement
+             */
+           
+            ps.setString(1,user.getFirstName());
+            ps.setString(2,user.getLastName());
+            ps.setString(3,user.getEmail());
+            ps.setString(4,user.getAddress());
+            ps.setDate(5, new java.sql.Date(user.getBirthdate().getTime()));
+            ps.setString(6,user.getPassword());
+            ps.setString(7,user.getJob());
+            ps.setDouble(8,user.getCreditLimit());
+            ps.setString(9,user.getUserImg());
+            ps.setInt(10,user.getUserId());
+            
+            effectedRows = ps.executeUpdate();
+            
+            if (effectedRows > 0) {
+                return Status.OK;
+            } else {
+                return Status.NOTOK;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Status.ERROR;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    @Override
+    public int getUserId(String email) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DbConnection.getConnection();
+            ps = con.prepareStatement("select user_id,email from userinfo where email='?'");
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         } finally {
             try {
                 if (ps != null) {
@@ -152,18 +244,48 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Status updateUser(UserInfoEntity user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getUserId(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public UserInfoEntity getUserInfo(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        UserInfoEntity user = null;
+        try {
+            con = DbConnection.getConnection();
+            ps = con.prepareStatement("select user_id,first_name,last_name,email,address,"
+                    + "birthdate,password,job,credit_limit,user_img "
+                    + "from userinfo where user_id = ?");
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new UserInfoEntity();
+                user.setUserId(rs.getInt(1));
+                user.setFirstName(rs.getString(2));
+                user.setLastName(rs.getString(3));
+                user.setEmail(rs.getString(4));
+                user.setAddress(rs.getString(5));
+                user.setBirthdate(rs.getDate(6));
+                user.setPassword(rs.getString(7));
+                user.setJob(rs.getString(8));
+                user.setCreditLimit(rs.getDouble(9));
+                user.setUserImg(rs.getString(10));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return user;
     }
 
     @Override
