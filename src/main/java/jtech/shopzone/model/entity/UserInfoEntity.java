@@ -16,6 +16,7 @@ public class UserInfoEntity {
     private int userId;
     private String firstName;
     private String lastName;
+    private String email;
     private String address;
     private Date birthdate;
     private String password;
@@ -26,10 +27,11 @@ public class UserInfoEntity {
     public UserInfoEntity() {
     }
 
-    public UserInfoEntity(int userId, String firstName, String lastName, String address, Date birthdate, String password, String job, double creditLimit, String userImg) {
+    public UserInfoEntity(int userId, String firstName, String lastName, String email, String address, Date birthdate, String password, String job, double creditLimit, String userImg) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.address = address;
         this.birthdate = birthdate;
         this.password = password;
@@ -162,5 +164,19 @@ public class UserInfoEntity {
      */
     public void setUserImg(String userImg) {
         this.userImg = userImg;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
