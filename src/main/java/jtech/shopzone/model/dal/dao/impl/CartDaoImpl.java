@@ -41,4 +41,10 @@ public class CartDaoImpl implements CartDao {
     public int userItemCount(int userId) {
         return 0;
     }
+
+    @Override
+    public Status restCart(int userId) {
+        return null;
+        
+    }
 }

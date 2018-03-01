@@ -6,12 +6,13 @@ import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
+import jtech.shopzone.model.dal.dao.impl.ProductDaoImpl;
 
 public class ProductControllerImpl implements ProductController {
     private ProductDao productDao;
 
     private ProductControllerImpl() {
-        // TODO init productDao from its factory method
+        productDao=new ProductDaoImpl();
     }
 
     public static ProductController newInstance() {
