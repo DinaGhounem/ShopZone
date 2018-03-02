@@ -167,8 +167,8 @@ public class CartDaoImpl implements CartDao {
     public static void main(String[] args) {
         CartDaoImpl cartDao = new CartDaoImpl();
         //System.out.println(cartDao.deleteProduct(10, 15));
-        //System.out.println(cartDao.addProduct(10, 10));
+        //System.out.println(cartDao.addProduct(1, 1));
         //System.out.println(cartDao.userItemCount(10));
-
+        //System.out.println(cartDao.getQuantity(1, 5));
     }
 }

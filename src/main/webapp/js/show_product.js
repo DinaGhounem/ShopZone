@@ -24,7 +24,7 @@ function callback(response, statusTxt, xhr)
                         "<div class=\"product_price\">$" + object[i].price + "<span>$590.00</span></div>" +
                         "</div>" +
                         "</div>" +
-                        "<div class=\"red_button add_to_cart_button\"><a href=\"#\">add to cart</a></div>" +
+                        "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct("+object[i].productId+")\">add to cart</div>" +
                         "</div>";
                 if (i % 4 == 0) {
                     height += 400;
@@ -45,4 +45,16 @@ function getProducts() {
     $.get("ShowProductServlet", callback);
 
 
+}
+
+function addProduct(productId) {
+
+    $.post("AddProductToCart",{productId:productId}, showProductCallback);
+
+}
+function showProductCallback(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+      
+    }
 }

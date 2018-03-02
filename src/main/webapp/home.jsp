@@ -4,7 +4,8 @@
     Author     : Hanaa
 --%>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
     <head>
         <title>Colo Shop</title>
@@ -22,7 +23,7 @@
         <%@page import="jtech.shopzone.view.controller.ShowProductServlet" %>
     </head>
 
-    <body onload="setInterval('getProducts()', 1000)">
+    <body onload="getProducts()">
 
         <div class="super_container">
 
@@ -205,8 +206,11 @@
                         <div class="col text-center">
                             <div class="new_arrivals_sorting">
                                 <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                                    <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-                                    <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
+                                     
+                                    <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">All</li>
+                                  
+                                    <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">Woman</li>
+                                   
                                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
                                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
                                 </ul>
