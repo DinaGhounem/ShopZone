@@ -3,6 +3,7 @@ package jtech.shopzone.model.dal.dao.impl;
 import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
+import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
@@ -50,7 +51,9 @@ public class CartDaoImpl implements CartDao {
                 // get product id of current product in cart
                 int productID = resultSet.getInt("PRODUCT_ID");
 
-                ProductsInfoEntity product = getProductInfo(productID);
+                // User product dao to get product info
+                ProductDao productDao = new ProductDaoImpl();
+                ProductsInfoEntity product = productDao.getProductInfo(productID);
 
                 // add the product to products with quantity list
                 CartEntity cartEntity = new CartEntity(productQuantity, product);
@@ -151,56 +154,7 @@ public class CartDaoImpl implements CartDao {
         return quantity;
     }
 
-    /**
-     * This method returns full data of a product with its product id
-     * TODO: move it to ProductDao
-     *
-     * @param productID
-     * @return
-     */
-    public ProductsInfoEntity getProductInfo(int productID) {
-        // Return object
-        ProductsInfoEntity product = null;
-
-        // Build product select statement
-        String productQuery = "select * from PRODUCTS_INFO where PRODUCT_ID = " + productID;
-
-        // get new statement from the connection
-        try (Statement statement = DbConnection.getStatement()) {
-
-            // execute select statement and get results
-            ResultSet resultSet = statement.executeQuery(productQuery);
-
-            // if result exists do some work
-            if (resultSet.next()) {
-
-                /* get each column value into a variable */
-
-                int PRODUCT_ID = resultSet.getInt("PRODUCT_ID");
-                String PRODUCT_NAME = resultSet.getString("PRODUCT_NAME");
-                int PRICE = resultSet.getInt("PRICE");
-                int QUANTITY = resultSet.getInt("QUANTITY");
-                String DESCRIPTION = resultSet.getString("DESCRIPTION");
-                int CATEGORY_ID = resultSet.getInt("CATEGORY_ID");
-                String IMG = resultSet.getString("IMG");
-
-                // Construct a new product variable
-                product = new ProductsInfoEntity();
-                product.setCategoryId(PRODUCT_ID);
-                product.setProductName(PRODUCT_NAME);
-                product.setPrice(PRICE);
-                product.setQuantity(QUANTITY);
-                product.setDescription(DESCRIPTION);
-                product.setCategoryId(CATEGORY_ID);
-                product.setImg(IMG);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return product;
-    }
-
-    public Status execUpdate(String query) {
+    private Status execUpdate(String query) {
         Status status;
         try {
             Statement statement = DbConnection.getStatement();

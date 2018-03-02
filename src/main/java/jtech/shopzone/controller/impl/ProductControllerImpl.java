@@ -58,4 +58,9 @@ public class ProductControllerImpl implements ProductController {
     public Status updateProductQuantities(int productId, int quantities) {
         return productDao.updateProductQuantities(productId,quantities);
     }
+
+    @Override
+    public ProductsInfoEntity getProductInfo(int productID) {
+        return productDao.getProductInfo(productID);
+    }
 }

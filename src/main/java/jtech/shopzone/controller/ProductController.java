@@ -21,4 +21,6 @@ public interface ProductController {
     int checkProductQuantities(int productId);
 
     Status updateProductQuantities(int productId, int quantities);
+
+    public ProductsInfoEntity getProductInfo(int productID);
 }

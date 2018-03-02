@@ -32,4 +32,6 @@ public interface ProductDao {
 
     Status updateProductQuantities(int productId, int quantities);
 
+    ProductsInfoEntity getProductInfo(int productID);
+
 }
