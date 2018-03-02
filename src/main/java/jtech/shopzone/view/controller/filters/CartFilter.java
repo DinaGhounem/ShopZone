@@ -16,7 +16,7 @@ public class CartFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         // TODO: Get id from session
-        int userId = 10;
+        int userId = 1;
         CartController cartController = CartControllerImpl.newInstance();
         ArrayList<CartEntity> cartEntities =  cartController.getUserProducts(userId);
         req.setAttribute("cartEntities",cartEntities);

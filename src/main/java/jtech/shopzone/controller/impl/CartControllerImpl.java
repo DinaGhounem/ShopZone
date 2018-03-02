@@ -58,6 +58,6 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public int getQuantity(int userId, int productId) {
-        return cartDao.getQuantity(userId, userId);
+        return cartDao.getQuantity(userId,productId);
     }
 }
