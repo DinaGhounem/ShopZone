@@ -27,4 +27,12 @@ public class CartEntity {
     public void setProductsInfoEntity(ProductsInfoEntity productsInfoEntity) {
         this.productsInfoEntity = productsInfoEntity;
     }
+
+    @Override
+    public String toString() {
+        return "CartEntity{" +
+                "quantity=" + quantity +
+                ", productsInfoEntity=" + productsInfoEntity +
+                '}';
+    }
 }

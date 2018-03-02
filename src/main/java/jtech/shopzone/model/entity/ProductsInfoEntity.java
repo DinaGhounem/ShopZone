@@ -129,4 +129,17 @@ public class ProductsInfoEntity {
     public void setImg(String img) {
         this.img = img;
     }
+
+    @Override
+    public String toString() {
+        return "ProductsInfoEntity{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", description='" + description + '\'' +
+                ", categoryId=" + categoryId +
+                ", img='" + img + '\'' +
+                '}';
+    }
 }
