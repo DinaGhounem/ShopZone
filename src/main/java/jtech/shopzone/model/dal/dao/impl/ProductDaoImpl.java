@@ -138,27 +138,180 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Status AddProduct(ProductsInfoEntity product) {
-        return null;
+    public Status addProduct(ProductsInfoEntity product) {
+        if (product.getQuantity() >= 0) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            int productId = 0;
+            try {
+                preparedStatement = DbConnection.getPreparedStatement("select nvl(max(product_id),0) from PRODUCTS_INFO");
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+
+                    productId = resultSet.getInt(1) + 1;
+                } else {
+                    return Status.NOTOK;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+
+            }
+            try {
+                preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_INFO values(?,?,?,?,?,?,?)");
+                preparedStatement.setInt(1, productId);
+                preparedStatement.setString(2, product.getProductName());
+                preparedStatement.setDouble(3, product.getPrice());
+                preparedStatement.setInt(4, product.getQuantity());
+                preparedStatement.setString(5, product.getDescription());
+                preparedStatement.setInt(6, product.getCategoryId());
+                preparedStatement.setString(7, product.getImg());
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    return Status.OK;
+                } else {
+                    return Status.NOTOK;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+            } finally {
+                try {
+
+                    DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return Status.NOTOK;
+
     }
 
     @Override
     public Status deleteProduct(int productId) {
-        return null;
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = DbConnection.getPreparedStatement("delete from PRODUCTS_INFO where product_id='" + productId + "'");
+
+            if (preparedStatement.executeUpdate() > 0) {
+                return Status.OK;
+            } else {
+                return Status.NOTOK;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return Status.ERROR;
+        } finally {
+            try {
+                DbConnection.closeStatementAndResultSet(preparedStatement, null);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     @Override
     public Status updateProduct(ProductsInfoEntity product) {
-        return null;
+        if (product.getQuantity() >= 0) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            try {
+                preparedStatement = DbConnection.getPreparedStatement("update PRODUCTS_INFO set product_name=?,price=?,Quantity=?,Description=?,category_id=?,Img=? where product_id=?");
+                preparedStatement.setInt(7, product.getProductId());
+                preparedStatement.setString(1, product.getProductName());
+                preparedStatement.setDouble(2, product.getPrice());
+                preparedStatement.setInt(3, product.getQuantity());
+                preparedStatement.setString(4, product.getDescription());
+                preparedStatement.setInt(5, product.getCategoryId());
+                preparedStatement.setString(6, product.getImg());
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    return Status.OK;
+                } else {
+                    return Status.NOTOK;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+            } finally {
+                try {
+
+                    DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return Status.NOTOK;
     }
 
     @Override
     public int checkProductQuantities(int productId) {
-        return 0;
+        int quantity = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = DbConnection.getPreparedStatement("select QUANTITY from PRODUCTS_INFO where product_id='" + productId + "'");
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                quantity = resultSet.getInt("QUANTITY");
+            } else {
+                return -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return -2;
+        } finally {
+            try {
+                DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return quantity;
     }
 
     @Override
     public Status updateProductQuantities(int productId, int quantities) {
-        return null;
+        if (quantities >= 0) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            try {
+                preparedStatement = DbConnection.getPreparedStatement("update PRODUCTS_INFO set Quantity=" + quantities + "where product_id=" + productId + "");
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    return Status.OK;
+                } else {
+                    return Status.NOTOK;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+            } finally {
+                try {
+
+                    DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return Status.NOTOK;
     }
+
+    //just for test ^_^
+    /*public static void main(String[] args) {
+        ProductsInfoEntity product = new ProductsInfoEntity();
+        product.setProductId(2);
+        product.setProductName("nutall");
+        product.setCategoryId(1);
+        product.setDescription("choclate");
+        product.setPrice(100);
+        product.setQuantity(100);
+        product.setImg("product_5.png");
+        ProductDaoImpl pdi = new ProductDaoImpl();
+        System.out.println(pdi.updateProductQuantities(1, 60));
+    }*/
 }

@@ -49,7 +49,9 @@ public class DbConnection {
     }
 
     public static void closeStatementAndResultSet(Statement statement, ResultSet resultSet) throws SQLException {
+       if(statement!=null)
         statement.close();
+       if(resultSet!=null)
         resultSet.close();
     }
 

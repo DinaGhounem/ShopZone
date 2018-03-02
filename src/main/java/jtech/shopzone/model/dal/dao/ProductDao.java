@@ -22,7 +22,7 @@ public interface ProductDao {
 
     ArrayList<ProductsInfoEntity> getProducts(double minPrice,double maxPrice);
 
-    Status AddProduct(ProductsInfoEntity product);
+    Status addProduct(ProductsInfoEntity product);
 
     Status deleteProduct(int productId);
 

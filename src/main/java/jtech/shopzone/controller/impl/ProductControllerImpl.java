@@ -36,7 +36,7 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public Status AddProduct(ProductsInfoEntity product) {
-        return productDao.AddProduct(product);
+        return productDao.addProduct(product);
     }
 
     @Override
