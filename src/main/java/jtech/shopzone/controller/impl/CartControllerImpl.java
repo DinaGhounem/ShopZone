@@ -7,25 +7,28 @@ import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
+import jtech.shopzone.model.dal.dao.impl.CartDaoImpl;
 
 public class CartControllerImpl implements CartController {
+
     private CartDao cartDao;
 
-    private CartControllerImpl(){
-        // TODO init cartDao with its factory method
+    private CartControllerImpl() {
+        cartDao = new CartDaoImpl();
     }
 
-    public static CartController newInstance(){
+    public static CartController newInstance() {
         return new CartControllerImpl();
     }
+
     @Override
     public Status addProduct(int userId, int productId) {
-        return cartDao.addProduct(userId,productId);
+        return cartDao.addProduct(userId, productId);
     }
 
     @Override
     public Status deleteProduct(int userId, int productId) {
-        return cartDao.deleteProduct(userId,productId);
+        return cartDao.deleteProduct(userId, productId);
     }
 
     @Override
@@ -35,16 +38,26 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public Status updateProductQuantities(int userId, int productId, int quantities) {
-        return cartDao.updateProductQuantities(userId,productId,quantities);
+        return cartDao.updateProductQuantities(userId, productId, quantities);
     }
 
     @Override
     public Status checkProductExistance(int userId, int productId) {
-        return cartDao.checkProductExistance(userId,productId);
+        return cartDao.checkProductExistance(userId, productId);
     }
 
     @Override
     public int userItemCount(int userId) {
         return cartDao.userItemCount(userId);
+    }
+
+    @Override
+    public Status restCart(int userId) {
+        return cartDao.restCart(userId);
+    }
+
+    @Override
+    public int getQuantity(int userId, int productId) {
+        return cartDao.getQuantity(userId, userId);
     }
 }

@@ -12,6 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jtech.shopzone.controller.CartController;
+import jtech.shopzone.controller.impl.CartControllerImpl;
+import jtech.shopzone.model.dal.Status;
 
 /**
  *
@@ -19,6 +22,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AddProductToCart", urlPatterns = {"/AddProductToCart"})
 public class AddProductToCart extends HttpServlet {
+
+    private CartController cartController;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        cartController = CartControllerImpl.newInstance();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +48,7 @@ public class AddProductToCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProductToCart</title>");            
+            out.println("<title>Servlet AddProductToCart</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddProductToCart at " + request.getContextPath() + "</h1>");
@@ -72,7 +83,18 @@ public class AddProductToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int userId = 1;
+        if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
+            cartController.addProduct(userId, productId);
+        } else {
+            out.print("else");
+            int quantity = cartController.getQuantity(userId, productId) + 1;
+            cartController.updateProductQuantities(userId, productId, quantity);
+        }
+
     }
 
     /**

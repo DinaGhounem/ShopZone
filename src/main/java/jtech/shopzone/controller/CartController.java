@@ -7,6 +7,7 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
 import java.util.ArrayList;
 
 public interface CartController {
+
     Status addProduct(int userId, int productId);
 
     Status deleteProduct(int userId, int productId);
@@ -18,4 +19,8 @@ public interface CartController {
     Status checkProductExistance(int userId, int productId);
 
     int userItemCount(int userId);
+
+    Status restCart(int userId);
+
+    int getQuantity(int userId, int productId);
 }
