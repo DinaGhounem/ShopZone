@@ -1004,12 +1004,16 @@ section
 {
 	width: 100%;
 	margin-top: 57px;
+        
+        
 }
 .product-item
 {
 	width: 20%;
 	height: 380px;
 	cursor: pointer;
+        
+        
 }
 .product-item::after
 {

@@ -30,8 +30,8 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ArrayList<ProductsInfoEntity> getProducts(Double price) {
-        return productDao.getProducts(price);
+    public ArrayList<ProductsInfoEntity> getProducts(double minPrice,double maxPrice) {
+        return productDao.getProducts(minPrice,maxPrice);
     }
 
     @Override

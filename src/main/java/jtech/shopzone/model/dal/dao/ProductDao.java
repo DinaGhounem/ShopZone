@@ -20,7 +20,7 @@ public interface ProductDao {
 
     ArrayList<ProductsInfoEntity> getProducts(int categoryId);
 
-    ArrayList<ProductsInfoEntity> getProducts(Double price);
+    ArrayList<ProductsInfoEntity> getProducts(double minPrice,double maxPrice);
 
     Status AddProduct(ProductsInfoEntity product);
 
