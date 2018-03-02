@@ -19,8 +19,8 @@ public class CartControllerImpl implements CartController {
         return new CartControllerImpl();
     }
     @Override
-    public Status AddProduct(int userId, ProductsInfoEntity product) {
-        return cartDao.AddProduct(userId,product);
+    public Status addProduct(int userId, int productId) {
+        return cartDao.addProduct(userId,productId);
     }
 
     @Override

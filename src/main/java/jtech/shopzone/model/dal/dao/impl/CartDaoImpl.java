@@ -11,13 +11,19 @@ import java.util.ArrayList;
 
 public class CartDaoImpl implements CartDao {
     @Override
-    public Status AddProduct(int userId, ProductsInfoEntity product) {
-        return Status.NOTOK;
+    public Status addProduct(int userId, int productId) {
+        Status status;
+        String query = "INSERT INTO SHOPPING_CART VALUES(" + userId + "," + productId + ",1)";
+        status = execUpdate(query);
+        return status;
     }
 
     @Override
     public Status deleteProduct(int userId, int productId) {
-        return Status.NOTOK;
+        Status status;
+        String query = "DELETE FROM SHOPPING_CART WHERE USER_ID=" + userId + " and PRODUCT_ID=" + productId;
+        status = execUpdate(query);
+        return status;
     }
 
     @Override
@@ -60,7 +66,10 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public Status updateProductQuantities(int userId, int productId, int quantities) {
-        return Status.NOTOK;
+        Status status;
+        String query = "UPDATE SHOPPING_CART SET QUANTITY="+quantities+" WHERE USER_ID="+userId+" AND PRODUCT_ID="+productId;
+        status = execUpdate(query);
+        return status;
     }
 
     @Override
@@ -69,7 +78,7 @@ public class CartDaoImpl implements CartDao {
         Status status = Status.NOTOK;
 
         // Build product check select statement
-        String productQuery = "select * from  shopping_cart where USER_ID =" + userId+" and PRODUCT_ID ="+productId;
+        String productQuery = "select * from  shopping_cart where USER_ID =" + userId + " and PRODUCT_ID =" + productId;
 
         // get new statement from the connection
         try (Statement statement = DbConnection.getStatement()) {
@@ -91,18 +100,61 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public int userItemCount(int userId) {
-        return 0;
-    }
+        int count;
 
+        try {
+            Statement statement = DbConnection.getStatement();
+            String sql = "SELECT SUM(QUANTITY) as itemCount FROM SHOPPING_CART WHERE USER_ID ="+userId;
+            ResultSet resultSet = statement.executeQuery(sql);
+            if(resultSet.next())
+            {
+                count = resultSet.getInt("itemCount");
+            }
+            else
+            {
+                count = 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            count = -1;
+        }
+
+        return count;
+    }
 
     @Override
     public Status restCart(int userId) {
-        return null;
-        
+        Status status;
+        String query = "DELETE FROM SHOPPING_CART WHERE USER_ID=" + userId;
+        status = execUpdate(query);
+        return status;
     }
+
+    @Override
+    public int getQuantity(int userId, int productId) {
+        int quantity = -1; // if this is returned then error happened
+        // get statement
+        try {
+            Statement statement = DbConnection.getStatement();
+            String query = "SELECT QUANTITY FROM SHOPPING_CART WHERE PRODUCT_ID=" + productId + " and USER_ID=" + userId;
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                quantity = resultSet.getInt("QUANTITY");
+            } else {
+                quantity = 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return quantity;
+    }
+
     /**
      * This method returns full data of a product with its product id
      * TODO: move it to ProductDao
+     *
      * @param productID
      * @return
      */
@@ -146,5 +198,30 @@ public class CartDaoImpl implements CartDao {
             e.printStackTrace();
         }
         return product;
+    }
+
+    public Status execUpdate(String query) {
+        Status status;
+        try {
+            Statement statement = DbConnection.getStatement();
+            int rowCount = statement.executeUpdate(query);
+            if (rowCount > 0) {
+                status = Status.OK;
+            } else {
+                status = Status.NOTOK;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            status = Status.ERROR;
+        }
+        return status;
+    }
+
+    public static void main(String[] args) {
+        CartDaoImpl cartDao = new CartDaoImpl();
+        //System.out.println(cartDao.deleteProduct(10, 15));
+        //System.out.println(cartDao.addProduct(10, 10));
+        //System.out.println(cartDao.userItemCount(10));
+
     }
 }

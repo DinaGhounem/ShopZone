@@ -17,7 +17,16 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
  */
 public interface CartDao {
 
-    Status AddProduct(int userId, ProductsInfoEntity product);
+    /**
+     * This method is CALLED ONLY ONCE when the product is first
+     * added to the cart, further calls to addProduct will reset
+     * the product count to 1, so alternatively to change product quantity
+     * you use updateProductQuantities()
+     * @param userId
+     * @param productId
+     * @return
+     */
+    Status addProduct(int userId, int productId);
 
     Status deleteProduct(int userId, int productId);
 
@@ -28,7 +37,21 @@ public interface CartDao {
     Status checkProductExistance(int userId, int productId);
 
     int userItemCount(int userId);
-    
+
+    /**
+     * Removes all in cart of a specific user
+     * @param userId
+     * @return
+     */
     Status restCart(int userId);
+
+    /**
+     * gets quantity of a specific product in user's cart
+     * @param userId
+     * @param productId
+     * @return 0 if product is not in the cart, -1 if SQLException occurred
+     *         or quantity of the product in user cart
+     */
+    int getQuantity(int userId, int productId);
 
 }
