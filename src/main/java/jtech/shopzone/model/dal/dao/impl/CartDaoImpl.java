@@ -33,12 +33,9 @@ public class CartDaoImpl implements CartDao {
         // Init empty arraylist to fill products info in it
         ArrayList<CartEntity> productsWithQuantity = new ArrayList<>();
 
-        try {
+        try (Statement statement = DbConnection.getStatement()){
             // build Outer SQL string to get cart entities
             String outerQuery = "select PRODUCT_ID , QUANTITY  from  shopping_cart where USER_ID =" + userId;
-
-            // get statement
-            Statement statement = DbConnection.getStatement();
 
             // get result set of cart entities
             ResultSet resultSet = statement.executeQuery(outerQuery);
@@ -105,8 +102,7 @@ public class CartDaoImpl implements CartDao {
     public int userItemCount(int userId) {
         int count;
 
-        try {
-            Statement statement = DbConnection.getStatement();
+        try (Statement statement = DbConnection.getStatement()){
             String sql = "SELECT SUM(QUANTITY) as itemCount FROM SHOPPING_CART WHERE USER_ID ="+userId;
             ResultSet resultSet = statement.executeQuery(sql);
             if(resultSet.next())
@@ -136,9 +132,7 @@ public class CartDaoImpl implements CartDao {
     @Override
     public int getQuantity(int userId, int productId) {
         int quantity = -1; // if this is returned then error happened
-        // get statement
-        try {
-            Statement statement = DbConnection.getStatement();
+        try (Statement statement = DbConnection.getStatement()){
             String query = "SELECT QUANTITY FROM SHOPPING_CART WHERE PRODUCT_ID=" + productId + " and USER_ID=" + userId;
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
@@ -156,8 +150,7 @@ public class CartDaoImpl implements CartDao {
 
     private Status execUpdate(String query) {
         Status status;
-        try {
-            Statement statement = DbConnection.getStatement();
+        try (Statement statement = DbConnection.getStatement()){
             int rowCount = statement.executeUpdate(query);
             if (rowCount > 0) {
                 status = Status.OK;
