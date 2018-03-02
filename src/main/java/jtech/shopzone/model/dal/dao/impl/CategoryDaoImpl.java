@@ -26,9 +26,9 @@ public class CategoryDaoImpl implements CategoryDao {
     public ArrayList<ProductCategoryEntity> getCategories() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-         ArrayList<ProductCategoryEntity> categoryEntitys = new ArrayList<>();
+        ArrayList<ProductCategoryEntity> categoryEntitys = new ArrayList<>();
         try {
-           
+
             preparedStatement = DbConnection.getPreparedStatement("select * from PRODUCTS_CATEGORY");
             resultSet = preparedStatement.executeQuery();
 
@@ -39,10 +39,10 @@ public class CategoryDaoImpl implements CategoryDao {
                 categoryEntitys.add(category);
 
             }
-           
+
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-           
+
         } finally {
             try {
                 DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
@@ -114,52 +114,52 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Status addCategory(ProductCategoryEntity category) {
-        if(category.getCategoryName()!=null){
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int categoryId = 0;
-        try {
-            preparedStatement = DbConnection.getPreparedStatement("select nvl(max(Category_id),0) from PRODUCTS_CATEGORY");
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-
-                categoryId = resultSet.getInt(1) + 1;
-               
-            } else {
-                return Status.NOTOK;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return Status.ERROR;
-
-        }
-        try {
-            preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_CATEGORY values(?,?)");
-            preparedStatement.setInt(1, categoryId);
-            preparedStatement.setString(2, category.getCategoryName());
-
-            if (preparedStatement.executeUpdate() > 0) {
-                return Status.OK;
-            } else {
-                return Status.NOTOK;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return Status.ERROR;
-        } finally {
+        if (category.getCategoryName() != null) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            int categoryId = 0;
             try {
+                preparedStatement = DbConnection.getPreparedStatement("select nvl(max(Category_id),0) from PRODUCTS_CATEGORY");
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
 
-                DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+                    categoryId = resultSet.getInt(1) + 1;
+
+                } else {
+                    return Status.NOTOK;
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+
             }
-        }
+            try {
+                preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_CATEGORY values(?,?)");
+                preparedStatement.setInt(1, categoryId);
+                preparedStatement.setString(2, category.getCategoryName());
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    return Status.OK;
+                } else {
+                    return Status.NOTOK;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return Status.ERROR;
+            } finally {
+                try {
+
+                    DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         return Status.NOTOK;
     }
-     // just for testing :))
+    // just for testing :))
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ProductCategoryEntity category = new ProductCategoryEntity();
         category.setCategoryName("drinks");
         CategoryDaoImpl cdi = new CategoryDaoImpl();
@@ -169,5 +169,5 @@ public class CategoryDaoImpl implements CategoryDao {
         }
        
 
-    }
+    }*/
 }
