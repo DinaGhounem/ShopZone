@@ -333,7 +333,7 @@ public class ProductDaoImpl implements ProductDao {
 
                 // Construct a new product variable
                 product = new ProductsInfoEntity();
-                product.setCategoryId(PRODUCT_ID);
+                product.setProductId(PRODUCT_ID);
                 product.setProductName(PRODUCT_NAME);
                 product.setPrice(PRICE);
                 product.setQuantity(QUANTITY);
