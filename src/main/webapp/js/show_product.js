@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 var pageNum = 20;
-var categoryId=0;
+var categoryId = 0;
 getProductsCount(categoryId);
 getCategories();
-currentPage=1;
+currentPage = 1;
 
 function callback(response, statusTxt, xhr)
 {
@@ -33,9 +33,9 @@ function callback(response, statusTxt, xhr)
                         "</div>" +
                         "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct(" + object[i].productId + ")\">add to cart</div>" +
                         "</div>";
-              /*  if (i % 4 == 0) {
-                    height += 400;
-                }*/
+                /*  if (i % 4 == 0) {
+                 height += 400;
+                 }*/
             }
         }
         $(products).html(content);
@@ -47,22 +47,26 @@ function callback(response, statusTxt, xhr)
          */
     }
 }
-function getProducts(page,categoryId) {
+function getProducts(page, categoryId) {
 
-    $.get("ShowProductServlet?page=" + page+"&categoryId="+categoryId, callback);
+    $.get("ShowProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
 
 
 }
 function getProductsCount(categoryId) {
 
-    $.get("ShowProductServlet?categoryId="+categoryId, ProductsCountcallback);
+    $.get("ShowProductServlet?categoryId=" + categoryId, ProductsCountcallback);
 
 
 }
 function ProductsCountcallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        pageNum = Math.round(response / 8);
+        if (response % 8 == 0) {
+            pageNum = Math.round(response / 8);
+        } else {
+            pageNum = Math.round(response / 8) + 1;
+        }
         $('#pagination-here').bootpag({
             total: pageNum,
             page: 1,
@@ -74,8 +78,8 @@ function ProductsCountcallback(response, statusTxt, xhr)
 //page click action
         $('#pagination-here').on("page", function (event, num) {
             //show / hide content or pull via ajax etc
-            currentPage=num;
-            getProducts(num,categoryId);
+            currentPage = num;
+            getProducts(num, categoryId);
         });
     }
 }
@@ -88,40 +92,41 @@ function showProductCallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
         getProductsCount(categoryId);
-        getProducts(currentPage,0);
-        
+        getProducts(currentPage, 0);
+
     }
 }
 
 function getCategories() {
 
-    $.get("ShowCategory",getCategoriesCallBack);
+    $.get("ShowCategory", getCategoriesCallBack);
 
 
 }
 function getCategoriesCallBack(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        
-        content="<option value='0'>All</option>";
+
+        content = "<option value='0'>All</option>";
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
-            content+="<option value='"+object[i].categoryId+"'>"+object[i].categoryName+"</option>";
-            
+            content += "<option value='" + object[i].categoryId + "'>" + object[i].categoryName + "</option>";
+
         }
-        
+
         $("#size").html(content);
-          $("#size").kendoDropDownList();
+        $("#size").kendoDropDownList();
 
-                   
 
-         
-        
-    }}
-      function changeCategory() {
-     categoryId = document.getElementById("size").value;
-     getProductsCount(categoryId);
-    getProducts(1,categoryId );
-    
-    
+
+
+
+    }
+}
+function changeCategory() {
+    categoryId = document.getElementById("size").value;
+    getProductsCount(categoryId);
+    getProducts(1, categoryId);
+
+
 }  

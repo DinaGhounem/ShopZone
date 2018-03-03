@@ -27,13 +27,13 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
  */
 @WebServlet(name = "ShowCategory", urlPatterns = {"/ShowCategory"})
 public class ShowCategory extends HttpServlet {
-     private CategoryController categoryController;
+
+    private CategoryController categoryController;
 
     @Override
     public void init() throws ServletException {
-       categoryController=CategoryControllerImpl.newInstance();
+        categoryController = CategoryControllerImpl.newInstance();
     }
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,7 +52,7 @@ public class ShowCategory extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShowCategory</title>");            
+            out.println("<title>Servlet ShowCategory</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ShowCategory at " + request.getContextPath() + "</h1>");
@@ -75,7 +75,7 @@ public class ShowCategory extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         ArrayList<ProductCategoryEntity> categories = new ArrayList<>();
-        categories=categoryController.getCategories();
+        categories = categoryController.getCategories();
         Gson gson = new Gson();
         String jsonObject = gson.toJson(categories);
         out.print(jsonObject);
