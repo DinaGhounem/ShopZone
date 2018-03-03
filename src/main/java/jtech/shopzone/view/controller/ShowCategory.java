@@ -14,23 +14,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jtech.shopzone.controller.CategoryController;
 import jtech.shopzone.controller.ProductController;
+import jtech.shopzone.controller.impl.CategoryControllerImpl;
 import jtech.shopzone.controller.impl.ProductControllerImpl;
-import jtech.shopzone.model.dal.dao.ProductDao;
-import jtech.shopzone.model.dal.dao.impl.ProductDaoImpl;
+import jtech.shopzone.model.entity.ProductCategoryEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 /**
  *
  * @author Hanaa
  */
-@WebServlet(name = "ShowProductServlet", urlPatterns = {"/ShowProductServlet"})
-public class ShowProductServlet extends HttpServlet {
-    private ProductController productController;
+@WebServlet(name = "ShowCategory", urlPatterns = {"/ShowCategory"})
+public class ShowCategory extends HttpServlet {
+     private CategoryController categoryController;
 
     @Override
     public void init() throws ServletException {
-       productController=ProductControllerImpl.newInstance();
+       categoryController=CategoryControllerImpl.newInstance();
     }
     
 
@@ -51,10 +52,10 @@ public class ShowProductServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShowProductServlet</title>");
+            out.println("<title>Servlet ShowCategory</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ShowProductServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShowCategory at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,34 +73,14 @@ public class ShowProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
         PrintWriter out = response.getWriter();
-        String page=request.getParameter("page");
-         int categoryId=Integer.parseInt(request.getParameter("categoryId"));
-        if(page!=null){
-           
-            int pageNum=Integer.parseInt(page);
-        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        if(categoryId==0){
-        products=productController.getProductsBTWRange(pageNum);
-        }else{
-            
-            products=productController.getProductsBTWRange(pageNum,categoryId);
-        }
+        ArrayList<ProductCategoryEntity> categories = new ArrayList<>();
+        categories=categoryController.getCategories();
         Gson gson = new Gson();
-        String jsonObject = gson.toJson(products);
+        String jsonObject = gson.toJson(categories);
         out.print(jsonObject);
-
-    }else{
-             int productCount=0;
-            if(categoryId==0){
-            productCount=productController.getProductCount();
-            }else{
-            productCount=productController.getProducts(categoryId).size();
-            }
-            out.print(productCount);
-        }
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *

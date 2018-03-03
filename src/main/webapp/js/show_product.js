@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 var pageNum = 20;
-getProductsCount();
+var categoryId=0;
+getProductsCount(categoryId);
+getCategories();
 currentPage=1;
+
 function callback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
@@ -44,15 +47,15 @@ function callback(response, statusTxt, xhr)
          */
     }
 }
-function getProducts(page) {
+function getProducts(page,categoryId) {
 
-    $.get("ShowProductServlet?page=" + page, callback);
+    $.get("ShowProductServlet?page=" + page+"&categoryId="+categoryId, callback);
 
 
 }
-function getProductsCount() {
+function getProductsCount(categoryId) {
 
-    $.get("ShowProductServlet", ProductsCountcallback);
+    $.get("ShowProductServlet?categoryId="+categoryId, ProductsCountcallback);
 
 
 }
@@ -72,7 +75,7 @@ function ProductsCountcallback(response, statusTxt, xhr)
         $('#pagination-here').on("page", function (event, num) {
             //show / hide content or pull via ajax etc
             currentPage=num;
-            getProducts(num);
+            getProducts(num,categoryId);
         });
     }
 }
@@ -84,8 +87,41 @@ function addProduct(productId) {
 function showProductCallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        getProductsCount();
-        getProducts(currentPage);
+        getProductsCount(categoryId);
+        getProducts(currentPage,0);
         
     }
 }
+
+function getCategories() {
+
+    $.get("ShowCategory",getCategoriesCallBack);
+
+
+}
+function getCategoriesCallBack(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+        
+        content="<option value='0'>All</option>";
+        object = JSON.parse(response);
+        for (i = 0; i < object.length; i++) {
+            content+="<option value='"+object[i].categoryId+"'>"+object[i].categoryName+"</option>";
+            
+        }
+        
+        $("#size").html(content);
+          $("#size").kendoDropDownList();
+
+                   
+
+         
+        
+    }}
+      function changeCategory() {
+     categoryId = document.getElementById("size").value;
+     getProductsCount(categoryId);
+    getProducts(1,categoryId );
+    
+    
+}  
