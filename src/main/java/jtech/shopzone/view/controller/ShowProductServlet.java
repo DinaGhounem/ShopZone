@@ -74,14 +74,20 @@ public class ShowProductServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         PrintWriter out = response.getWriter();
+        String page=request.getParameter("page");
+        if(page!=null){
+            int pageNum=Integer.parseInt(page);
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        products=productController.getProducts();
+        products=productController.getProductsBTWRange(pageNum);
         Gson gson = new Gson();
         String jsonObject = gson.toJson(products);
         out.print(jsonObject);
 
+    }else{
+            int productCount=productController.getProductCount();
+            out.print(productCount);
+        }
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

@@ -4,8 +4,10 @@
     Author     : Hanaa
 --%>
 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html lang="en">
     <head>
         <title>Colo Shop</title>
@@ -20,11 +22,13 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+          <link rel="stylesheet" href="css/pagination_styles.css">
         <%@page import="jtech.shopzone.view.controller.ShowProductServlet" %>
+        <link rel="stylesheet" href="css/pagination.css"/>
     </head>
 
-    <body onload="getProducts()">
-
+    <body onload="getProducts(1)">
+        
         <div class="super_container">
 
             <!-- Header -->
@@ -206,9 +210,9 @@
                         <div class="col text-center">
                             <div class="new_arrivals_sorting">
                                 <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                                     
+                                    
                                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">All</li>
-                                  
+                               
                                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">Woman</li>
                                    
                                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
@@ -223,12 +227,15 @@
 
 
                             </div>
+                            <div class="wrapper">
+  <div class="container">
+      <div id="pagination-here"></div></div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
+            
             <!-- Newsletter -->
 
             <div class="newsletter">
@@ -286,6 +293,7 @@
                         </div>
                     </div>
                 </div>
+                
             </footer>
 
 
@@ -300,8 +308,10 @@
         <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
         <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
         <script src="plugins/easing/easing.js"></script>
+         <script type="text/javascript" src="js/bootpag.js"></script>
         <script src="js/custom.js"></script>
         <script src="js/show_product.js"></script>
+        
     </body>
 
 </html>

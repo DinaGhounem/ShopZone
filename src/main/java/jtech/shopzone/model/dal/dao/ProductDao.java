@@ -20,7 +20,13 @@ public interface ProductDao {
 
     ArrayList<ProductsInfoEntity> getProducts(int categoryId);
 
-    ArrayList<ProductsInfoEntity> getProducts(double minPrice,double maxPrice);
+    ArrayList<ProductsInfoEntity> getProducts(double minPrice, double maxPrice);
+
+    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range);
+
+    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId);
+
+    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice);
 
     Status addProduct(ProductsInfoEntity product);
 
@@ -33,5 +39,7 @@ public interface ProductDao {
     Status updateProductQuantities(int productId, int quantities);
 
     ProductsInfoEntity getProductInfo(int productID);
+
+    int getProductCount();
 
 }
