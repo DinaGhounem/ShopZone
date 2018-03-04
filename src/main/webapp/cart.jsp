@@ -192,7 +192,7 @@
 
     <!--/#cart_items-->
 
-    <div style="margin-top:200px">
+    <div style="margin-top: 200px;">
         <section id="cart_items">
             <div class="container">
                 <div class="table-responsive cart_info">
@@ -226,7 +226,7 @@
                                         <a class="cart_quantity_up"
                                            onclick="incrementProductQuantity(${cartEntity.productsInfoEntity.productId})">+</a>
                                         <input class="cart_quantity_input" type="text" name="quantity"
-                                               value="${cartEntity.quantity}" autocomplete="off" size="2" disabled>
+                                               value="${cartEntity.quantity}" autocomplete="off" size="2" onkeyup="setProductQuantity(Event,${cartEntity.productsInfoEntity.productId})">
                                         <a class="cart_quantity_down"
                                            onclick="decrementProductQuantity(${cartEntity.productsInfoEntity.productId})">-</a>
                                     </div>

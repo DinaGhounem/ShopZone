@@ -27,27 +27,52 @@ $(document).ready(function () {
 });
 
 function incrementProductQuantity(productId) {
+    var priceStr = $("#" + productId).find(".cart_price").find("p")[0].innerText;
+    priceStr = priceStr.substr(1,priceStr.length);
+    var price = parseFloat(priceStr);
+    var total = $("#" + productId).find(".cart_total_price")[0];
     $.post("AddProductToCart", {productId: productId}, function () {
-        var value = parseInt($("#"+productId).find(".cart_quantity_input")[0].value);
+        var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
         value++;
-        $("#"+productId).find(".cart_quantity_input")[0].value = value;
+        $("#" + productId).find(".cart_quantity_input")[0].value = value;
+        total.innerText = "$"+(price * value).toFixed(1);
     });
 }
 
 function decrementProductQuantity(productId) {
-    var value = parseInt($("#"+productId).find(".cart_quantity_input")[0].value);
-    if(value==1)
-    {
+    var priceStr = $("#" + productId).find(".cart_price").find("p")[0].innerText;
+    priceStr = priceStr.substr(1,priceStr.length);
+    var price = parseInt(priceStr);
+    var total = $("#" + productId).find(".cart_total_price")[0];
+    var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
+    if (value == 1) {
         return;
     }
     $.post("RemoveProductFromCart", {productId: productId}, function () {
         value--;
-        $("#"+productId).find(".cart_quantity_input")[0].value = value;
+        $("#" + productId).find(".cart_quantity_input")[0].value = value;
+        total.innerText = "$"+(price * value).toFixed(1);
     });
 }
 
 function removeProduct(productId) {
-    $.post("RemoveProductFromCart", {productId: productId,removeProduct:""}, function () {
-        $("#"+productId).remove();
+    $.post("RemoveProductFromCart", {productId: productId, removeProduct: ""}, function () {
+        $("#" + productId).remove();
     });
+}
+
+function setProductQuantity(e, productId) {
+    console.log(e);
+    console.log(productId);
+}
+
+function validateQuantity(productId)
+{
+    var validated = false;
+    var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
+    if(value>0)
+    {
+        validated = true;
+    }
+    return validated;
 }
