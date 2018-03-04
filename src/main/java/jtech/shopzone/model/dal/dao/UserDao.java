@@ -31,5 +31,7 @@ public interface UserDao {
     ArrayList<UserInfoEntity> getUsers();
 
     Status updateCreditLimit(int userId, Double value);
+    
+    Status isAdmin(String email);
 
 }
