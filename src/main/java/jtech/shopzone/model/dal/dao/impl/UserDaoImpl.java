@@ -400,4 +400,31 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public Status isAdmin(String email) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DbConnection.getConnection();
+            ps = con.prepareStatement("select email from admin_info where email = ?");
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return Status.OK;
+            } else {
+                return Status.NOTOK;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Status.ERROR;
+        } finally {
+            try {
+                DbConnection.closeStatementAndResultSet(ps, rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }    
+    }
+
 }
