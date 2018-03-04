@@ -1,9 +1,7 @@
 package jtech.shopzone.model.dal.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
@@ -301,8 +299,170 @@ public class ProductDaoImpl implements ProductDao {
         return Status.NOTOK;
     }
 
+    /**
+     * This method returns full data of a product with its product id
+     *
+     * @param productID
+     * @return whole product info as product table
+     */
+    @Override
+    public ProductsInfoEntity getProductInfo(int productID) {
+        // Return object
+        ProductsInfoEntity product = null;
+
+        // Build product select statement
+        String productQuery = "select * from PRODUCTS_INFO where PRODUCT_ID = " + productID;
+
+        // get new statement from the connection
+        try (Statement statement = DbConnection.getStatement()) {
+
+            // execute select statement and get results
+            ResultSet resultSet = statement.executeQuery(productQuery);
+
+            // if result exists do some work
+            if (resultSet.next()) {
+
+                /* get each column value into a variable */
+                int PRODUCT_ID = resultSet.getInt("PRODUCT_ID");
+                String PRODUCT_NAME = resultSet.getString("PRODUCT_NAME");
+                int PRICE = resultSet.getInt("PRICE");
+                int QUANTITY = resultSet.getInt("QUANTITY");
+                String DESCRIPTION = resultSet.getString("DESCRIPTION");
+                int CATEGORY_ID = resultSet.getInt("CATEGORY_ID");
+                String IMG = resultSet.getString("IMG");
+
+                // Construct a new product variable
+                product = new ProductsInfoEntity();
+                product.setProductId(PRODUCT_ID);
+                product.setProductName(PRODUCT_NAME);
+                product.setPrice(PRICE);
+                product.setQuantity(QUANTITY);
+                product.setDescription(DESCRIPTION);
+                product.setCategoryId(CATEGORY_ID);
+                product.setImg(IMG);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    /* @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
+          ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+      //  String query = "SELECT * from PRODUCTS_INFO  limit"+(range-1)*8+", "+range*8+"";
+       String query = "SELECT * from (select * from PRODUCTS_INFO order by product_id) where ROWNUM <= "+((range)*8)+" and ROWNUM > "+((range-1)*8);
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ProductsInfoEntity product = new ProductsInfoEntity();
+                product.setProductId(resultSet.getInt("PRODUCT_ID"));
+                product.setProductName(resultSet.getString("PRODUCT_NAME"));
+                product.setPrice(resultSet.getDouble("PRICE"));
+                product.setQuantity(resultSet.getInt("QUANTITY"));
+                product.setDescription(resultSet.getString("DESCRIPTION"));
+                product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
+                product.setImg(resultSet.getString("IMG"));
+                products.add(product);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return products;
+        
+    }*/
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
+        ArrayList<ProductsInfoEntity> allProducts = getProducts();
+        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+            ProductsInfoEntity product = allProducts.get(j);
+            if (product.getQuantity() == 0) {
+                i--;
+            } else {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId) {
+        ArrayList<ProductsInfoEntity> allProducts = getProducts(categoryId);
+        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+            ProductsInfoEntity product = allProducts.get(j);
+            if (product.getQuantity() == 0) {
+                i--;
+            } else {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice) {
+        ArrayList<ProductsInfoEntity> allProducts = getProducts(minPrice, maxPrice);
+        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+            ProductsInfoEntity product = allProducts.get(j);
+            if (product.getQuantity() == 0) {
+                i--;
+            } else {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public int getProductCount() {
+        int productCount = 0;
+        String query = "select count(*) from PRODUCTS_INFO ";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                productCount = resultSet.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return productCount;
+    }
+
     //just for test ^_^
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         ProductsInfoEntity product = new ProductsInfoEntity();
         product.setProductId(2);
         product.setProductName("nutall");
@@ -312,6 +472,11 @@ public class ProductDaoImpl implements ProductDao {
         product.setQuantity(100);
         product.setImg("product_5.png");
         ProductDaoImpl pdi = new ProductDaoImpl();
-        System.out.println(pdi.updateProductQuantities(1, 60));
-    }*/
+        /* ArrayList<ProductsInfoEntity>products=pdi.getProductsBTWRange(2);
+        for (ProductsInfoEntity product1 : products) {
+              System.out.println(product1.getProductName());
+        }*/
+
+    }
+
 }

@@ -16,6 +16,7 @@ import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.UserDao;
 import jtech.shopzone.model.entity.UserInfoEntity;
+import jtech.shopzone.model.entity.UserInterestsEntity;
 
 /**
  *
@@ -86,6 +87,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs1 = null;
         int user_id = 0;
         int effectedRows;
+        ArrayList<UserInterestsEntity> interests;
         try {
             con = DbConnection.getConnection();
             /**
@@ -115,6 +117,22 @@ public class UserDaoImpl implements UserDao {
 
             effectedRows = ps.executeUpdate();
 
+            /**
+             * inserting user interests
+             */
+            interests = user.getInterests();
+            if (interests.size() > 0) {
+                PreparedStatement ps2 = null;
+                for (int i = 0; i < interests.size(); i++) {
+                    ps2 = con.prepareStatement("Insert into USER_INTERESTS "
+                            + "(USER_ID, INTEREST_NAME)"
+                            + " Values(?,?)");
+                    ps2.setInt(1, user.getUserId());
+                    ps2.setString(2, interests.get(i).getInterestName());
+                    ps.executeUpdate();
+                }
+                ps2.close();
+            }
             if (effectedRows > 0) {
                 return Status.OK;
             } else {
@@ -137,6 +155,7 @@ public class UserDaoImpl implements UserDao {
     public Status updateUser(UserInfoEntity user) {
         Connection con = null;
         PreparedStatement ps = null;
+        ArrayList<UserInterestsEntity> interests;
         int effectedRows;
         try {
             con = DbConnection.getConnection();
@@ -149,7 +168,6 @@ public class UserDaoImpl implements UserDao {
             /**
              * set values to update statement
              */
-
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getEmail());
@@ -163,6 +181,29 @@ public class UserDaoImpl implements UserDao {
 
             effectedRows = ps.executeUpdate();
 
+            /**
+             * deleting previous interests and insert the new ones
+             */
+            interests = user.getInterests();
+            if (interests.size() > 0) {
+                PreparedStatement ps1 = null;
+                PreparedStatement ps2 = null;
+
+                ps1 = con.prepareStatement("delete from user_interests "
+                        + "where user_id=?");
+                ps1.setInt(1, user.getUserId());
+
+                ps1.close();
+                for (int i = 0; i < interests.size(); i++) {
+                    ps2 = con.prepareStatement("Insert into USER_INTERESTS "
+                            + "(USER_ID, INTEREST_NAME)"
+                            + " Values(?,?)");
+                    ps2.setInt(1, user.getUserId());
+                    ps2.setString(2, interests.get(i).getInterestName());
+                    ps.executeUpdate();
+                }
+                ps2.close();
+            }
             if (effectedRows > 0) {
                 return Status.OK;
             } else {
@@ -215,9 +256,20 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        PreparedStatement ps1 = null;
+        ResultSet rs1 = null;
         UserInfoEntity user = null;
+        ArrayList<UserInterestsEntity> interests = null;
         try {
             con = DbConnection.getConnection();
+            ps1 = con.prepareStatement("select user_id , interest_name from user_interests where user_id=?");
+            ps1.setInt(1, userId);
+            rs1 = ps1.executeQuery();
+            while (rs1.next()) {
+                UserInterestsEntity entity = new UserInterestsEntity(rs.getInt(1), rs.getString(2));
+                interests.add(entity);
+            }
+
             ps = con.prepareStatement("select user_id,first_name,last_name,email,address,"
                     + "birthdate,password,job,credit_limit,user_img "
                     + "from userinfo where user_id = ?");
@@ -235,12 +287,15 @@ public class UserDaoImpl implements UserDao {
                 user.setJob(rs.getString(8));
                 user.setCreditLimit(rs.getDouble(9));
                 user.setUserImg(rs.getString(10));
+                user.setInterests(interests);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 DbConnection.closeStatementAndResultSet(ps, rs);
+                DbConnection.closeStatementAndResultSet(ps1, rs1);
             } catch (SQLException ex) {
                 Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -253,6 +308,9 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        PreparedStatement ps1 = null;
+        ResultSet rs1 = null;
+        ArrayList<UserInterestsEntity> interests = null;
         ArrayList<UserInfoEntity> users = null;
         try {
             con = DbConnection.getConnection();
@@ -272,6 +330,13 @@ public class UserDaoImpl implements UserDao {
                 user.setJob(rs.getString(8));
                 user.setCreditLimit(rs.getDouble(9));
                 user.setUserImg(rs.getString(10));
+                ps1 = con.prepareStatement("select user_id , interest_name from user_interests where user_id=?");
+                ps1.setInt(1,rs.getInt(1));
+                rs1 = ps1.executeQuery();
+                while (rs1.next()) {
+                    UserInterestsEntity entity = new UserInterestsEntity(rs.getInt(1), rs.getString(2));
+                    interests.add(entity);
+                }
 
                 users.add(user);
             }
@@ -280,6 +345,7 @@ public class UserDaoImpl implements UserDao {
         } finally {
             try {
                 DbConnection.closeStatementAndResultSet(ps, rs);
+                DbConnection.closeStatementAndResultSet(ps1, rs1);
             } catch (SQLException ex) {
                 Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -302,7 +368,7 @@ public class UserDaoImpl implements UserDao {
             ps.setInt(1, userId);
             rs = ps.executeQuery();
             if (rs.next()) {
-                oldCredit=rs.getDouble(1);
+                oldCredit = rs.getDouble(1);
             }
             newCredit = oldCredit - value;
             ps = con.prepareStatement("update userinfo "
