@@ -29,20 +29,20 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="signincludes/images/img-01.png" alt="IMG">
 				</div>
-
-				<form class="login100-form validate-form">
+                          
+				<form class="login100-form validate-form" name="signupform" action="RegisterationServlet" method="POST">
 					<span class="login100-form-title">
 						Member Sign Up
 					</span>
 					<div class="wrap-input100 validate-input" data-validate = "firstname is required">
-						<input class="input100" type="text" name="firstname" placeholder="first name">
+						<input class="input100" type="text" name="firstName" placeholder="first name">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</span>
 					</div>
                                     <div class="wrap-input100 validate-input" data-validate = "second name is required">
-						<input class="input100" type="text" name="secondname" placeholder="second name">
+						<input class="input100" type="text" name="lastName" placeholder="last name">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
@@ -58,7 +58,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -75,15 +75,15 @@
 							<i class="fa fa-genderless" aria-hidden="true"></i>
 						</span>
 					</div>	-->
-					<div class="wrap-input100 validate-input" data-validate = "date is required">
-							<input  class="input100" id="date" type="date" name="datepicker" placeholder="date">
+					<div class="wrap-input100 validate-input" data-validate = "Birthdate is required">
+							<input  class="input100" id="date" type="date" name="birthdate" placeholder="birth date">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-calendar" aria-hidden="true"></i>
 						</span>
 					</div>	
 					<div class="wrap-input100 validate-input" data-validate = "Valid number is required">
-							<input class="input100" type="number" name="creditlimit" placeholder="credit limit">
+							<input class="input100" type="number" name="creditLimit" placeholder="credit limit">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-credit-card
@@ -97,12 +97,18 @@
 							<i class="fa fa-address-book" aria-hidden="true"></i>
 						</span>
 					</div>	
+                                        <div class="wrap-input100 validate-input" data-validate = "job is required">
+							<input class="input100" type="text" name="job" placeholder="job">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-building" aria-hidden="true"></i>
+						</span>
+					</div>	
 					
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Sign up
-						</button>
+                                            <input class="login100-form-btn" type="submit" value="SignUp" name="signup" />
+						
 					</div>
 				</form>
 			</div>

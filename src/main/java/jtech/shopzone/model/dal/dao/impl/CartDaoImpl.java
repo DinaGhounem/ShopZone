@@ -172,3 +172,4 @@ public class CartDaoImpl implements CartDao {
         //System.out.println(cartDao.getQuantity(1, 5));
     }
 }
+//dont forget to remove main 

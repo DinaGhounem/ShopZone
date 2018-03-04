@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jtech.shopzone.controller.CartController;
+import jtech.shopzone.controller.ProductController;
 import jtech.shopzone.controller.impl.CartControllerImpl;
+import jtech.shopzone.controller.impl.ProductControllerImpl;
 import jtech.shopzone.model.dal.Status;
 
 /**
@@ -24,11 +26,13 @@ import jtech.shopzone.model.dal.Status;
 public class AddProductToCart extends HttpServlet {
 
     private CartController cartController;
+    private ProductController productController;
 
     @Override
     public void init() throws ServletException {
         super.init();
         cartController = CartControllerImpl.newInstance();
+        productController=ProductControllerImpl.newInstance();
     }
 
     /**
@@ -85,16 +89,19 @@ public class AddProductToCart extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
         PrintWriter out = response.getWriter();
+     
         int productId = Integer.parseInt(request.getParameter("productId"));
-        int userId = 1;
+        int totalQuantities=productController.checkProductQuantities(productId);
+        if(totalQuantities>0){
+        int userId = 1;//TODO get id from login session
         if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
             cartController.addProduct(userId, productId);
         } else {
-            out.print("else");
             int quantity = cartController.getQuantity(userId, productId) + 1;
             cartController.updateProductQuantities(userId, productId, quantity);
         }
-
+            productController.updateProductQuantities(productId, totalQuantities-1);
+        }
     }
 
     /**
