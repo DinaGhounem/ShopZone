@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             String loggedIn = (String) session.getAttribute("loggedIn");
             if (!loggedIn.equalsIgnoreCase("true")) {
                 response.sendRedirect("signin.html");
-                
+
             }
         }
 
@@ -51,9 +51,31 @@ public class LoginServlet extends HttpServlet {
         //---------------------initialization--------------------------------//
 
         Status loginAck;
+        Status adminAck;
+
         //---------------------response--------------------------------//
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+
+        //----------------------if admin-------------------------------//
+        /*  adminAck=userController.isAdmin(request.getParameter("email"), request.getParameter("password"));
+        if (AdminAck == Status.OK) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("loggedIn", new String("true"));
+            session.setAttribute("isAdmin", new String("true"));
+            session.setAttribute("adminEmail", request.getParameter("email"));//or give me in return user id to put it on the session
+            session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
+            RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
+            rd.forward(request, response);
+        } else if (AdminAck == Status.NOTOK) {
+        
+            
+
+        } else if (AdminAck == Status.ERROR) {
+            
+        }
+
+         */
         //-----------------------login user in db--------------------//        
         loginAck = userController.login(request.getParameter("email"), request.getParameter("password"));
         //-----------------------create httpsession--------------------//
@@ -61,17 +83,14 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("loggedIn", new String("true"));
             session.setAttribute("userEmail", request.getParameter("email"));//or give me in return user id to put it on the session
+            session.setAttribute("userId", userController.getUserId(request.getParameter("email")));
             RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
             rd.forward(request, response);
         } else if (loginAck == Status.NOTOK) {
-            out.print(" this email is not exists !");
-            RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
-            rd.include(request, response);
-
+            response.sendRedirect("signin.html?Status=notok&errormessage=this-email-does-not-exist");
         } else if (loginAck == Status.ERROR) {
-            out.print(" Sorry Error in connection Try again later !");
-            RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
-            rd.include(request, response);
+
+            response.sendRedirect("signin.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
         }
 
     }

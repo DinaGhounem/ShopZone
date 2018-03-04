@@ -7,6 +7,7 @@ package jtech.shopzone.view.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpSession;
 import jtech.shopzone.controller.UserController;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.util.CustomDate;
+import jtech.shopzone.model.entity.AdminInfoEntity;
 import jtech.shopzone.model.entity.UserInfoEntity;
+import jtech.shopzone.model.entity.UserInterestsEntity;
 
 /**
  *
@@ -36,12 +39,13 @@ public class RegisterationServlet extends HttpServlet {
         response.sendRedirect("singin.html");
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         UserInfoEntity newMember = new UserInfoEntity();
+        ArrayList<UserInterestsEntity> memberInterests=new ArrayList<UserInterestsEntity>();
+        // AdminInfoEntity newAdmin=new AdminInfoEntity();
         Status registerAck;
         //---------------------response--------------------------------//
         response.setContentType("text/html");
@@ -54,7 +58,20 @@ public class RegisterationServlet extends HttpServlet {
         newMember.setJob(request.getParameter("job"));
         newMember.setAddress(request.getParameter("address"));
         newMember.setCreditLimit(Double.parseDouble(request.getParameter("creditLimit")));
-        //   newMember.setBirthdate(new CustomDate(request.getParameter("date"),dateFormat));// i need modification in database model
+        String[] checkedInterests = request.getParameterValues("interest"); 
+        if (checkedInterests.length>0){
+            for (String checkedInterest : checkedInterests) {
+                
+                memberInterests.add(new UserInterestsEntity(0,checkedInterest ));
+            }
+        }
+        newMember.setInterests(memberInterests);
+        //-------------------------------mahrous part--------------------------------------//  
+        /*
+        newMember.setBirthdate(new CustomDate(request.getParameter("date"),dateFormat));// i need modification in database model
+        */
+        //-----------------------------------------------------------------------------------
+        
         newMember.setUserImg("/signincludes/images/img-01.png");//fixed image
         //-----------------------validate email regex ------------------//
 
@@ -66,19 +83,38 @@ public class RegisterationServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("loggedIn", new String("true"));
             session.setAttribute("userEmail", newMember.getEmail());//change this with userid modif
-            session.setAttribute("userID", newMember.getUserId());
+            session.setAttribute("userId", newMember.getUserId());
             RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
             rd.forward(request, response);
 
         } else if (registerAck == Status.NOTOK) {
-            out.print(" this email is already exsist !");
-            RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
-            rd.include(request, response);
-            
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                response.sendRedirect("/signin.html");
+            } else {
+                String isAdmin = (String) session.getAttribute("isAdmin");
+                String loggedIn = (String) session.getAttribute("loggedIn");
+                if (!isAdmin.equalsIgnoreCase("true")) {//not admin
+                    if (!loggedIn.equalsIgnoreCase("true")) {
+                        response.sendRedirect("signin.html");
+
+                    } else {
+                        RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+                        rd.forward(request, response);
+                    }
+
+                } else {//admin
+                    response.sendRedirect("/adminpage.jsp");
+                }
+
+            }
+           
+
         } else if (registerAck == Status.ERROR) {
-            out.print(" Sorry Error in connection Try again later !");
-            RequestDispatcher rd = request.getRequestDispatcher("/signup.html");
-            rd.include(request, response);
+            response.sendRedirect("signup.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
+            // out.print(" Sorry Error in connection Try again later !");
+            //RequestDispatcher rd = request.getRequestDispatcher("/signup.html");
+            //rd.include(request, response);
         }
     }
 
