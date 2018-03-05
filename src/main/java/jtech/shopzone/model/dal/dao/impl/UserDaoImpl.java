@@ -231,7 +231,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = null;
         try {
             con = DbConnection.getConnection();
-            ps = con.prepareStatement("select user_id,email from userinfo where email='?'");
+            ps = con.prepareStatement("select user_id,email from userinfo where email=?");
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -401,14 +401,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Status isAdmin(String email) {
+    public Status isAdmin(String email,String password) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = DbConnection.getConnection();
-            ps = con.prepareStatement("select email from admin_info where email = ?");
+            ps = con.prepareStatement("select email , password  from admin_info where email = ? and password=? ");
             ps.setString(1, email);
+            ps.setString(2, password);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return Status.OK;

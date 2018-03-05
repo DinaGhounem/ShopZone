@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>UserProfile</title>
+        <title>User Profile</title>
         <link href="cartincludes/css/bootstrap.min.css" rel="stylesheet">
         <link href="cartincludes/css/font-awesome.min.css" rel="stylesheet">
         <link href="cartincludes/css/prettyPhoto.css" rel="stylesheet">
@@ -232,15 +232,9 @@
                                                 <td><input input type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" placeholder="1000" required="required" data-error="Credit Limit is required."></td>
                                             </tr>
                                         </table>
-
-                                        
-
-                                        <input id="input_website" class="form_input input_website input_ph" type="url" name="name" placeholder="Website" required="required" data-error="Name is required.">
-                                        <textarea id="input_message" class="input_ph input_message" name="message"  placeholder="Message" rows="3" required data-error="Please, write us a message."></textarea>
-                                    </div>
-                                    <div>
-                                        <button id="review_submit" type="submit" class="red_button message_submit_btn trans_300" value="Submit">send message</button>
-                                    </div>
+                                        <div>
+                                            <button id="button_submit" type="submit" class="red_button message_submit_btn trans_300" value="Submit">Save</button>
+                                        </div>
                                 </form>
                             </center>
                         </div>

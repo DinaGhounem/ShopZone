@@ -32,6 +32,6 @@ public interface UserDao {
 
     Status updateCreditLimit(int userId, Double value);
     
-    Status isAdmin(String email);
+    Status isAdmin(String email,String password);
 
 }
