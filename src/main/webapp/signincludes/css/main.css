@@ -137,14 +137,14 @@ iframe {
     font-family: Poppins-Regular;
     font-size: 13px;
     line-height: 1.5;
-    color: #999999;
+    color: #C6E0DC;
 }
 
 .txt2 {
     font-family: Poppins-Regular;
     font-size: 13px;
     line-height: 1.5;
-    color: #666666;
+    color: #E6E6E6;
 }
 
 
@@ -179,7 +179,7 @@ iframe {
 
 .wrap-login100 {
     width: 960px;
-    background: rgba(235, 163, 96, 0.74);
+    background: rgba(235, 163, 96, 0.877);
     /*background-image: url("../images/logincontainer.jpg");*/
     border-radius: 10px;
     overflow: hidden;
@@ -209,7 +209,7 @@ iframe {
 .login100-form {
     width: 320px;
     padding:20px;
-        background-color: #8599aa; 
+        background-color: #465765; 
         border-radius: 25px;
 
 }

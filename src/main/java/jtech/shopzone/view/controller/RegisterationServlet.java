@@ -44,8 +44,7 @@ public class RegisterationServlet extends HttpServlet {
             throws ServletException, IOException {
 
         UserInfoEntity newMember = new UserInfoEntity();
-        ArrayList<UserInterestsEntity> memberInterests=new ArrayList<UserInterestsEntity>();
-        // AdminInfoEntity newAdmin=new AdminInfoEntity();
+        ArrayList<UserInterestsEntity> memberInterests = new ArrayList<UserInterestsEntity>();
         Status registerAck;
         //---------------------response--------------------------------//
         response.setContentType("text/html");
@@ -58,20 +57,20 @@ public class RegisterationServlet extends HttpServlet {
         newMember.setJob(request.getParameter("job"));
         newMember.setAddress(request.getParameter("address"));
         newMember.setCreditLimit(Double.parseDouble(request.getParameter("creditLimit")));
-        String[] checkedInterests = request.getParameterValues("interest"); 
-        if (checkedInterests.length>0){
+        String[] checkedInterests = request.getParameterValues("interest");
+        if (checkedInterests.length > 0) {
             for (String checkedInterest : checkedInterests) {
-                
-                memberInterests.add(new UserInterestsEntity(0,checkedInterest ));
+
+                memberInterests.add(new UserInterestsEntity(0, checkedInterest));
             }
         }
         newMember.setInterests(memberInterests);
         //-------------------------------mahrous part--------------------------------------//  
         /*
         newMember.setBirthdate(new CustomDate(request.getParameter("date"),dateFormat));// i need modification in database model
-        */
+         */
         //-----------------------------------------------------------------------------------
-        
+
         newMember.setUserImg("/signincludes/images/img-01.png");//fixed image
         //-----------------------validate email regex ------------------//
 
@@ -82,8 +81,8 @@ public class RegisterationServlet extends HttpServlet {
 
             HttpSession session = request.getSession(true);
             session.setAttribute("loggedIn", new String("true"));
-            session.setAttribute("userEmail", newMember.getEmail());//change this with userid modif
-            session.setAttribute("userId", newMember.getUserId());
+            session.setAttribute("userEmail", newMember.getEmail());//
+            session.setAttribute("userId", userController.getUserId(newMember.getEmail()));
             RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
             rd.forward(request, response);
 
@@ -106,21 +105,16 @@ public class RegisterationServlet extends HttpServlet {
                 } else {//admin
                     response.sendRedirect("/adminpage.jsp");
                 }
-
             }
-           
-
         } else if (registerAck == Status.ERROR) {
             response.sendRedirect("signup.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
-            // out.print(" Sorry Error in connection Try again later !");
-            //RequestDispatcher rd = request.getRequestDispatcher("/signup.html");
-            //rd.include(request, response);
         }
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
+// out.print(" Sorry Error in connection Try again later !");
+//RequestDispatcher rd = request.getRequestDispatcher("/signup.html");
+            //rd.include(request, response);
