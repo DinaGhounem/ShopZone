@@ -22,4 +22,6 @@ public interface UserController {
     ArrayList<UserInfoEntity> getUsers();
 
     Status updateCreditLimit(int userId, Double value);
+    
+    Status isAdmin(String email,String password);
 }
