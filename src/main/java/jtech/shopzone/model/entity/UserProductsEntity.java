@@ -5,6 +5,8 @@
  */
 package jtech.shopzone.model.entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Dina PC
@@ -14,14 +16,18 @@ public class UserProductsEntity {
     private int userId;
     private int productId;
     private int quantity;
+    private Date date;
+    private double price;
 
     public UserProductsEntity() {
     }
 
-    public UserProductsEntity(int userId, int productId, int quantity) {
+    public UserProductsEntity(int userId, int productId, int quantity,Date date,double price) {
         this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
+        this.date=date;
+        this.price=price;
     }
 
     /**
@@ -64,5 +70,33 @@ public class UserProductsEntity {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * @return the date
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    /**
+     * @return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
