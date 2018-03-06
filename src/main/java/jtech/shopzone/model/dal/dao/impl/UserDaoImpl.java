@@ -97,6 +97,7 @@ public class UserDaoImpl implements UserDao {
             rs1 = ps1.executeQuery();
             if (rs1.next()) {
                 user_id = rs1.getInt(1) + 1;
+                user.setUserId(user_id);
             }
             ps = con.prepareStatement("insert into userinfo"
                     + "(user_id,first_name,Last_name,email,address,birthdate,password,job,credit_limit,user_img) "
@@ -104,7 +105,7 @@ public class UserDaoImpl implements UserDao {
             /**
              * set values to insert statement
              */
-            ps.setInt(1, user_id);
+            ps.setInt(1, user.getUserId());
             ps.setString(2, user.getFirstName());
             ps.setString(3, user.getLastName());
             ps.setString(4, user.getEmail());
@@ -129,7 +130,7 @@ public class UserDaoImpl implements UserDao {
                             + " Values(?,?)");
                     ps2.setInt(1, user.getUserId());
                     ps2.setString(2, interests.get(i).getInterestName());
-                    ps.executeUpdate();
+                    ps2.executeUpdate();
                 }
                 ps2.close();
             }
@@ -200,7 +201,7 @@ public class UserDaoImpl implements UserDao {
                             + " Values(?,?)");
                     ps2.setInt(1, user.getUserId());
                     ps2.setString(2, interests.get(i).getInterestName());
-                    ps.executeUpdate();
+                    ps2.executeUpdate();
                 }
                 ps2.close();
             }
@@ -259,14 +260,15 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement ps1 = null;
         ResultSet rs1 = null;
         UserInfoEntity user = null;
-        ArrayList<UserInterestsEntity> interests = null;
+        ArrayList<UserInterestsEntity> interests = new ArrayList<UserInterestsEntity>();
+        UserInterestsEntity entity;
         try {
             con = DbConnection.getConnection();
-            ps1 = con.prepareStatement("select user_id , interest_name from user_interests where user_id=?");
+            ps1 = con.prepareStatement("select user_id , interest_name from user_interests where user_id = ? ");
             ps1.setInt(1, userId);
             rs1 = ps1.executeQuery();
             while (rs1.next()) {
-                UserInterestsEntity entity = new UserInterestsEntity(rs.getInt(1), rs.getString(2));
+                entity = new UserInterestsEntity(userId, rs1.getString(2));
                 interests.add(entity);
             }
 
@@ -282,7 +284,7 @@ public class UserDaoImpl implements UserDao {
                 user.setLastName(rs.getString(3));
                 user.setEmail(rs.getString(4));
                 user.setAddress(rs.getString(5));
-                user.setBirthdate(rs.getDate(6));
+                user.setBirthdate(new java.util.Date(rs.getShort(6)));
                 user.setPassword(rs.getString(7));
                 user.setJob(rs.getString(8));
                 user.setCreditLimit(rs.getDouble(9));
@@ -334,10 +336,9 @@ public class UserDaoImpl implements UserDao {
                 ps1.setInt(1,rs.getInt(1));
                 rs1 = ps1.executeQuery();
                 while (rs1.next()) {
-                    UserInterestsEntity entity = new UserInterestsEntity(rs.getInt(1), rs.getString(2));
+                    UserInterestsEntity entity = new UserInterestsEntity(rs1.getInt(1), rs1.getString(2));
                     interests.add(entity);
                 }
-
                 users.add(user);
             }
         } catch (Exception e) {
@@ -427,5 +428,10 @@ public class UserDaoImpl implements UserDao {
             }
         }    
     }
-
+    public static void main(String[] args) {
+        UserDaoImpl userdao = new UserDaoImpl();        
+//        UserInfoEntity user =  userdao.getUserInfo(1);
+//        System.out.println("id is "+user.getUserId());
+//        System.out.println("email is "+user.getEmail());
+    }
 }

@@ -8,6 +8,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>jtech.shopzone.view.controller.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowProfileServlet</servlet-name>
+        <servlet-class>jtech.shopzone.view.controller.ShowProfileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterationServlet</servlet-name>
         <url-pattern>/RegisterationServlet</url-pattern>
@@ -15,5 +19,9 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowProfileServlet</servlet-name>
+        <url-pattern>/ShowProfileServlet</url-pattern>
     </servlet-mapping>
 </web-app>
