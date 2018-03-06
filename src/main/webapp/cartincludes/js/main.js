@@ -28,20 +28,20 @@ $(document).ready(function () {
 
 function incrementProductQuantity(productId) {
     var priceStr = $("#" + productId).find(".cart_price").find("p")[0].innerText;
-    priceStr = priceStr.substr(1,priceStr.length);
+    priceStr = priceStr.substr(1, priceStr.length);
     var price = parseFloat(priceStr);
     var total = $("#" + productId).find(".cart_total_price")[0];
     $.post("AddProductToCart", {productId: productId}, function () {
         var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
         value++;
         $("#" + productId).find(".cart_quantity_input")[0].value = value;
-        total.innerText = "$"+(price * value).toFixed(1);
+        total.innerText = "$" + (price * value).toFixed(1);
     });
 }
 
 function decrementProductQuantity(productId) {
     var priceStr = $("#" + productId).find(".cart_price").find("p")[0].innerText;
-    priceStr = priceStr.substr(1,priceStr.length);
+    priceStr = priceStr.substr(1, priceStr.length);
     var price = parseInt(priceStr);
     var total = $("#" + productId).find(".cart_total_price")[0];
     var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
@@ -51,7 +51,7 @@ function decrementProductQuantity(productId) {
     $.post("RemoveProductFromCart", {productId: productId}, function () {
         value--;
         $("#" + productId).find(".cart_quantity_input")[0].value = value;
-        total.innerText = "$"+(price * value).toFixed(1);
+        total.innerText = "$" + (price * value).toFixed(1);
     });
 }
 
@@ -62,17 +62,49 @@ function removeProduct(productId) {
 }
 
 function setProductQuantity(e, productId) {
-    console.log(e);
-    console.log(productId);
+
+    var priceStr = $("#" + productId).find(".cart_price").find("p")[0].innerText;
+    priceStr = priceStr.substr(1, priceStr.length);
+    var price = parseFloat(priceStr);
+    var total = $("#" + productId).find(".cart_total_price")[0];
+    var validated = validateQuantity(productId);
+    if (validated) {
+        if (event.keyCode === 13) {
+            var productQuantity = $("#" + productId).find(".cart_quantity_input")[0].value;
+            $.post("SetProductQuantityIntoCart", {productId: productId, quantity: productQuantity}, function () {
+                var value = parseInt(productQuantity);
+                $("#" + productId).find(".cart_quantity_input")[0].value = value;
+                total.innerText = "$" + (price * value).toFixed(1);
+            });
+        }
+    }
+    else {
+        var totalVal = parseFloat(total.innerText.substr(1, total.innerText.length));
+        var quantity = totalVal / price;
+        $("#" + productId).find(".cart_quantity_input")[0].value = quantity;
+
+    }
+
 }
 
-function validateQuantity(productId)
-{
+function validateQuantity(productId) {
     var validated = false;
-    var value = parseInt($("#" + productId).find(".cart_quantity_input")[0].value);
-    if(value>0)
+    var quantity = $("#" + productId).find(".cart_quantity_input")[0].value;
+    if(isNumeric(quantity))
     {
-        validated = true;
+        var value = parseInt(quantity);
+        if (value > 0 && value < 20) {
+            validated = true;
+        }
     }
+    else
+    {
+        validated = false;
+    }
+
     return validated;
+}
+
+function isNumeric(num){
+    return !isNaN(num)
 }

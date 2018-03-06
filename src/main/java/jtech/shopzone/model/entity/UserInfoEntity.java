@@ -5,7 +5,8 @@
  */
 package jtech.shopzone.model.entity;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +24,7 @@ public class UserInfoEntity {
     private String job;
     private double creditLimit;
     private String userImg;
+    private ArrayList<UserInterestsEntity> interests;
 
     public UserInfoEntity() {
     }
@@ -38,6 +40,20 @@ public class UserInfoEntity {
         this.job = job;
         this.creditLimit = creditLimit;
         this.userImg = userImg;
+    }
+
+    public UserInfoEntity(int userId, String firstName, String lastName, String email, String address, Date birthdate, String password, String job, double creditLimit, String userImg, ArrayList<UserInterestsEntity> interests) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.birthdate = birthdate;
+        this.password = password;
+        this.job = job;
+        this.creditLimit = creditLimit;
+        this.userImg = userImg;
+        this.interests = interests;
     }
 
     /**
@@ -178,5 +194,19 @@ public class UserInfoEntity {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return the interests
+     */
+    public ArrayList<UserInterestsEntity> getInterests() {
+        return interests;
+    }
+
+    /**
+     * @param interests the interests to set
+     */
+    public void setInterests(ArrayList<UserInterestsEntity> interests) {
+        this.interests = interests;
     }
 }

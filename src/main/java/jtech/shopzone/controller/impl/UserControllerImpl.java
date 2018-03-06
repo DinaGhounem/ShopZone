@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
 
 public class UserControllerImpl implements UserController {
-    private UserDao userDao;
+    private UserDao userDao ;
     private UserControllerImpl(){
-        // TODO init userdao using factory method of userdaoimpl
-        userDao=new UserDaoImpl();
+
+        userDao = new UserDaoImpl();
+
     }
 
     /**
@@ -62,5 +63,10 @@ public class UserControllerImpl implements UserController {
     @Override
     public Status updateCreditLimit(int userId, Double value) {
         return userDao.updateCreditLimit(userId,value);
+    }
+
+    @Override
+    public Status isAdmin(String email, String password) {
+        return userDao.isAdmin(email, password);
     }
 }

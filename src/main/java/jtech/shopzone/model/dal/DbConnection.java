@@ -55,7 +55,4 @@ public class DbConnection {
         resultSet.close();
     }
 
-}
-//note where close connection @sultanotes
-//note this is not a singletone class @sultanotes
-//this oracle jdbc driver will not work 
+} 
