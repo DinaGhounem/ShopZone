@@ -24,4 +24,6 @@ public interface UserController {
     Status updateCreditLimit(int userId, Double value);
     
     Status isAdmin(String email,String password);
+    
+    int getAdminId(String email);
 }

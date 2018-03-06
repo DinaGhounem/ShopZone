@@ -11,7 +11,9 @@ import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
 public class UserControllerImpl implements UserController {
     private UserDao userDao ;
     private UserControllerImpl(){
+
         userDao = new UserDaoImpl();
+
     }
 
     /**
@@ -66,5 +68,10 @@ public class UserControllerImpl implements UserController {
     @Override
     public Status isAdmin(String email, String password) {
         return userDao.isAdmin(email, password);
+    }
+
+    @Override
+    public int getAdminId(String email) {
+        return userDao.getAdminId(email);
     }
 }

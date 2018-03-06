@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,13 +27,13 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
  */
 @WebServlet(name = "ShowProductServlet", urlPatterns = {"/ShowProductServlet"})
 public class ShowProductServlet extends HttpServlet {
+
     private ProductController productController;
 
     @Override
     public void init() throws ServletException {
-       productController=ProductControllerImpl.newInstance();
+        productController = ProductControllerImpl.newInstance();
     }
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,32 +75,33 @@ public class ShowProductServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         PrintWriter out = response.getWriter();
-        String page=request.getParameter("page");
-         int categoryId=Integer.parseInt(request.getParameter("categoryId"));
-        if(page!=null){
-           
-            int pageNum=Integer.parseInt(page);
-        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        if(categoryId==0){
-        products=productController.getProductsBTWRange(pageNum);
-        }else{
-            
-            products=productController.getProductsBTWRange(pageNum,categoryId);
-        }
-        Gson gson = new Gson();
-        String jsonObject = gson.toJson(products);
-        out.print(jsonObject);
+        String page = request.getParameter("page");
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        if (page != null) {
 
-    }else{
-             int productCount=0;
-            if(categoryId==0){
-            productCount=productController.getProductCount();
-            }else{
-            productCount=productController.getProducts(categoryId).size();
+            int pageNum = Integer.parseInt(page);
+            ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+            if (categoryId == 0) {
+                products = productController.getProductsBTWRange(pageNum);
+            } else {
+
+                products = productController.getProductsBTWRange(pageNum, categoryId);
+            }
+            Gson gson = new Gson();
+            String jsonObject = gson.toJson(products);
+            out.print(jsonObject);
+
+        } else {
+            int productCount = 0;
+            if (categoryId == 0) {
+                productCount = productController.getProductCount();
+            } else {
+                productCount = productController.getProducts(categoryId).size();
             }
             out.print(productCount);
         }
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -125,3 +127,5 @@ public class ShowProductServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

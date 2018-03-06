@@ -8,6 +8,7 @@ package jtech.shopzone.view.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jtech.shopzone.controller.UserController;
+import jtech.shopzone.controller.impl.UserControllerImpl;
+import jtech.shopzone.controller.impl.UserControllerImpl;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.entity.UserInfoEntity;
 
@@ -27,6 +30,11 @@ import jtech.shopzone.model.entity.UserInfoEntity;
 public class LoginServlet extends HttpServlet {
 
     private UserController userController;
+
+    @Override
+    public void init() throws ServletException {
+        userController=UserControllerImpl.newInstance();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

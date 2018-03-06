@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jtech.shopzone.controller.UserController;
+import jtech.shopzone.controller.impl.UserControllerImpl;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.util.CustomDate;
 import jtech.shopzone.model.entity.AdminInfoEntity;
@@ -32,6 +33,11 @@ public class RegisterationServlet extends HttpServlet {
 
     private UserController userController;
     private static final String dateFormat = new String("mm/dd/yyyy");
+
+    @Override
+    public void init() throws ServletException {
+        userController = UserControllerImpl.newInstance();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -110,6 +116,7 @@ public class RegisterationServlet extends HttpServlet {
             response.sendRedirect("signup.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
         }
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";

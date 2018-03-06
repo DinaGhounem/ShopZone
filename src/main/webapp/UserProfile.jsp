@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Mohamed Mahrous
-  Date: 3/2/2018
-  Time: 5:09 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -37,7 +30,7 @@
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
     </head><!--/head-->
 
-    <body>
+    <body onload="loadData()">
         <div class="super_container">
             <!-- Header -->
 
@@ -201,11 +194,11 @@
                                         <table>
                                             <tr>
                                                 <td>First Name:</td>
-                                                <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname" placeholder="FirstName" required="required" data-error="First Name is required."></td>
+                                                <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname"  required="required" data-error="First Name is required."></td>
                                             </tr>
                                             <tr>
                                                 <td>Last Name:</td>
-                                                <td><input id="input_lastname" class="form_input input_name input_ph" type="text" name="lname" placeholder="LastName" required="required" data-error="Last Name is required."></td>
+                                                <td><input id="input_lastname" class="form_input input_name input_ph" type="text" name="lname" required="required" data-error="Last Name is required."></td>
                                             </tr>
                                             <tr>
                                                 <td>Email :</td>
@@ -213,23 +206,23 @@
                                             </tr>
                                             <tr>
                                                 <td>Password :</td>
-                                                <td><input id="input_password" class="form_input input_passwrd input_ph" type="password" name="password" placeholder="Password" required="required" data-error="Valid password is required."></td>
+                                                <td><input id="input_password" class="form_input input_passwrd input_ph" type="password" name="password" required="required" data-error="Valid password is required."></td>
                                             </tr>
                                             <tr>
                                                 <td>Address :</td>
-                                                <td><textarea id="input_address" class="input_ph input_address" name="address"  placeholder="Address" rows="2" required data-error="Please, write Your Address."></textarea></td>
+                                                <td><textarea id="input_address" class="input_ph input_address" name="address" rows="2" required data-error="Please, write Your Address."></textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>Birth Date :</td>
-                                                <td><input id="input_date" class="form_input input_date input_ph" type="date" name="bdate" placeholder="01/01/1990" required="required" data-error="datw is required."></td>
+                                                <td><input id="input_date" class="form_input input_date input_ph" type="date" name="bdate" required="required" data-error="datw is required."></td>
                                             </tr>
                                             <tr>
                                                 <td>Job :</td>
-                                                <td><input id="input_job" class="form_input input_job input_ph" type="text" name="job" placeholder="Job" required="required" data-error="Job is required."></td>
+                                                <td><input id="input_job" class="form_input input_job input_ph" type="text" name="job" required="required" data-error="Job is required."></td>
                                             </tr>
                                             <tr>
                                                 <td>Credit Limit :</td>
-                                                <td><input input type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" placeholder="1000" required="required" data-error="Credit Limit is required."></td>
+                                                <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
                                             </tr>
                                         </table>
                                         <div>
@@ -283,6 +276,7 @@
 
 
         <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/EditProfile.js"></script>
         <script src="css/bootstrap4/popper.js"></script>
         <script src="css/bootstrap4/bootstrap.min.js"></script>
         <script src="plugins/Isotope/isotope.pkgd.min.js"></script>

@@ -62,10 +62,10 @@ function getProductsCount(categoryId) {
 function ProductsCountcallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        if (response % 8 == 0) {
+        if (response % 8 == 0||response % 8>=5) {
             pageNum = Math.round(response / 8);
         } else {
-            pageNum = Math.round(response / 8) + 1;
+            pageNum = Math.round(response / 8)+1 ;
         }
         $('#pagination-here').bootpag({
             total: pageNum,
