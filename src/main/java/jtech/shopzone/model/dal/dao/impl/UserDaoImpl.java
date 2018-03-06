@@ -284,7 +284,7 @@ public class UserDaoImpl implements UserDao {
                 user.setLastName(rs.getString(3));
                 user.setEmail(rs.getString(4));
                 user.setAddress(rs.getString(5));
-                user.setBirthdate(new java.util.Date(rs.getShort(6)));
+                user.setBirthdate(rs.getDate(6));
                 user.setPassword(rs.getString(7));
                 user.setJob(rs.getString(8));
                 user.setCreditLimit(rs.getDouble(9));
@@ -310,10 +310,11 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+
         PreparedStatement ps1 = null;
         ResultSet rs1 = null;
         ArrayList<UserInterestsEntity> interests = null;
-        ArrayList<UserInfoEntity> users = null;
+        ArrayList<UserInfoEntity> users = new ArrayList<>();;
         try {
             con = DbConnection.getConnection();
             ps = con.prepareStatement("select user_id,first_name,last_name,email,address,"
@@ -400,6 +401,7 @@ public class UserDaoImpl implements UserDao {
             }
         }
     }
+
 
     @Override
     public Status isAdmin(String email, String password) {

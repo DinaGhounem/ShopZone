@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,34 +5,31 @@
  */
 package jtech.shopzone.view.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jtech.shopzone.controller.CartController;
-import jtech.shopzone.controller.ProductController;
-import jtech.shopzone.controller.impl.CartControllerImpl;
-import jtech.shopzone.controller.impl.ProductControllerImpl;
-import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.controller.UserController;
+import jtech.shopzone.controller.impl.UserControllerImpl;
+import jtech.shopzone.model.entity.UserInfoEntity;
 
 /**
  *
  * @author Hanaa
  */
-@WebServlet(name = "AddProductToCart", urlPatterns = {"/AddProductToCart"})
-public class AddProductToCart extends HttpServlet {
+@WebServlet(name = "ShowUserToAdmin", urlPatterns = {"/ShowUserToAdmin"})
+public class ShowUserToAdmin extends HttpServlet {
 
-    private CartController cartController;
-    private ProductController productController;
+    private UserController userController;
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        cartController = CartControllerImpl.newInstance();
-        productController = ProductControllerImpl.newInstance();
+        userController = UserControllerImpl.newInstance();
     }
 
     /**
@@ -53,10 +49,10 @@ public class AddProductToCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProductToCart</title>");
+            out.println("<title>Servlet ShowUserToAdmin</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddProductToCart at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShowUserToAdmin at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,7 +70,20 @@ public class AddProductToCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        String userIdParam=request.getParameter("userId");
+        if(userIdParam==null){
+        ArrayList<UserInfoEntity> users=userController.getUsers();
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(users);
+        out.print(jsonObject);
+        }else{
+            int userId=Integer.parseInt(userIdParam);
+            UserInfoEntity user=userController.getUserInfo(userId);
+            Gson gson = new Gson();
+            String jsonObject = gson.toJson(user);
+            out.print(jsonObject);
+        }
     }
 
     /**
@@ -88,21 +97,7 @@ public class AddProductToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
-        PrintWriter out = response.getWriter();
-
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int totalQuantities = productController.checkProductQuantities(productId);
-        if (totalQuantities > 0) {
-            int userId = 1;//TODO get id from login session
-            if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
-                cartController.addProduct(userId, productId);
-            } else {
-                int quantity = cartController.getQuantity(userId, productId) + 1;
-                cartController.updateProductQuantities(userId, productId, quantity);
-            }
-            productController.updateProductQuantities(productId, totalQuantities - 1);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -116,4 +111,3 @@ public class AddProductToCart extends HttpServlet {
     }// </editor-fold>
 
 }
-

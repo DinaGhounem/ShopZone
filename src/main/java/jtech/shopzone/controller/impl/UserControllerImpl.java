@@ -11,7 +11,9 @@ import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
 public class UserControllerImpl implements UserController {
     private UserDao userDao ;
     private UserControllerImpl(){
+
         userDao = new UserDaoImpl();
+
     }
 
     /**
