@@ -6,11 +6,13 @@ import jtech.shopzone.model.dal.dao.UserDao;
 import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
+import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
 
 public class UserControllerImpl implements UserController {
     private UserDao userDao;
     private UserControllerImpl(){
         // TODO init userdao using factory method of userdaoimpl
+        userDao=new UserDaoImpl();
     }
 
     /**

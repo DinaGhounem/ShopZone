@@ -253,7 +253,7 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<UserInfoEntity> users = null;
+        ArrayList<UserInfoEntity> users = new ArrayList<>();
         try {
             con = DbConnection.getConnection();
             ps = con.prepareStatement("select user_id,first_name,last_name,email,address,"
@@ -333,5 +333,4 @@ public class UserDaoImpl implements UserDao {
             }
         }
     }
-
 }

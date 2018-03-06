@@ -32,7 +32,7 @@ public class AddProductToCart extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         cartController = CartControllerImpl.newInstance();
-        productController=ProductControllerImpl.newInstance();
+        productController = ProductControllerImpl.newInstance();
     }
 
     /**
@@ -89,18 +89,18 @@ public class AddProductToCart extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
         PrintWriter out = response.getWriter();
-     
+
         int productId = Integer.parseInt(request.getParameter("productId"));
-        int totalQuantities=productController.checkProductQuantities(productId);
-        if(totalQuantities>0){
-        int userId = 1;//TODO get id from login session
-        if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
-            cartController.addProduct(userId, productId);
-        } else {
-            int quantity = cartController.getQuantity(userId, productId) + 1;
-            cartController.updateProductQuantities(userId, productId, quantity);
-        }
-            productController.updateProductQuantities(productId, totalQuantities-1);
+        int totalQuantities = productController.checkProductQuantities(productId);
+        if (totalQuantities > 0) {
+            int userId = 1;//TODO get id from login session
+            if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
+                cartController.addProduct(userId, productId);
+            } else {
+                int quantity = cartController.getQuantity(userId, productId) + 1;
+                cartController.updateProductQuantities(userId, productId, quantity);
+            }
+            productController.updateProductQuantities(productId, totalQuantities - 1);
         }
     }
 
