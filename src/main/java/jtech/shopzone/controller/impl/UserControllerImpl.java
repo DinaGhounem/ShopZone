@@ -67,4 +67,9 @@ public class UserControllerImpl implements UserController {
     public Status isAdmin(String email, String password) {
         return userDao.isAdmin(email, password);
     }
+
+    @Override
+    public int getAdminId(String email) {
+        return userDao.getAdminId(email);
+    }
 }

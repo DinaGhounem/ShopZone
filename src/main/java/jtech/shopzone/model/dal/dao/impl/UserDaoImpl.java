@@ -333,7 +333,7 @@ public class UserDaoImpl implements UserDao {
                 user.setCreditLimit(rs.getDouble(9));
                 user.setUserImg(rs.getString(10));
                 ps1 = con.prepareStatement("select user_id , interest_name from user_interests where user_id=?");
-                ps1.setInt(1,rs.getInt(1));
+                ps1.setInt(1, rs.getInt(1));
                 rs1 = ps1.executeQuery();
                 while (rs1.next()) {
                     UserInterestsEntity entity = new UserInterestsEntity(rs1.getInt(1), rs1.getString(2));
@@ -402,7 +402,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Status isAdmin(String email,String password) {
+    public Status isAdmin(String email, String password) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -426,10 +426,39 @@ public class UserDaoImpl implements UserDao {
             } catch (SQLException ex) {
                 Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }    
+        }
     }
+
+    @Override
+    public int getAdminId(String email) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DbConnection.getConnection();
+            ps = con.prepareStatement("select admin_id,email from admin_info where email=? ");
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            try {
+                DbConnection.closeStatementAndResultSet(ps, rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        UserDaoImpl userdao = new UserDaoImpl();        
+        UserDaoImpl userdao = new UserDaoImpl();
+//        System.out.println(userdao.getAdminId("mm@yahoo.com"));
 //        UserInfoEntity user =  userdao.getUserInfo(1);
 //        System.out.println("id is "+user.getUserId());
 //        System.out.println("email is "+user.getEmail());
