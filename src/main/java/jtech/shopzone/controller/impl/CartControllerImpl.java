@@ -8,7 +8,9 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
 import jtech.shopzone.model.dal.dao.impl.CartDaoImpl;
-
+/**
+ * @author Mahrous
+ */
 public class CartControllerImpl implements CartController {
 
     private CartDao cartDao;

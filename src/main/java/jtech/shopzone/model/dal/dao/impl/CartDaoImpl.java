@@ -9,7 +9,9 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * @author Mahrous
+ */
 public class CartDaoImpl implements CartDao {
     @Override
     public Status addProduct(int userId, int productId) {
@@ -165,6 +167,7 @@ public class CartDaoImpl implements CartDao {
     }
 
     public static void main(String[] args) {
+        // TODO : Remove main
         CartDaoImpl cartDao = new CartDaoImpl();
         //System.out.println(cartDao.deleteProduct(10, 15));
         //System.out.println(cartDao.addProduct(1, 1));
@@ -172,4 +175,3 @@ public class CartDaoImpl implements CartDao {
         //System.out.println(cartDao.getQuantity(1, 5));
     }
 }
-//dont forget to remove main 

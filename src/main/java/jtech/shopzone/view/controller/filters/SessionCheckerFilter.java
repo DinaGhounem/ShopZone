@@ -3,7 +3,9 @@ package jtech.shopzone.view.controller.filters;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
-
+/**
+ * @author Mahrous
+ */
 @WebFilter(filterName = "SessionCheckerFilter")
 public class SessionCheckerFilter implements Filter {
     public void destroy() {
