@@ -8,42 +8,34 @@
 <%@page import="jtech.shopzone.view.controller.ShowUserToAdmin" %>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Cart | ShopZone</title>
-        <link href="cartincludes/css/bootstrap.min.css" rel="stylesheet">
-        <link href="cartincludes/css/font-awesome.min.css" rel="stylesheet">
-        <link href="cartincludes/css/prettyPhoto.css" rel="stylesheet">
-        <link href="cartincludes/css/price-range.css" rel="stylesheet">
-        <link href="cartincludes/css/animate.css" rel="stylesheet">
-        <link href="cartincludes/css/main.css" rel="stylesheet">
-        <link href="cartincludes/css/responsive.css" rel="stylesheet">
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-        <link rel="shortcut icon" href="cartincludes/images/ico/favicon.ico">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144"
-              href="cartincludes/images/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114"
-              href="cartincludes/images/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72"
-              href="cartincludes/images/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="cartincludes/images/ico/apple-touch-icon-57-precomposed.png">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-        <link rel="stylesheet" type="text/css" href="css/main_styles.css">
-        <link rel="stylesheet" type="text/css" href="css/responsive.css">
+  <head>
+    <title>Colo Shop</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.default.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.default.mobile.min.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <link rel="stylesheet" href="css/pagination_styles.css">
+
+    <link rel="stylesheet" type="text/css" href="cartincludes/css/main.css">
+
         <style>
             #user_profile{
                 position: relative;
                 float: right;
 
-                top:-230px;
+                top:-150px;
 
 
             }
@@ -286,18 +278,17 @@
 
 
                     <script src="js/jquery-3.2.1.min.js"></script>
-                    <script src="css/bootstrap4/popper.js"></script>
-                    <script src="css/bootstrap4/bootstrap.min.js"></script>
-                    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-                    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-                    <script src="plugins/easing/easing.js"></script>
-                    <script src="js/custom.js"></script>
-                    <script src="js/show_users.js"></script>
-                    <script src="cartincludes/js/jquery.js"></script>
-                    <script src="cartincludes/js/bootstrap.min.js"></script>
-                    <script src="cartincludes/js/jquery.scrollUp.min.js"></script>
-                    <script src="cartincludes/js/jquery.prettyPhoto.js"></script>
-                    <script src="cartincludes/js/main.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <script src="css/bootstrap4/popper.js"></script>
+    <script src="css/bootstrap4/bootstrap.min.js"></script>
+    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script type="text/javascript" src="js/bootpag.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/show_users.js"></script>
+    <script src="cartincludes/js/main.js"></script>
 
                     </body>
                     </html>
