@@ -8,6 +8,8 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
 import jtech.shopzone.model.dal.dao.impl.CartDaoImpl;
+import jtech.shopzone.model.entity.StockStatus;
+
 /**
  * @author Mahrous
  */
@@ -61,5 +63,10 @@ public class CartControllerImpl implements CartController {
     @Override
     public int getQuantity(int userId, int productId) {
         return cartDao.getQuantity(userId,productId);
+    }
+
+    @Override
+    public StockStatus getStockStatus(int productId, int quantity) {
+        return cartDao.getStockStatus(productId,quantity);
     }
 }

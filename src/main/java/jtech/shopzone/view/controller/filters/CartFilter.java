@@ -8,9 +8,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-/**
- * @author Mahrous
- */
+
 @WebFilter(filterName = "CartFilter", urlPatterns = "/cart.jsp")
 public class CartFilter implements Filter {
     public void destroy() {

@@ -6,6 +6,7 @@ import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
+import jtech.shopzone.model.entity.StockStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,8 +55,20 @@ public class CartDaoImpl implements CartDao {
                 ProductDao productDao = new ProductDaoImpl();
                 ProductsInfoEntity product = productDao.getProductInfo(productID);
 
+                // set stock status
+                StockStatus stockStatus = null;
+                if(product.getQuantity() >= productQuantity)
+                {
+                    stockStatus = StockStatus.IN_STOCK;
+                }
+                else
+                {
+                    stockStatus = StockStatus.OUT_OF_STOCK;
+                }
+
+
                 // add the product to products with quantity list
-                CartEntity cartEntity = new CartEntity(productQuantity, product);
+                CartEntity cartEntity = new CartEntity(productQuantity, product, stockStatus);
                 productsWithQuantity.add(cartEntity);
             }
         } catch (SQLException e) {
@@ -148,6 +161,26 @@ public class CartDaoImpl implements CartDao {
         }
 
         return quantity;
+    }
+
+    @Override
+    public StockStatus getStockStatus(int productId, int quantity) {
+        StockStatus stockStatus = null;
+        // get product using product dao
+        ProductDao productDao = new ProductDaoImpl();
+        ProductsInfoEntity productsInfoEntity = productDao.getProductInfo(productId);
+
+        if(productsInfoEntity.getQuantity() >= quantity)
+        {
+            stockStatus = StockStatus.IN_STOCK;
+        }
+        else
+        {
+            stockStatus = StockStatus.OUT_OF_STOCK;
+        }
+
+        return stockStatus;
+
     }
 
     private Status execUpdate(String query) {
