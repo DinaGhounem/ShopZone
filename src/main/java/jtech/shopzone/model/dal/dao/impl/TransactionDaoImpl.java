@@ -72,28 +72,25 @@ public class TransactionDaoImpl implements TransactionsDao {
                 // Check if user has enough money
                 double creditLimit = userInfoEntity.getCreditLimit();
                 double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
-                if(creditLimit < totalPrice)
-                {
+                if (creditLimit < totalPrice) {
                     transactionReport.setComment("Not enough credit");
                     transactionReport.setStatus(Status.NOTOK);
                     continue;
-                }
-                else
-                {
+                } else {
                     // All set to execute the transaction
 
                     // Cut price from user's credit limit
-                    userDao.updateCreditLimit(userId,totalPrice);
+                    userDao.updateCreditLimit(userId, totalPrice);
 
                     // Cut product quantity from stock
                     int newQuantity = cartEntity.getProductsInfoEntity().getQuantity() - cartEntity.getQuantity();
-                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(),newQuantity);
+                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(), newQuantity);
 
                     // remove entry from cart
                     cartDao.deleteProduct(userId, cartEntity.getProductsInfoEntity().getProductId());
 
                     // Add to history
-                    addToHistory(userId,cartEntity);
+                    addToHistory(userId, cartEntity);
 
                     // Write report status
                     transactionReport.setStatus(Status.OK);
@@ -119,13 +116,13 @@ public class TransactionDaoImpl implements TransactionsDao {
 
         String query = "INSERT INTO USER_PRODUCTS VALUES(?,?,?,?,?)";
 
-        try (PreparedStatement statement = DbConnection.getPreparedStatement(query)){
+        try (PreparedStatement statement = DbConnection.getPreparedStatement(query)) {
 
-            statement.setInt(1,userId);
-            statement.setInt(2,productsInfoEntity.getProductId());
-            statement.setInt(3,quantity);
-            statement.setDate(4,sqlDateNow);
-            statement.setDouble(5,totalPrice);
+            statement.setInt(1, userId);
+            statement.setInt(2, productsInfoEntity.getProductId());
+            statement.setInt(3, quantity);
+            statement.setDate(4, sqlDateNow);
+            statement.setDouble(5, totalPrice);
 
             int rowCount = statement.executeUpdate();
             if (rowCount > 0) {

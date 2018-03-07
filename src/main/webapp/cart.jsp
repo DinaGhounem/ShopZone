@@ -257,7 +257,7 @@
                     <ul>
                         <li class="totalRow final"><span class="label">Total</span><span class="value">$44.00</span>
                         </li>
-                        <li class="totalRow"><a href="#" class="btn continue">Checkout</a></li>
+                        <li class="totalRow"><a href="#" class="btn continue" onclick="checkOut(${cartEntity.productsInfoEntity.productId})">Checkout</a></li>
                     </ul>
                 </div>
             </div>
