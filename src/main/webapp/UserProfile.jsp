@@ -28,6 +28,7 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
     </head><!--/head-->
 
     <body onload="loadData()">
@@ -210,11 +211,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Address :</td>
-                                                <td><textarea id="input_address" class="input_ph input_address" name="address" rows="2" required data-error="Please, write Your Address."></textarea></td>
+                                                <td><input type="text" id="input_address" class="form_input input_name input_ph" name="address" required data-error="Please, write Your Address."></td>
                                             </tr>
                                             <tr>
                                                 <td>Birth Date :</td>
-                                                <td><input id="input_date" class="form_input input_date input_ph" type="date" name="bdate" required="required" data-error="datw is required."></td>
+                                                <td><input id="input_date" class="form_input input_date input_ph" type="text" name="bdate" disabled="true"></td>
                                             </tr>
                                             <tr>
                                                 <td>Job :</td>
@@ -234,6 +235,7 @@
                     </div>
                 </section>
             </div>
+                    <br><br>
             <!-- Footer -->
 
             <footer class="footer">
