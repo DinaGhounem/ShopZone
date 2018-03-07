@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Mahrous
+ */
 public class FileUploadAdapter {
     private List<FileItem> parameters;
     private List<FileItem> files;

@@ -7,7 +7,10 @@ package jtech.shopzone.view.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -72,9 +75,21 @@ public class RegisterationServlet extends HttpServlet {
         }
         newMember.setInterests(memberInterests);
         //-------------------------------mahrous part--------------------------------------//  
-        /*
-        newMember.setBirthdate(new CustomDate(request.getParameter("date"),dateFormat));// i need modification in database model
-         */
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String date = request.getParameter("date");
+            Date parsed = format.parse(date);
+            newMember.setBirthdate(parsed);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+            response.sendRedirect("/signin.html");
+        }
+
+
+
         //-----------------------------------------------------------------------------------
 
         newMember.setUserImg("/signincludes/images/img-01.png");//fixed image
