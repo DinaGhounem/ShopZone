@@ -82,3 +82,38 @@ function updateTotal() {
 
 }
 
+function checkOut(userId) {
+    $.post("CheckOut", {userId: userId}, function (data) {
+        console.log(data);
+    });
+}
+
+[{
+    "cartEntity": {
+        "quantity": 2,
+        "productsInfoEntity": {
+            "productId": 15,
+            "productName": "Car",
+            "price": 200.0,
+            "quantity": 16,
+            "description": "just a car",
+            "categoryId": 3,
+            "img": "img\\product_1.png"
+        },
+        "stockStatus": "IN_STOCK"
+    }, "status": "OK", "comment": ""
+}, {
+    "cartEntity": {
+        "quantity": 3,
+        "productsInfoEntity": {
+            "productId": 10,
+            "productName": "Another car",
+            "price": 100.0,
+            "quantity": 27,
+            "description": "this is another car",
+            "categoryId": 3,
+            "img": "img\\product_1.png"
+        },
+        "stockStatus": "IN_STOCK"
+    }, "status": "OK", "comment": ""
+}]
