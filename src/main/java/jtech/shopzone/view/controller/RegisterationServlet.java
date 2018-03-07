@@ -67,7 +67,7 @@ public class RegisterationServlet extends HttpServlet {
         newMember.setAddress(request.getParameter("address"));
         newMember.setCreditLimit(Double.parseDouble(request.getParameter("creditLimit")));
         String[] checkedInterests = request.getParameterValues("interest");
-        if (checkedInterests.length > 0) {
+        if ( checkedInterests!=null &&checkedInterests.length > 0) {
             for (String checkedInterest : checkedInterests) {
 
                 memberInterests.add(new UserInterestsEntity(0, checkedInterest));
@@ -75,60 +75,61 @@ public class RegisterationServlet extends HttpServlet {
         }
         newMember.setInterests(memberInterests);
         //-------------------------------mahrous part--------------------------------------//  
-        try
-        {
+
+        try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String date = request.getParameter("date");
             Date parsed = format.parse(date);
             newMember.setBirthdate(parsed);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace();
             response.sendRedirect("/signin.html");
         }
 
-
-
         //-----------------------------------------------------------------------------------
-
-        newMember.setUserImg("/signincludes/images/img-01.png");//fixed image
+        newMember.setUserImg("/signincludes/images/user.png");//fixed image
         //-----------------------validate email regex ------------------//
 
         //-----------------------register user in db--------------------//
-        registerAck = userController.register(newMember);
-        //-----------------------create httpsession--------------------//
-        if (registerAck == Status.OK) {
+        Status checkEmail = userController.checkEmail(newMember.getEmail());
+        if (checkEmail == Status.OK) {
+            registerAck = userController.register(newMember);
+            //-----------------------create httpsession--------------------//
+            if (registerAck == Status.OK) {
 
-            HttpSession session = request.getSession(true);
-            session.setAttribute("loggedIn", new String("true"));
-            session.setAttribute("userEmail", newMember.getEmail());//
-            session.setAttribute("userId", userController.getUserId(newMember.getEmail()));
-            RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-            rd.forward(request, response);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("loggedIn", new String("true"));
+                session.setAttribute("userEmail", newMember.getEmail());//
+                session.setAttribute("userId", userController.getUserId(newMember.getEmail()));
+                RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+                rd.forward(request, response);
 
-        } else if (registerAck == Status.NOTOK) {
-            HttpSession session = request.getSession(false);
-            if (session == null) {
-                response.sendRedirect("/signin.html");
-            } else {
-                String isAdmin = (String) session.getAttribute("isAdmin");
-                String loggedIn = (String) session.getAttribute("loggedIn");
-                if (!isAdmin.equalsIgnoreCase("true")) {//not admin
-                    if (!loggedIn.equalsIgnoreCase("true")) {
-                        response.sendRedirect("signin.html");
+            } else if (registerAck == Status.NOTOK) {
+                HttpSession session = request.getSession(false);
+                if (session == null) {
+                    response.sendRedirect("/signin.html");
+                } else {
+                    String isAdmin = (String) session.getAttribute("isAdmin");
+                    String loggedIn = (String) session.getAttribute("loggedIn");
+                    if (!isAdmin.equalsIgnoreCase("true")) {//not admin
+                        if (!loggedIn.equalsIgnoreCase("true")) {
+                            response.sendRedirect("signin.html");
 
-                    } else {
-                        RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-                        rd.forward(request, response);
+                        } else {
+                            RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+                            rd.forward(request, response);
+                        }
+
+                    } else {//admin
+                        response.sendRedirect("/adminpage.jsp");
                     }
-
-                } else {//admin
-                    response.sendRedirect("/adminpage.jsp");
                 }
+            } else if (registerAck == Status.ERROR) {
+                response.sendRedirect("signup.html?Status=error&errormessage=Sorry-Error-in-connection-Try-again-later");
             }
-        } else if (registerAck == Status.ERROR) {
-            response.sendRedirect("signup.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
+        } else {
+            response.sendRedirect("signup.html?Status=error&errormessage=Sorry-notvalid-email");
+
         }
     }
 
