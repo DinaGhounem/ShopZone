@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("loggedIn", new String("true"));
             session.setAttribute("isAdmin", new String("true"));
             session.setAttribute("adminEmail", request.getParameter("email"));//or give me in return user id to put it on the session
-            //session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
+            //session.setAttribute("adminId", userController.get(request.getParameter("email")));
             RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
             rd.forward(request, response);
 
