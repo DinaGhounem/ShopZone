@@ -1,9 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Mohamed Mahrou
-  Date: 3/7/2018
-  Time: 11:34 AM
-  To change this template use File | Settings | File Templates.
+  User: Mohamed Mahrous
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -190,14 +189,74 @@
     <!-- New Arrivals -->
 
     <div class="new_arrivals">
-        <div class="container" style="margin-top: 150px">
-            <c:forEach items="${requestScope.transactions}" var="transaction" varStatus="loop">
+        <div class="container" style="margin-top: 200px">
+                <div class="heading cf">
+                    <h1>Checkout Report</h1>
 
-                ${transaction}
-                <br/>
+                </div>
+            <table class="table table-striped table-hover">
+                <thead class="thead-inverse">
+                <th>
+                    Product ID
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Total price
+                </th>
+                <th>
+                    Success
+                </th>
+                <th>
+                    Comment
+                </th>
+                </thead>
+                <tbody>
 
-            </c:forEach>
+                <c:forEach items="${sessionScope.transactions}" var="transaction" varStatus="loop">
+                    <tr>
+                        <td>
+                            <p>#QUE-${transaction.cartEntity.productsInfoEntity.productId}</p>
+                        </td>
+                        <td>
+                                <%--<img src="${transaction.cartEntity.productsInfoEntity.img}" style="height: 150px;width: 150px"--%>
+                                <%--alt="${transaction.cartEntity.productsInfoEntity.productName}" class="itemImg"/>--%>
+                            <h3>${transaction.cartEntity.productsInfoEntity.productName}</h3>
+                        </td>
+                        <td>
+                                ${transaction.cartEntity.quantity}
+                        </td>
+                        <td>
+                            <p class="cart_total_price">
+                                $${transaction.cartEntity.quantity * transaction.cartEntity.productsInfoEntity.price}
+                            </p>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${transaction.status eq 'OK'}">
+                                    <i class="fa fa-check-circle" style="color: #0c9083; font-size:20pt"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fa fa-times-circle" style="color: #ff1235; font-size:20pt"></i>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                                ${transaction.comment}
+                        </td>
+                    </tr>
+                </c:forEach>
 
+                </tbody>
+            </table>
+
+            <div class="heading cf">
+                <a href="home.jsp" class="continue">Continue Shopping</a>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -240,22 +299,18 @@
 
 
     </div>
-
-
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/kendo.all.min.js"></script>
-    <script src="css/bootstrap4/popper.js"></script>
-    <script src="css/bootstrap4/bootstrap.min.js"></script>
-    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-    <script src="plugins/easing/easing.js"></script>
-    <script type="text/javascript" src="js/bootpag.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/show_product.js"></script>
-    <script src="cartincludes/js/main.js"></script>
-
-
+</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/kendo.all.min.js"></script>
+<script src="css/bootstrap4/popper.js"></script>
+<script src="css/bootstrap4/bootstrap.min.js"></script>
+<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script type="text/javascript" src="js/bootpag.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/show_product.js"></script>
 </body>
 
 </html>

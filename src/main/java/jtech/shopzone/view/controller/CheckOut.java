@@ -28,17 +28,16 @@ public class CheckOut extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: get user id from session
-        int userId = 1;
-        ArrayList<TransactionReport>  transactionReports = transactionsController.checkOut(userId);
-        Gson gson = new Gson();
-        String transactionReportsJSON = gson.toJson(transactionReports);
-        request.getSession().setAttribute("transactions",transactionReportsJSON);
-        response.sendRedirect("/checkout.jsp");
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        // TODO: get user id from session
+        int userId = 1;
+        ArrayList<TransactionReport>  transactionReports = transactionsController.checkOut(userId);
+       // Gson gson = new Gson();
+//        String transactionReportsJSON = gson.toJson(transactionReports);
+        request.getSession().setAttribute("transactions",transactionReports);
+        response.sendRedirect("/checkout.jsp");
     }
 }
