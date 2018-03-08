@@ -201,8 +201,6 @@
                                 <h1>You don't have any items in your cart... </h1>
                         </c:if>
                         <c:forEach items="${requestScope.cartEntities}" var="cartEntity" varStatus="loop">
-
-                            <%--TODO: if size zero print NO ELEMENTS TEXT--%>
                             <c:choose>
                                 <c:when test="${loop.index%2==0}">
                                     <li class="items even" id="${cartEntity.productsInfoEntity.productId}">
