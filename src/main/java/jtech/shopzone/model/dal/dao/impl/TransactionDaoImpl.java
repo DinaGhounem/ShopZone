@@ -33,6 +33,7 @@ public class TransactionDaoImpl implements TransactionsDao {
                 userProductsEntity.setQuantity(resultSet.getInt("QUANTITY"));
                 userProductsEntity.setDate(resultSet.getDate("ORDER_DATE"));
                 userProductsEntity.setPrice(resultSet.getInt("PRICE"));
+                userProductsEntity.setProductName(resultSet.getString("PRODUCT_NAME"));
                 transactionsList.add(userProductsEntity);
 
             }
