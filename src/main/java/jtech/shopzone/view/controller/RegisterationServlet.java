@@ -45,7 +45,7 @@ public class RegisterationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("singin.html");
+        response.sendRedirect("signin.html");
     }
 
     @Override
@@ -78,9 +78,13 @@ public class RegisterationServlet extends HttpServlet {
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String date = request.getParameter("date");
-            Date parsed = format.parse(date);
+            String birthdate = request.getParameter("birthDate");
+            String bd=request.getParameter("birthDate");
+            
+            if(birthdate!=null){
+            Date parsed = format.parse(birthdate);
             newMember.setBirthdate(parsed);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             response.sendRedirect("/signin.html");
@@ -96,7 +100,6 @@ public class RegisterationServlet extends HttpServlet {
             registerAck = userController.register(newMember);
             //-----------------------create httpsession--------------------//
             if (registerAck == Status.OK) {
-
                 HttpSession session = request.getSession(true);
                 session.setAttribute("loggedIn", new String("true"));
                 session.setAttribute("userEmail", newMember.getEmail());//
