@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
             } else if (loginAck == Status.NOTOK) {
-                response.sendRedirect("signin.html?Status=notok&errormessage=this-email-does-not-exist");
+                response.sendRedirect("signin.html?Status=notok&errormessage=Wrong email or password");
             } else if (loginAck == Status.ERROR) {
 
                 response.sendRedirect("signin.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");

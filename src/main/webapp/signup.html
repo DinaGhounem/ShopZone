@@ -29,14 +29,16 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="signincludes/images/user.png" alt="IMG">
                         <span style="font-size: 50;">
-                                <i class="fa fa-camera" aria-hidden="true"></i>
-                            </span>
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                        </span>
                     </div>
 
                     <form class="login100-form validate-form" name="signupform" action="RegisterationServlet" method="POST">
                         <span class="login100-form-title">
                             Member Sign Up
                         </span>
+                        <label id ="errorlable" class="txt2" style="color: red" > </label>   
+
                         <div class="wrap-input100 validate-input" data-validate = "firstname is required">
                             <input class="input100" type="text" name="firstName" placeholder="first name">
                             <span class="focus-input100"></span>
@@ -93,6 +95,7 @@
                                    " aria-hidden="true"></i>
                             </span>
                         </div>
+
                         <div class="wrap-input100 validate-input" data-validate = "address is required">
                             <input class="input100" type="text" name="address" placeholder="address">
                             <span class="focus-input100"></span>

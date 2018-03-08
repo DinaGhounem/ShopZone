@@ -78,9 +78,7 @@ public class RegisterationServlet extends HttpServlet {
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String birthdate = request.getParameter("birthDate");
-            String bd=request.getParameter("birthDate");
-            
+            String birthdate = request.getParameter("birthDate");            
             if(birthdate!=null){
             Date parsed = format.parse(birthdate);
             newMember.setBirthdate(parsed);
@@ -131,7 +129,7 @@ public class RegisterationServlet extends HttpServlet {
                 response.sendRedirect("signup.html?Status=error&errormessage=Sorry-Error-in-connection-Try-again-later");
             }
         } else {
-            response.sendRedirect("signup.html?Status=error&errormessage=Sorry-notvalid-email");
+            response.sendRedirect("signup.html?Status=error&errormessage=Wrong email or password");
 
         }
     }
