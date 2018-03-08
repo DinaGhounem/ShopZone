@@ -67,7 +67,7 @@ public class RegisterationServlet extends HttpServlet {
         newMember.setAddress(request.getParameter("address"));
         newMember.setCreditLimit(Double.parseDouble(request.getParameter("creditLimit")));
         String[] checkedInterests = request.getParameterValues("interest");
-        if ( checkedInterests!=null &&checkedInterests.length > 0) {
+        if (checkedInterests != null && checkedInterests.length > 0) {
             for (String checkedInterest : checkedInterests) {
 
                 memberInterests.add(new UserInterestsEntity(0, checkedInterest));
@@ -78,10 +78,10 @@ public class RegisterationServlet extends HttpServlet {
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String birthdate = request.getParameter("birthDate");            
-            if(birthdate!=null){
-            Date parsed = format.parse(birthdate);
-            newMember.setBirthdate(parsed);
+            String birthdate = request.getParameter("birthDate");
+            if (birthdate != null) {
+                Date parsed = format.parse(birthdate);
+                newMember.setBirthdate(parsed);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -114,7 +114,7 @@ public class RegisterationServlet extends HttpServlet {
                     String loggedIn = (String) session.getAttribute("loggedIn");
                     if (!isAdmin.equalsIgnoreCase("true")) {//not admin
                         if (!loggedIn.equalsIgnoreCase("true")) {
-                            response.sendRedirect("signin.html");
+                            response.sendRedirect("/signin.html");
 
                         } else {
                             RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
@@ -122,14 +122,17 @@ public class RegisterationServlet extends HttpServlet {
                         }
 
                     } else {//admin
-                        response.sendRedirect("/adminpage.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
+                        rd.forward(request, response);
                     }
                 }
             } else if (registerAck == Status.ERROR) {
-                response.sendRedirect("signup.html?Status=error&errormessage=Sorry-Error-in-connection-Try-again-later");
+                RequestDispatcher rd = request.getRequestDispatcher("/signup.html?Status=error&errormessage=Sorry-Error-in-connection-Try-again-later");
+                rd.forward(request, response);
             }
         } else {
-            response.sendRedirect("signup.html?Status=error&errormessage=Wrong email or password");
+           RequestDispatcher rd = request.getRequestDispatcher ("/signup.html?Status=error&errormessage=this email already exist");
+                rd.forward(request, response);
 
         }
     }
