@@ -199,12 +199,4 @@ public class CartDaoImpl implements CartDao {
         return status;
     }
 
-    public static void main(String[] args) {
-        // TODO : Remove main
-        CartDaoImpl cartDao = new CartDaoImpl();
-        //System.out.println(cartDao.deleteProduct(10, 15));
-        //System.out.println(cartDao.addProduct(1, 1));
-        //System.out.println(cartDao.userItemCount(10));
-        //System.out.println(cartDao.getQuantity(1, 5));
-    }
 }
