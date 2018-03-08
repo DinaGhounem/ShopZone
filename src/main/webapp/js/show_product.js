@@ -30,9 +30,9 @@ function callback(response, statusTxt, xhr)
                 content += "<div class=\"product_info\">" +
                         "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
                         "<div class=\"product_price\">$" + object[i].price ;
-                if(flag!=null){
+               /* if(flag!=null){
                     content+= "<span>$590.00</span>" ;
-                }
+                }*/
                   content+= "</div></div>" +
                         "</div>" +
                         "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct(" + object[i].productId + ")\">add to cart</div>" +
