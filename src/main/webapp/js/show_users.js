@@ -39,8 +39,7 @@ function showUserProfileCallBack(response, statusTxt, xhr)
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +
                         "<img src=\"img/" + object.userImg + "\" alt=\"\">" +
-                        "</div>" +
-                        "<div class=\"favorite favorite_left\" onclick=\"clearFun()\"></div>";
+                        "</div>" ;
                
                 content += "<div class=\"product_info\">" +
                         "<h6 class=\"product_price\">" + object.firstName + " "+object.lastName+"<br/>(" + object.email + ")</h6>" +
@@ -58,7 +57,6 @@ function showUserProfileCallBack(response, statusTxt, xhr)
                     }
                         content+="</div>" +
                         "</div>" +
-                        "<div class=\"red_button add_to_cart_button\" onclick='showHistory("+object.userId+",showUserHistoryCallBack)'><a href=\"#ex1\" rel=\"modal:open\" class='a'>show history</a></div>" +
                         "</div>";
                 /*  if (i % 4 == 0) {
                  height += 400;
@@ -85,7 +83,7 @@ function showUserHistoryCallBack(response, statusTxt, xhr)
           content="";
         if(object.length>0){
            
-        content="<div class=\"table-responsive cart_info\" style=\"width:100%\">"+
+        content="<div class=\"table-responsive cart_info table-hover\" style=\"width:100%\">"+
                                    " <table class=\"table table-condensed\" >"+
                                         "<thead> <tr class=\"cart_menu\">"+
                                                " <td class=\"image\">Product</td>"+
@@ -98,7 +96,7 @@ function showUserHistoryCallBack(response, statusTxt, xhr)
 
 
         for(i=0;i<object.length;i++){
-            content+=" <tr id=\"\" ><td class=\"cart_product\">"+object[i].productId;
+            content+=" <tr id=\"\" ><td class=\"cart_product\">"+object[i].productName;
                                     
                 content+= "</td>  <td class=\"cart_description\">"+object[i].quantity;
                  content+= "</td>  <td class=\"cart_description\">"+object[i].date;

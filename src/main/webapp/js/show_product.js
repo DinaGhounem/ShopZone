@@ -96,7 +96,6 @@ function addProduct(productId) {
 function showProductCallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        alert(response);
         getProductsCount(categoryId);
         getProducts(currentPage, 0,response);
 

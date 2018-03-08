@@ -42,7 +42,6 @@
             #user_profile{
                 position: relative;
                 float: right;
-
                 top:-150px;
 
 
@@ -54,6 +53,9 @@
                 float: right;
 
 
+            }
+            #user_profile_section{
+                margin: 10%;
             }
             .product_image img{
                 border-radius: 50%;
@@ -262,7 +264,7 @@
             <div style="margin-top: 200px;">
                 <section id="cart_items">
                     <div class="container">
-                        <div class="table-responsive cart_info" style="width:50%">
+                        <div class="table-responsive cart_info table-hover" style="width:50%">
                             <table class="table table-condensed" >
                                 <thead>
                                     <tr class="cart_menu">
@@ -281,9 +283,24 @@
 
                         </div>
                         <div id="user_profile" class="product-grid" style="width:50%"  >
-
-                            <div id="user_profile_section"><div>
+                             
+                            <div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">History</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block">
+     <div id="user_profile_section">
                                 </div>
+  </div>
+</div>
+                           
                             </div>
                             </section>
                         </div>

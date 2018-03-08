@@ -24,7 +24,7 @@ public class TransactionDaoImpl implements TransactionsDao {
         ArrayList<UserProductsEntity> transactionsList = new ArrayList<>();
 
         try (Statement statement = DbConnection.getStatement()) {
-            String query = "select *  from  USER_PRODUCTS  where USER_ID =" + userId;
+            String query = "select *  from  USER_PRODUCTS  userProduct , PRODUCTS_INFO  product where userProduct.PRODUCT_ID=product.PRODUCT_ID and USER_ID ="+userId;
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 UserProductsEntity userProductsEntity = new UserProductsEntity();
@@ -136,5 +136,11 @@ public class TransactionDaoImpl implements TransactionsDao {
         }
         return status;
     }
-
+    public static void main(String[] args) {
+        TransactionDaoImpl tdi=new TransactionDaoImpl();
+        ArrayList<UserProductsEntity> products=tdi.getUserHistory(1);
+        for (UserProductsEntity product : products) {
+            System.out.println(product.getProductName());
+        }
+    }
 }
