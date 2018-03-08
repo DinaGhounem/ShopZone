@@ -82,3 +82,8 @@ function updateTotal() {
 
 }
 
+function checkOut(userId) {
+    $.post("CheckOut", {userId: userId}, function (data) {
+        console.log(data);
+    });
+}

@@ -367,8 +367,8 @@ public class UserDaoImpl implements UserDao {
             con = DbConnection.getConnection();
 
             ps1 = con.prepareStatement("select credit_limit from userinfo where user_id=?");
-            ps.setInt(1, userId);
-            rs = ps.executeQuery();
+            ps1.setInt(1, userId);
+            rs = ps1.executeQuery();
             if (rs.next()) {
                 oldCredit = rs.getDouble(1);
             }

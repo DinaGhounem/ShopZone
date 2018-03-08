@@ -15,11 +15,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+          <!-- jQuery Modal -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
         <link rel="stylesheet" href="styles/kendo.common.min.css"/>
         <link rel="stylesheet" href="styles/kendo.default.min.css"/>
         <link rel="stylesheet" href="styles/kendo.default.mobile.min.css"/>
-
-
         <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -30,11 +33,9 @@
         <link rel="stylesheet" href="css/pagination_styles.css">
 
         <link rel="stylesheet" type="text/css" href="cartincludes/css/main.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+      
 
-        <!-- jQuery Modal -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+      
 
         <style>
 
@@ -62,7 +63,7 @@
 
             }
             #ex1{
-                margin: 12% 0%;
+                margin: 17% 30%;
                 top: 0px;
                 overflow-y: auto;
                 height: 300px;
@@ -95,6 +96,13 @@
 {
   background: rgba(0, 0, 0, 0.5);
 }
+.a:hover, .a:active {
+     
+    text-decoration: none;
+    text-align: none;
+    color: #333;
+}
+
 
         </style>
     </head><!--/head-->
@@ -260,7 +268,7 @@
                                     <tr class="cart_menu">
                                         <td class="image">Name</td>
                                         <td class="price">Email</td>
-                                        <td class="total">Total</td>
+                                        <td class="total">Total Price </td>
                                         <td></td>
                                     </tr>
                                 </thead>

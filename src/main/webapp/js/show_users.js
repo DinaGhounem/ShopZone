@@ -17,7 +17,9 @@ function showUserCallBack(response, statusTxt, xhr)
             content+=" <tr id=\"\" onclick='showUserProfile("+object[i].userId+")'><td class=\"cart_product\">"+object[i].firstName+" "+object[i].lastName;
                                     
                 content+= "</td>  <td class=\"cart_description\">"+object[i].email;
-                     content+= "</td><td class=\"cart_price\"><p></p> </td></tr>";
+                 content+= "</td><td class=\"cart_price\"><p id='totalPrice"+object[i].userId+"'>0$</p> </td></tr>";
+                     showHistory(object[i].userId,showUserHistoryCallBack2);
+                    
 
         }
         $(user_table).html(content);
@@ -56,7 +58,7 @@ function showUserProfileCallBack(response, statusTxt, xhr)
                     }
                         content+="</div>" +
                         "</div>" +
-                        "<div class=\"red_button add_to_cart_button\" onclick='showHistory("+object.userId+")'><a href=\"#ex1\" rel=\"modal:open\">show history</a></div>" +
+                        "<div class=\"red_button add_to_cart_button\" onclick='showHistory("+object.userId+",showUserHistoryCallBack)'><a href=\"#ex1\" rel=\"modal:open\" class='a'>show history</a></div>" +
                         "</div>";
                 /*  if (i % 4 == 0) {
                  height += 400;
@@ -72,7 +74,7 @@ function clearFun(){
     $(user_profile_section).html("<div></div>");
 }
 
-function showHistory(userId){
+function showHistory(userId,showUserHistoryCallBack){
     
      $.get("UserHistory?userId="+userId,showUserHistoryCallBack)
 }
@@ -117,4 +119,22 @@ function showUserHistoryCallBack(response, statusTxt, xhr)
 }
 
     }
-    
+    function showUserHistoryCallBack2(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+        object = JSON.parse(response);
+          content=0;
+        if(object.length>0){
+            for(i=0;i<object.length;i++){
+            content+=object[i].price;
+                                    
+                
+        }
+     $("#totalPrice"+object[0].userId).html(content+"$");   
+           
+       
+}
+
+
+    }
+}

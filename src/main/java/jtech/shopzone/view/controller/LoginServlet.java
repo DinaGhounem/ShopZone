@@ -67,14 +67,16 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //----------------------if admin-------------------------------//
-        adminAck = userController.isAdmin(request.getParameter("email"), request.getParameter("password"));
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
+        adminAck = userController.isAdmin(email,password);
         if (adminAck == Status.OK) {
             isAdmin = true;
             HttpSession session = request.getSession(true);
             session.setAttribute("loggedIn", new String("true"));
             session.setAttribute("isAdmin", new String("true"));
             session.setAttribute("adminEmail", request.getParameter("email"));//or give me in return user id to put it on the session
-            //session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
+            session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
             RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
             rd.forward(request, response);
 
