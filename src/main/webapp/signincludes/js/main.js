@@ -64,9 +64,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    var status = getParameterByName('status'); // "lorem"
-    var error = getParameterByName('error'); // "" (present with empty value)
+    var status = getParameterByName('Status'); // "lorem"
+    var error = getParameterByName('errormessage'); // "" (present with empty value)
     if (status==="notok"){
+        alert(error);
         $('#errorlable').html(error);
     }
     

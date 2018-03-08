@@ -73,8 +73,8 @@ public class LoginServlet extends HttpServlet {
         if (adminAck == Status.OK) {
             isAdmin = true;
             HttpSession session = request.getSession(true);
-            session.setAttribute("loggedIn", new String("true"));
-            session.setAttribute("isAdmin", new String("true"));
+            session.setAttribute("loggedIn", new Boolean(true));
+            session.setAttribute("isAdmin", new Boolean(true));
             session.setAttribute("adminEmail", request.getParameter("email"));//or give me in return user id to put it on the session
             session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
             RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
@@ -95,13 +95,14 @@ public class LoginServlet extends HttpServlet {
             //-----------------------create httpsession--------------------//
             if (loginAck == Status.OK) {
                 HttpSession session = request.getSession(true);
-                session.setAttribute("loggedIn", new String("true"));
+                session.setAttribute("loggedIn", new Boolean(true));
+                 session.setAttribute("isAdmin", new Boolean(false));
                 session.setAttribute("userEmail", request.getParameter("email"));//or give me in return user id to put it on the session
                 session.setAttribute("userId", userController.getUserId(request.getParameter("email")));
                 RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
             } else if (loginAck == Status.NOTOK) {
-                response.sendRedirect("signin.html?Status=notok&errormessage=this-email-does-not-exist");
+                response.sendRedirect("signin.html?Status=notok&errormessage=Wrong email or password");
             } else if (loginAck == Status.ERROR) {
 
                 response.sendRedirect("signin.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");

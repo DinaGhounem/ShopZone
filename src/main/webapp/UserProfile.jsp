@@ -8,27 +8,21 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>User Profile</title>
-        <link href="cartincludes/css/bootstrap.min.css" rel="stylesheet">
-        <link href="cartincludes/css/font-awesome.min.css" rel="stylesheet">
-        <link href="cartincludes/css/prettyPhoto.css" rel="stylesheet">
-        <link href="cartincludes/css/price-range.css" rel="stylesheet">
-        <link href="cartincludes/css/animate.css" rel="stylesheet">
-        <link href="cartincludes/css/main.css" rel="stylesheet">
-        <link href="cartincludes/css/responsive.css" rel="stylesheet">
-        <link rel="shortcut icon" href="cartincludes/images/ico/favicon.ico">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144"
-              href="cartincludes/images/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114"
-              href="cartincludes/images/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72"
-              href="cartincludes/images/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="cartincludes/images/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="stylesheet" type="text/css" href="css/main_styles.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
+        <link rel="stylesheet" type="text/css" href="css/EditProfile.css">
+        <link rel="stylesheet" href="styles/kendo.common.min.css" />
+        <link rel="stylesheet" href="styles/kendo.default.min.css" />
+        <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
+        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
-        <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
+        <link rel="stylesheet" href="css/pagination_styles.css">
     </head><!--/head-->
 
     <body onload="loadData()">
@@ -36,63 +30,21 @@
             <!-- Header -->
 
             <header class="header trans_300">
-
-                <!-- Top Navigation -->
-
                 <div class="top_nav">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="top_nav_left">free shipping on all u.s orders over $50</div>
+                                <div class="top_nav_left">Welcome In Our Online Shopping website ShopZone :) </div>
                             </div>
-                            <div class="col-md-6 text-right">
-                                <div class="top_nav_right">
-                                    <ul class="top_nav_menu">
-
-                                        <!-- Currency / Language / My Account -->
-
-                                        <li class="currency">
-                                            <a href="#">
-                                                usd
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="currency_selection">
-                                                <li><a href="#">cad</a></li>
-                                                <li><a href="#">aud</a></li>
-                                                <li><a href="#">eur</a></li>
-                                                <li><a href="#">gbp</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="language">
-                                            <a href="#">
-                                                English
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="language_selection">
-                                                <li><a href="#">French</a></li>
-                                                <li><a href="#">Italian</a></li>
-                                                <li><a href="#">German</a></li>
-                                                <li><a href="#">Spanish</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="account">
-                                            <a href="#">
-                                                My Account
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="account_selection">
-                                                <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                                <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <>
+                            <div class="top_nav_left" style="padding-left:35em;">
+                                <form method="post" action="LogOutServlet">
+                                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Main Navigation -->
 
                 <div class="main_nav_container">
@@ -100,24 +52,20 @@
                         <div class="row">
                             <div class="col-lg-12 text-right">
                                 <div class="logo_container">
-                                    <a href="#">colo<span>shop</span></a>
+                                    <a>Shop<span>Zone</span></a>
                                 </div>
                                 <nav class="navbar">
                                     <ul class="navbar_menu">
-                                        <li><a href="#">home</a></li>
-                                        <li><a href="#">shop</a></li>
-                                        <li><a href="#">promotion</a></li>
-                                        <li><a href="#">pages</a></li>
-                                        <li><a href="#">blog</a></li>
-                                        <li><a href="contact.html">contact</a></li>
+                                        <li><a href="home.jsp">Home</a></li>
+                                        <li><a href="UserProfile.jsp">My Profile</a></li>
+                                        <li><a href="cart.jsp">My Cart</a></li>
                                     </ul>
                                     <ul class="navbar_user">
-                                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                        <li><a href="UserProfile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                         <li class="checkout">
-                                            <a href="#">
+                                            <a href="cart.jsp">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                <span id="checkout_items" class="checkout_items">2</span>
+                                                <span id="checkout_items" class="checkout_items"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -134,50 +82,7 @@
             <div class="fs_menu_overlay"></div>
             <div class="hamburger_menu">
                 <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                <div class="hamburger_menu_content text-right">
-                    <ul class="menu_top_nav">
-                        <li class="menu_item has-children">
-                            <a href="#">
-                                usd
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="menu_selection">
-                                <li><a href="#">cad</a></li>
-                                <li><a href="#">aud</a></li>
-                                <li><a href="#">eur</a></li>
-                                <li><a href="#">gbp</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu_item has-children">
-                            <a href="#">
-                                English
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="menu_selection">
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Italian</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu_item has-children">
-                            <a href="#">
-                                My Account
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="menu_selection">
-                                <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu_item"><a href="#">home</a></li>
-                        <li class="menu_item"><a href="#">shop</a></li>
-                        <li class="menu_item"><a href="#">promotion</a></li>
-                        <li class="menu_item"><a href="#">pages</a></li>
-                        <li class="menu_item"><a href="#">blog</a></li>
-                        <li class="menu_item"><a href="#">contact</a></li>
-                    </ul>
-                </div>
+                <div class="hamburger_menu_content text-right"></div>
             </div>
 
             <!-- profile section-->
@@ -187,14 +92,9 @@
                     <div class="container">
                         <div class="table-responsive cart_info">
                             <center>
-                                <form action="UpdateProfileServlet" method="post">
+                                <form action="UpdateProfileServlet" method="post" class="dark-matter">
                                     <table>
                                         <tr>
-                                            <td style="width: 30%;">
-                                                <div class="login100-pic js-tilt" data-tilt>
-                                                    <img src="signincludes/images/img-01.png" alt="IMG">
-                                                </div>
-                                            </td>
                                             <td>
                                                 <table>
                                                     <tr>
@@ -229,27 +129,12 @@
                                                         <td>Credit Limit :</td>
                                                         <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Interests :</td>
-                                                        <td>
-                                                            <fieldset class="wrap-input100 validate-input" data-validate = "interests is required">
-                                                                <div>
-                                                                    <input  type="checkbox" id="fashion" name="interest" value="fashion">
-                                                                    <label style="font-family: Poppins-Medium;font-size: 15px;line-height: 1.5; color: #666666;" for="fashion">Fashion</label>
-                                                                </div>
-                                                                <div>
-                                                                    <input type="checkbox" id="elcts" name="interest" value="laptops&electronics">
-                                                                    <label style="font-family: Poppins-Medium;font-size: 15px;line-height: 1.5; color: #666666;" for="Laptops&electronics">Laptops & Electronics</label>
-                                                                </div>
-                                                            </fieldset>
-                                                        </td>
-                                                    </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                     </table>
                                     <div>
-                                        <input id="button_submit" type="submit" class="red_button message_submit_btn trans_300" value="Save"/>
+                                        <input id="button_submit" type="submit" class="btn btn-outline-danger my-2 my-sm-0" value="Save"/>
                                     </div>
                                 </form>
                             </center>
@@ -259,27 +144,26 @@
             </div>
             <br><br>
             <!-- Footer -->
-
             <footer class="footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
                                 <ul class="footer_nav">
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">Blog</a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">FAQs</a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">Contact us</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -289,7 +173,7 @@
                             <div class="footer_nav_container">
                                 <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
                                                                                                           aria-hidden="true"></i>
-                                    by <a href="#">Colorlib</a></div>
+                                    by <a>ShopZone</a></div>
                             </div>
                         </div>
                     </div>
