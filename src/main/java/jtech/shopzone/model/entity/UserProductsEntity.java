@@ -15,6 +15,7 @@ public class UserProductsEntity {
 
     private int userId;
     private int productId;
+    private String productName;
     private int quantity;
     private Date date;
     private double price;
@@ -100,11 +101,20 @@ public class UserProductsEntity {
         this.price = price;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
     @Override
     public String toString() {
         return "UserProductsEntity{" +
                 "userId=" + userId +
                 ", productId=" + productId +
+                ", productName='" + productName + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
                 ", price=" + price +

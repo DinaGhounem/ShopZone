@@ -28,6 +28,7 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
     </head><!--/head-->
 
     <body onload="loadData()">
@@ -186,54 +187,77 @@
                     <div class="container">
                         <div class="table-responsive cart_info">
                             <center>
-                                <form action="post">
+                                <form action="UpdateProfileServlet" method="post">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 30%;">
+                                                <div class="login100-pic js-tilt" data-tilt>
+                                                    <img src="signincludes/images/img-01.png" alt="IMG">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>First Name:</td>
+                                                        <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname"  required="required" data-error="First Name is required."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Last Name:</td>
+                                                        <td><input id="input_lastname" class="form_input input_name input_ph" type="text" name="lname" required="required" data-error="Last Name is required."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email :</td>
+                                                        <td><input id="input_email" class="form_input input_email input_ph" type="email" name="email" disabled="true"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Password :</td>
+                                                        <td><input id="input_password" class="form_input input_passwrd input_ph" type="password" name="password" required="required" data-error="Valid password is required."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Address :</td>
+                                                        <td><input type="text" id="input_address" class="form_input input_name input_ph" name="address" required data-error="Please, write Your Address."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Birth Date :</td>
+                                                        <td><input id="input_date" class="form_input input_date input_ph" type="text" name="bdate" disabled="true"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Job :</td>
+                                                        <td><input id="input_job" class="form_input input_job input_ph" type="text" name="job" required="required" data-error="Job is required."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Credit Limit :</td>
+                                                        <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Interests :</td>
+                                                        <td>
+                                                            <fieldset class="wrap-input100 validate-input" data-validate = "interests is required">
+                                                                <div>
+                                                                    <input  type="checkbox" id="fashion" name="interest" value="fashion">
+                                                                    <label style="font-family: Poppins-Medium;font-size: 15px;line-height: 1.5; color: #666666;" for="fashion">Fashion</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input type="checkbox" id="elcts" name="interest" value="laptops&electronics">
+                                                                    <label style="font-family: Poppins-Medium;font-size: 15px;line-height: 1.5; color: #666666;" for="Laptops&electronics">Laptops & Electronics</label>
+                                                                </div>
+                                                            </fieldset>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <div>
-                                        <div class="login100-pic js-tilt" data-tilt>
-                                            <img src="signincludes/images/img-01.png" alt="IMG">
-                                        </div>
-                                        <table>
-                                            <tr>
-                                                <td>First Name:</td>
-                                                <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname"  required="required" data-error="First Name is required."></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Last Name:</td>
-                                                <td><input id="input_lastname" class="form_input input_name input_ph" type="text" name="lname" required="required" data-error="Last Name is required."></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email :</td>
-                                                <td><input id="input_email" class="form_input input_email input_ph" type="email" name="email" disabled="true"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Password :</td>
-                                                <td><input id="input_password" class="form_input input_passwrd input_ph" type="password" name="password" required="required" data-error="Valid password is required."></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Address :</td>
-                                                <td><textarea id="input_address" class="input_ph input_address" name="address" rows="2" required data-error="Please, write Your Address."></textarea></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Birth Date :</td>
-                                                <td><input id="input_date" class="form_input input_date input_ph" type="date" name="bdate" required="required" data-error="datw is required."></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Job :</td>
-                                                <td><input id="input_job" class="form_input input_job input_ph" type="text" name="job" required="required" data-error="Job is required."></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Credit Limit :</td>
-                                                <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
-                                            </tr>
-                                        </table>
-                                        <div>
-                                            <button id="button_submit" type="submit" class="red_button message_submit_btn trans_300" value="Submit">Save</button>
-                                        </div>
+                                        <input id="button_submit" type="submit" class="red_button message_submit_btn trans_300" value="Save"/>
+                                    </div>
                                 </form>
                             </center>
                         </div>
                     </div>
                 </section>
             </div>
+            <br><br>
             <!-- Footer -->
 
             <footer class="footer">

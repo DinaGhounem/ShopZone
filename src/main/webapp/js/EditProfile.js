@@ -15,11 +15,7 @@ function loadData() {
             document.getElementById("input_job").value = userData.job;
             document.getElementById("input_creditLimit").value = userData.creditLimit;
             //document.getElementById("input_firstname").value = userData.firstName;
-            //document.getElementById("input_firstname").value = userData.firstName;
-            
-            
-       }
+            //document.getElementById("input_firstname").value = userData.firstName;    
+        }
     });
 }
-
-
