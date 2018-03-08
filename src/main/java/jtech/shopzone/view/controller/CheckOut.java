@@ -25,7 +25,9 @@ public class CheckOut extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: get user id from session
         int userId = 1;
-        //cartController.get
+
+//        cartController.get
+
 
     }
 

@@ -99,4 +99,15 @@ public class UserProductsEntity {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "UserProductsEntity{" +
+                "userId=" + userId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", date=" + date +
+                ", price=" + price +
+                '}';
+    }
 }

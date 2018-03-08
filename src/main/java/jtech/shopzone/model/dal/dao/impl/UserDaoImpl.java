@@ -313,7 +313,7 @@ public class UserDaoImpl implements UserDao {
 
         PreparedStatement ps1 = null;
         ResultSet rs1 = null;
-        ArrayList<UserInterestsEntity> interests = null;
+        ArrayList<UserInterestsEntity> interests = new ArrayList<>();
         ArrayList<UserInfoEntity> users = new ArrayList<>();;
         try {
             con = DbConnection.getConnection();
