@@ -92,16 +92,22 @@ public class AddProductToCart extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         int productId = Integer.parseInt(request.getParameter("productId"));
+       
         int totalQuantities = productController.checkProductQuantities(productId);
         if (totalQuantities > 0) {
             int userId = 1;//TODO get id from login session
+             int quantityInCart=cartController.getQuantity(userId, productId);
+             int quantityInStock=productController.checkProductQuantities(productId);
+             if(quantityInCart+1<=quantityInStock){
             if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
                 cartController.addProduct(userId, productId);
             } else {
                 int quantity = cartController.getQuantity(userId, productId) + 1;
                 cartController.updateProductQuantities(userId, productId, quantity);
             }
-            productController.updateProductQuantities(productId, totalQuantities - 1);
+        }else{
+                 out.print(productId);
+             }
         }
     }
 

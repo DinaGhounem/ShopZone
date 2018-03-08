@@ -37,7 +37,7 @@
 
     </head>
 
-    <body onload="getProducts(1, 0)">
+    <body onload="getProducts(1, 0,null)">
 
         <div class="super_container">
 
