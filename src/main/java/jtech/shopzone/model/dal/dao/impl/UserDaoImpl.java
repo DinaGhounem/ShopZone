@@ -35,9 +35,9 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return Status.OK;
-            } else {
                 return Status.NOTOK;
+            } else {
+                return Status.OK;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -193,7 +193,7 @@ public class UserDaoImpl implements UserDao {
                 ps1 = con.prepareStatement("delete from user_interests "
                         + "where user_id=?");
                 ps1.setInt(1, user.getUserId());
-
+                ps1.executeUpdate();
                 ps1.close();
                 for (int i = 0; i < interests.size(); i++) {
                     ps2 = con.prepareStatement("Insert into USER_INTERESTS "
@@ -460,7 +460,7 @@ public class UserDaoImpl implements UserDao {
 
     public static void main(String[] args) {
         UserDaoImpl userdao = new UserDaoImpl();
-//        System.out.println(userdao.getAdminId("mm@yahoo.com"));
+//        System.out.println(userdao.checkEmail("dina@gmail.com"));
 //        UserInfoEntity user =  userdao.getUserInfo(1);
 //        System.out.println("id is "+user.getUserId());
 //        System.out.println("email is "+user.getEmail());

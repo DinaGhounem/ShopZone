@@ -1,12 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
-    Document   : home
-    Created on : Mar 1, 2018, 4:24:16 AM
-    Author     : Hanaa
+  Created by IntelliJ IDEA.
+  User: Mohamed Mahrous
 --%>
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -200,8 +197,10 @@
                 </div>
                 <div class="cart">
                     <ul class="cartWrap">
+                        <c:if test="${fn:length(requestScope.cartEntities) == 0}">
+                                <h1>You don't have any items in your cart... </h1>
+                        </c:if>
                         <c:forEach items="${requestScope.cartEntities}" var="cartEntity" varStatus="loop">
-                            <%--TODO: if size zero print NO ELEMENTS TEXT--%>
                             <c:choose>
                                 <c:when test="${loop.index%2==0}">
                                     <li class="items even" id="${cartEntity.productsInfoEntity.productId}">
@@ -255,9 +254,9 @@
 
                 <div class="subtotal cf">
                     <ul>
-                        <li class="totalRow final"><span class="label">Total</span><span class="value">$44.00</span>
+                        <li class="totalRow final"><span class="label">Total</span><span class="value">$00.0</span>
                         </li>
-                        <li class="totalRow"><a href="#" class="btn continue" onclick="checkOut(${cartEntity.productsInfoEntity.productId})">Checkout</a></li>
+                        <li class="totalRow"><a href="CheckOut" class="btn continue">Checkout</a></li>
                     </ul>
                 </div>
             </div>

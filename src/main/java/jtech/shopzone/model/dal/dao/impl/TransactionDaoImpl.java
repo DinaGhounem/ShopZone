@@ -33,6 +33,7 @@ public class TransactionDaoImpl implements TransactionsDao {
                 userProductsEntity.setQuantity(resultSet.getInt("QUANTITY"));
                 userProductsEntity.setDate(resultSet.getDate("ORDER_DATE"));
                 userProductsEntity.setPrice(resultSet.getInt("PRICE"));
+                userProductsEntity.setProductName(resultSet.getString("PRODUCT_NAME"));
                 transactionsList.add(userProductsEntity);
 
             }
@@ -66,16 +67,15 @@ public class TransactionDaoImpl implements TransactionsDao {
                 // Since stock is not enough then this transaction will not be
                 // completed
                 transactionReport.setStatus(Status.NOTOK);
-                transactionReport.setComment(StockStatus.OUT_OF_STOCK.toString());
+                transactionReport.setComment("Out Of Stock");
             } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
                 UserInfoEntity userInfoEntity = userDao.getUserInfo(userId);
                 // Check if user has enough money
                 double creditLimit = userInfoEntity.getCreditLimit();
                 double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
                 if (creditLimit < totalPrice) {
-                    transactionReport.setComment("Not enough credit");
+                    transactionReport.setComment("Not Enough Credit");
                     transactionReport.setStatus(Status.NOTOK);
-                    continue;
                 } else {
                     // All set to execute the transaction
 
@@ -137,9 +137,4 @@ public class TransactionDaoImpl implements TransactionsDao {
         return status;
     }
 
-    public static void main(String[] args) {
-        // TODO: remove main
-        TransactionDaoImpl transactionDao = new TransactionDaoImpl();
-        System.out.println(transactionDao.checkOut(1));
-    }
 }
