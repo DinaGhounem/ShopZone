@@ -193,7 +193,7 @@ public class UserDaoImpl implements UserDao {
                 ps1 = con.prepareStatement("delete from user_interests "
                         + "where user_id=?");
                 ps1.setInt(1, user.getUserId());
-
+                ps1.executeUpdate();
                 ps1.close();
                 for (int i = 0; i < interests.size(); i++) {
                     ps2 = con.prepareStatement("Insert into USER_INTERESTS "

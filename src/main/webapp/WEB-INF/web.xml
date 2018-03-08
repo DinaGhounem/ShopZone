@@ -12,6 +12,10 @@
         <servlet-name>ShowProfileServlet</servlet-name>
         <servlet-class>jtech.shopzone.view.controller.ShowProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateProfileServlet</servlet-name>
+        <servlet-class>jtech.shopzone.view.controller.UpdateProfileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterationServlet</servlet-name>
         <url-pattern>/RegisterationServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ShowProfileServlet</servlet-name>
         <url-pattern>/ShowProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfileServlet</servlet-name>
+        <url-pattern>/UpdateProfileServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>singin.html</welcome-file>
