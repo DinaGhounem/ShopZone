@@ -1,48 +1,40 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Mohamed Mahrous
-  Date: 3/2/2018
-  Time: 5:09 PM
-  To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+    <title>Colo Shop</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Cart | ShopZone</title>
-    <link href="cartincludes/css/bootstrap.min.css" rel="stylesheet">
-    <link href="cartincludes/css/font-awesome.min.css" rel="stylesheet">
-    <link href="cartincludes/css/prettyPhoto.css" rel="stylesheet">
-    <link href="cartincludes/css/price-range.css" rel="stylesheet">
-    <link href="cartincludes/css/animate.css" rel="stylesheet">
-    <link href="cartincludes/css/main.css" rel="stylesheet">
-    <link href="cartincludes/css/responsive.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="shortcut icon" href="cartincludes/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="cartincludes/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="cartincludes/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72"
-          href="cartincludes/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="cartincludes/images/ico/apple-touch-icon-57-precomposed.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.default.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.default.mobile.min.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="css/main_styles.css">
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
-</head><!--/head-->
+    <link rel="stylesheet" href="css/pagination_styles.css">
+
+    <link rel="stylesheet" type="text/css" href="cartincludes/css/main.css">
+
+</head>
 
 <body>
+
 <div class="super_container">
+
     <!-- Header -->
 
     <header class="header trans_300">
@@ -141,6 +133,7 @@
         </div>
 
     </header>
+
     <div class="fs_menu_overlay"></div>
     <div class="hamburger_menu">
         <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
@@ -190,120 +183,141 @@
         </div>
     </div>
 
-    <!--/#cart_items-->
+    <!-- Slider -->
 
-    <div style="margin-top:200px">
-        <section id="cart_items">
-            <div class="container">
-                <div class="table-responsive cart_info">
-                    <table class="table table-condensed">
-                        <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Item</td>
-                            <td class="description"></td>
-                            <td class="price">Price</td>
-                            <td class="quantity">Quantity</td>
-                            <td class="total">Total</td>
-                            <td></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${requestScope.cartEntities}" var="cartEntity">
-                            <tr id="${cartEntity.productsInfoEntity.productId}">
-                                <td class="cart_product">
-                                    <a href=""><img src="${cartEntity.productsInfoEntity.img}"
-                                                    alt="${cartEntity.productsInfoEntity.productName}"></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">${cartEntity.productsInfoEntity.productName}</a></h4>
-                                    <p>${cartEntity.productsInfoEntity.description}</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$${cartEntity.productsInfoEntity.price}</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up"
-                                           onclick="incrementProductQuantity(${cartEntity.productsInfoEntity.productId})">+</a>
-                                        <input class="cart_quantity_input" type="text" name="quantity"
-                                               value="${cartEntity.quantity}" autocomplete="off" size="2" disabled>
-                                        <a class="cart_quantity_down"
-                                           onclick="decrementProductQuantity(${cartEntity.productsInfoEntity.productId})">-</a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
+
+    <!-- New Arrivals -->
+
+    <div class="new_arrivals">
+        <div class="container" style="margin-top: 150px">
+            <div class="wrap cf">
+                <div class="heading cf">
+                    <h1>My Cart</h1>
+                    <a href="home.jsp" class="continue">Continue Shopping</a>
+                </div>
+                <div class="cart">
+                    <ul class="cartWrap">
+                        <c:if test="${fn:length(requestScope.cartEntities) == 0}">
+                                <h1>You don't have any items in your cart... </h1>
+                        </c:if>
+                        <c:forEach items="${requestScope.cartEntities}" var="cartEntity" varStatus="loop">
+                            <c:choose>
+                                <c:when test="${loop.index%2==0}">
+                                    <li class="items even" id="${cartEntity.productsInfoEntity.productId}">
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="items odd" id="${cartEntity.productsInfoEntity.productId}">
+                                </c:otherwise>
+                            </c:choose>
+
+                            <div class="infoWrap">
+                                <div class="cartSection info">
+
+                                    <img src="${cartEntity.productsInfoEntity.img}"
+                                         alt="${cartEntity.productsInfoEntity.productName}" class="itemImg"/>
+                                    <p class="itemNumber">#QUE-${cartEntity.productsInfoEntity.productId}</p>
+                                    <h3>${cartEntity.productsInfoEntity.productName}</h3>
+
+                                    <p class="cart_price">
+                                        <input type="text" class="cart_quantity_input qty" placeholder="3"
+                                               value="${cartEntity.quantity}"
+                                               onkeyup="setProductQuantity(Event,${cartEntity.productsInfoEntity.productId})"/>
+                                        x $${cartEntity.productsInfoEntity.price}</p>
+                                    <c:choose>
+                                        <c:when test="${cartEntity.stockStatus == 'IN_STOCK' }">
+                                            <p class="stockStatus"> In Stock</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="stockStatus out"> Out of Stock</p>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </div>
+
+
+                                <div class="prodTotal cartSection">
                                     <p class="cart_total_price">
                                         $${cartEntity.quantity * cartEntity.productsInfoEntity.price}</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="#"
-                                       onclick="removeProduct(${cartEntity.productsInfoEntity.productId})"><i
-                                            class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                                </div>
+
+                                <div class="cartSection removeWrap">
+                                    <a href="#" class="remove"
+                                       onclick="removeProduct(${cartEntity.productsInfoEntity.productId})">x</a>
+                                </div>
+                            </div>
+                            </li>
+
+
                         </c:forEach>
+                    </ul>
+                </div>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    </div>
-    <!-- Footer -->
-
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                        <ul class="footer_nav">
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="contact.html">Contact us</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer_nav_container">
-                        <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
-                                                                                                  aria-hidden="true"></i>
-                            by <a href="#">Colorlib</a></div>
-                    </div>
+                <div class="subtotal cf">
+                    <ul>
+                        <li class="totalRow final"><span class="label">Total</span><span class="value">$00.0</span>
+                        </li>
+                        <li class="totalRow"><a href="CheckOut" class="btn continue">Checkout</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </footer>
 
-</div>
+        <!-- Footer -->
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                            <ul class="footer_nav">
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">FAQs</a></li>
+                                <li><a href="contact.html">Contact us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer_nav_container">
+                            <div class="cr">�2018 All Rights Reserverd. This template is made with <i
+                                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
 
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="css/bootstrap4/popper.js"></script>
-<script src="css/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
-<script src="js/show_product.js"></script>
+    </div>
 
-<script src="cartincludes/js/jquery.js"></script>
-<script src="cartincludes/js/bootstrap.min.js"></script>
-<script src="cartincludes/js/jquery.scrollUp.min.js"></script>
-<script src="cartincludes/js/jquery.prettyPhoto.js"></script>
-<script src="cartincludes/js/main.js"></script>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <script src="css/bootstrap4/popper.js"></script>
+    <script src="css/bootstrap4/bootstrap.min.js"></script>
+    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script type="text/javascript" src="js/bootpag.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/show_product.js"></script>
+    <script src="cartincludes/js/main.js"></script>
+
 
 </body>
+
 </html>

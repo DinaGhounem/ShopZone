@@ -3,7 +3,9 @@ package jtech.shopzone.model.dal;
 import oracle.jdbc.OracleDriver;
 
 import java.sql.*;
-
+/**
+ * @author Mahrous
+ */
 public class DbConnection {
     private static Connection connection;
 
@@ -55,4 +57,4 @@ public class DbConnection {
         resultSet.close();
     }
 
-}
+} 

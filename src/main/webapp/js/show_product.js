@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var pageNum = 20;
+var categoryId = 0;
+currentPage = 1;
+var Cart=null
+getCart();
+getProductsCount(categoryId);
+getCategories();
+
+
 function callback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
         //object contain array of products
         var content = "";
-        var height = 0;
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
             if (object[i].quantity > 0) {
@@ -17,22 +25,30 @@ function callback(response, statusTxt, xhr)
                         "<div class=\"product_image\">" +
                         "<img src=\"img/" + object[i].img + "\" alt=\"\">" +
                         "</div>" +
-                        "<div class=\"favorite favorite_left\"></div>" +
-                        "<div class=\"product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center\"><span>-$20</span></div>" +
-                        "<div class=\"product_info\">" +
-                        "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
-                        "<div class=\"product_price\">$" + object[i].price + "<span>$590.00</span></div>" +
-                        "</div>" +
-                        "</div>" +
-                        "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct("+object[i].productId+")\">add to cart</div>" +
-                        "</div>";
-                if (i % 4 == 0) {
-                    height += 400;
+                        "<div class=\"favorite favorite_left\"></div>";
+                if (object[i].quantity == 1) {
+                    content += "<div class=\"product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center\"><span>latest</span></div>";
                 }
+                content += "<div class=\"product_info\">" +
+                        "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
+                        "<div class=\"product_price\">$" + object[i].price ;
+                for(j=0;j<Cart.length;j++){
+                    if(Cart[j].productsInfoEntity.productId==object[i].productId){
+                        
+                        if((Cart[j].quantity)>=object[i].quantity-1){
+                            
+                    content+= "<span>Out Of Stock</span>" ;
+                }
+                }
+                }
+                  content+= "</div></div>" +
+                        "</div>" +
+                        "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct(" + object[i].productId + ")\">add to cart</div>" +
+                        "</div>";            
             }
         }
         $(products).html(content);
-        $(products).css("height", height + "px");
+        $(products).css("height", "800px");
 
         /* just for testing
          * if(object[0]!=null)
@@ -40,21 +56,102 @@ function callback(response, statusTxt, xhr)
          */
     }
 }
-function getProducts() {
+function getProducts(page, categoryId) {
 
-    $.get("ShowProductServlet", callback);
+    $.get("ShowProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
+  
 
 
 }
+function getProductsCount(categoryId) {
 
+    $.get("ShowProductServlet?categoryId=" + categoryId, ProductsCountcallback);
+
+
+}
+function ProductsCountcallback(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+        if (response % 8 == 0||response % 8>=5) {
+            pageNum = Math.round(response / 8);
+        } else {
+            pageNum = Math.round(response / 8)+1 ;
+        }
+        $('#pagination-here').bootpag({
+            total: pageNum,
+            page: 1,
+            maxVisible: 3,
+            leaps: true,
+            href: "#result-page-{{number}}",
+        })
+
+//page click action
+        $('#pagination-here').on("page", function (event, num) {
+            //show / hide content or pull via ajax etc
+            currentPage = num;
+            getProducts(num, categoryId);
+        });
+    }
+}
 function addProduct(productId) {
 
-    $.post("AddProductToCart",{productId:productId}, showProductCallback);
+    $.post("AddProductToCart", {productId: productId}, showProductCallback);
+    getCart();
 
 }
 function showProductCallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-      
+        getProductsCount(categoryId);
+        getProducts(currentPage, 0);
+
+    }
+}
+
+function getCategories() {
+
+    $.get("ShowCategory", getCategoriesCallBack);
+
+
+}
+function getCategoriesCallBack(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+
+        content = "<option value='0'>All</option>";
+        object = JSON.parse(response);
+        for (i = 0; i < object.length; i++) {
+            content += "<option value='" + object[i].categoryId + "'>" + object[i].categoryName + "</option>";
+
+        }
+
+        $("#size").html(content);
+        $("#size").kendoDropDownList();
+
+
+
+
+
+    }
+}
+function changeCategory() {
+    categoryId = document.getElementById("size").value;
+    getProductsCount(categoryId);
+    getProducts(1, categoryId);
+
+
+}  
+function getCart() {
+
+    $.get("CartProducts", getCartCallBack);
+
+
+}
+function getCartCallBack(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+
+       
+        Cart = JSON.parse(response);
     }
 }

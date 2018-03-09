@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
+import jtech.shopzone.model.entity.StockStatus;
 
 /**
  * @author Hanaa
@@ -54,4 +55,5 @@ public interface CartDao {
      */
     int getQuantity(int userId, int productId);
 
+    StockStatus getStockStatus(int productId, int quantity);
 }

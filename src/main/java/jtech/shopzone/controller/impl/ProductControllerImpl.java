@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import jtech.shopzone.model.dal.dao.impl.ProductDaoImpl;
 
 public class ProductControllerImpl implements ProductController {
+
     private ProductDao productDao;
 
     private ProductControllerImpl() {
-        productDao=new ProductDaoImpl();
+        productDao = new ProductDaoImpl();
     }
 
     public static ProductController newInstance() {
@@ -30,8 +31,8 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ArrayList<ProductsInfoEntity> getProducts(double minPrice,double maxPrice) {
-        return productDao.getProducts(minPrice,maxPrice);
+    public ArrayList<ProductsInfoEntity> getProducts(double minPrice, double maxPrice) {
+        return productDao.getProducts(minPrice, maxPrice);
     }
 
     @Override
@@ -56,11 +57,33 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public Status updateProductQuantities(int productId, int quantities) {
-        return productDao.updateProductQuantities(productId,quantities);
+        return productDao.updateProductQuantities(productId, quantities);
     }
 
     @Override
     public ProductsInfoEntity getProductInfo(int productID) {
         return productDao.getProductInfo(productID);
     }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
+        return productDao.getProductsBTWRange(range);
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId) {
+        return productDao.getProductsBTWRange(range, categoryId);
+
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice) {
+        return productDao.getProductsBTWRange(range, minPrice, maxPrice);
+    }
+
+    @Override
+    public int getProductCount() {
+        return productDao.getProductCount();
+    }
+
 }

@@ -6,10 +6,13 @@ import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
+import jtech.shopzone.model.entity.StockStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * @author Mahrous
+ */
 public class CartDaoImpl implements CartDao {
     @Override
     public Status addProduct(int userId, int productId) {
@@ -52,8 +55,20 @@ public class CartDaoImpl implements CartDao {
                 ProductDao productDao = new ProductDaoImpl();
                 ProductsInfoEntity product = productDao.getProductInfo(productID);
 
+                // set stock status
+                StockStatus stockStatus = null;
+                if(product.getQuantity() >= productQuantity)
+                {
+                    stockStatus = StockStatus.IN_STOCK;
+                }
+                else
+                {
+                    stockStatus = StockStatus.OUT_OF_STOCK;
+                }
+
+
                 // add the product to products with quantity list
-                CartEntity cartEntity = new CartEntity(productQuantity, product);
+                CartEntity cartEntity = new CartEntity(productQuantity, product, stockStatus);
                 productsWithQuantity.add(cartEntity);
             }
         } catch (SQLException e) {
@@ -148,6 +163,26 @@ public class CartDaoImpl implements CartDao {
         return quantity;
     }
 
+    @Override
+    public StockStatus getStockStatus(int productId, int quantity) {
+        StockStatus stockStatus = null;
+        // get product using product dao
+        ProductDao productDao = new ProductDaoImpl();
+        ProductsInfoEntity productsInfoEntity = productDao.getProductInfo(productId);
+
+        if(productsInfoEntity.getQuantity() >= quantity)
+        {
+            stockStatus = StockStatus.IN_STOCK;
+        }
+        else
+        {
+            stockStatus = StockStatus.OUT_OF_STOCK;
+        }
+
+        return stockStatus;
+
+    }
+
     private Status execUpdate(String query) {
         Status status;
         try (Statement statement = DbConnection.getStatement()){
@@ -164,11 +199,4 @@ public class CartDaoImpl implements CartDao {
         return status;
     }
 
-    public static void main(String[] args) {
-        CartDaoImpl cartDao = new CartDaoImpl();
-        //System.out.println(cartDao.deleteProduct(10, 15));
-        //System.out.println(cartDao.addProduct(1, 1));
-        //System.out.println(cartDao.userItemCount(10));
-        //System.out.println(cartDao.getQuantity(1, 5));
-    }
 }
