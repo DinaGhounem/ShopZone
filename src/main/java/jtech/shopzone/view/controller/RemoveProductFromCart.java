@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -58,19 +59,21 @@ public class RemoveProductFromCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO : get userId from session
-        int userId = 1;
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        String remove = request.getParameter("removeProduct");
-        if (remove == null) {
-            if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
-                cartController.addProduct(userId, productId);
+        HttpSession httpSession = request.getSession();
+        Integer userId = (Integer) httpSession.getAttribute("userId");
+        if (userId != null) {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            String remove = request.getParameter("removeProduct");
+            if (remove == null) {
+                if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
+                    cartController.addProduct(userId, productId);
+                } else {
+                    int quantity = cartController.getQuantity(userId, productId) - 1;
+                    cartController.updateProductQuantities(userId, productId, quantity);
+                }
             } else {
-                int quantity = cartController.getQuantity(userId, productId) - 1;
-                cartController.updateProductQuantities(userId, productId, quantity);
+                cartController.deleteProduct(userId, productId);
             }
-        } else {
-            cartController.deleteProduct(userId,productId);
         }
 
     }

@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import jtech.shopzone.controller.CartController;
 import jtech.shopzone.controller.ProductController;
 import jtech.shopzone.controller.impl.CartControllerImpl;
@@ -20,7 +22,6 @@ import jtech.shopzone.controller.impl.ProductControllerImpl;
 import jtech.shopzone.model.dal.Status;
 
 /**
- *
  * @author Hanaa
  */
 @WebServlet(name = "AddProductToCart", urlPatterns = {"/AddProductToCart"})
@@ -40,10 +41,10 @@ public class AddProductToCart extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,13 +64,14 @@ public class AddProductToCart extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -80,35 +82,38 @@ public class AddProductToCart extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
-        PrintWriter out = response.getWriter();
+        HttpSession httpSession = request.getSession();
+        Integer userId = (Integer) httpSession.getAttribute("userId");
+        if (userId != null) {
+            PrintWriter out = response.getWriter();
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
-       
-        int totalQuantities = productController.checkProductQuantities(productId);
-        if (totalQuantities > 0) {
-            int userId = 1;//TODO get id from login session
-             int quantityInCart=cartController.getQuantity(userId, productId);
-             int quantityInStock=productController.checkProductQuantities(productId);
-             if(quantityInCart+1<=quantityInStock){
-            if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
-                cartController.addProduct(userId, productId);
-            } else {
-                int quantity = cartController.getQuantity(userId, productId) + 1;
-                cartController.updateProductQuantities(userId, productId, quantity);
+            int productId = Integer.parseInt(request.getParameter("productId"));
+
+            int totalQuantities = productController.checkProductQuantities(productId);
+            if (totalQuantities > 0) {
+                int quantityInCart = cartController.getQuantity(userId, productId);
+                int quantityInStock = productController.checkProductQuantities(productId);
+                if (quantityInCart + 1 <= quantityInStock) {
+                    if (cartController.checkProductExistance(userId, productId) == Status.NOTOK) {
+                        cartController.addProduct(userId, productId);
+                    } else {
+                        int quantity = cartController.getQuantity(userId, productId) + 1;
+                        cartController.updateProductQuantities(userId, productId, quantity);
+                    }
+                } else {
+                    out.print(productId);
+                }
             }
-        }else{
-                 out.print(productId);
-             }
         }
+
     }
 
     /**
