@@ -1,11 +1,12 @@
 <%-- 
-    Document   : home
-    Created on : Mar 1, 2018, 4:24:16 AM
-    Author     : Hanaa
+    Document   : Category
+    Created on : Mar 9, 2018, 1:24:04 PM
+    Author     : Dina PC
 --%>
 
-<<!DOCTYPE html>
-<html lang="en">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
     <head>
         <title>Shop Zone </title>
         <meta charset="utf-8">
@@ -27,10 +28,9 @@
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <link rel="stylesheet" href="css/pagination_styles.css">
-        <%@page import="jtech.shopzone.view.controller.AdminProductServlet" %>
     </head>
 
-    <body onload="getProducts()">
+    <body onload="">
 
         <div class="super_container">
 
@@ -83,7 +83,7 @@
             </div>
 
 
-            <!-- New Arrivals -->
+            <!-- Add Categories Part -->
 
             <div class="new_arrivals">
                 <div class="container">
@@ -95,10 +95,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div id="products" class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
-
-                                <h1>in test</h1>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -133,7 +130,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_nav_container">
-                                <div class="cr">?2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
+                                <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
                                                                                                           aria-hidden="true"></i>
                                     by <a>ShopZone</a></div>
                             </div>
@@ -142,7 +139,6 @@
                 </div>
             </footer>
         </div>
-
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="css/bootstrap4/popper.js"></script>
         <script src="css/bootstrap4/bootstrap.min.js"></script>
@@ -150,7 +146,5 @@
         <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
         <script src="plugins/easing/easing.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/admin_show_product.js"></script>
     </body>
-
 </html>
