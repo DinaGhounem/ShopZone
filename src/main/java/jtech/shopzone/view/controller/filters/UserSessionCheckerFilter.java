@@ -18,8 +18,17 @@ public class UserSessionCheckerFilter implements Filter {
         HttpSession httpSession = httpRequest.getSession();
         if (httpSession != null) {
             Boolean isLogged = (Boolean) httpSession.getAttribute("loggedIn");
+            Boolean isAdmin = (Boolean) httpSession.getAttribute("isAdmin");
+
             if (isLogged != null && isLogged) {
-                chain.doFilter(req, resp);
+                if(isAdmin!=null && isAdmin == true)
+                {
+                    httpServletResponse.sendRedirect("/adminHome.jsp");
+                }
+                else
+                {
+                    chain.doFilter(req,resp);
+                }
             } else {
                 httpServletResponse.sendRedirect("/signin.html");
             }

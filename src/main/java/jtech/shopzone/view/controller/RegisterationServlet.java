@@ -123,7 +123,7 @@ public class RegisterationServlet extends HttpServlet {
                         }
 
                     } else {//admin
-                       RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
+                       RequestDispatcher rd = request.getRequestDispatcher("/adminHome.jsp");
                        rd.forward(request, response);
                     }
                 }
