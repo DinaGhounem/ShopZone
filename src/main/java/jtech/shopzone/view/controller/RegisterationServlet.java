@@ -56,8 +56,7 @@ public class RegisterationServlet extends HttpServlet {
         ArrayList<UserInterestsEntity> memberInterests = new ArrayList<UserInterestsEntity>();
         Status registerAck;
         //---------------------response--------------------------------//
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+        
         //----------------------getparameter from registeration form ---//
         newMember.setFirstName(request.getParameter("firstName"));
         newMember.setLastName(request.getParameter("lastName"));
@@ -67,7 +66,7 @@ public class RegisterationServlet extends HttpServlet {
         newMember.setAddress(request.getParameter("address"));
         newMember.setCreditLimit(Double.parseDouble(request.getParameter("creditLimit")));
         String[] checkedInterests = request.getParameterValues("interest");
-        if ( checkedInterests!=null &&checkedInterests.length > 0) {
+        if (checkedInterests != null && checkedInterests.length > 0) {
             for (String checkedInterest : checkedInterests) {
 
                 memberInterests.add(new UserInterestsEntity(0, checkedInterest));
@@ -78,14 +77,14 @@ public class RegisterationServlet extends HttpServlet {
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String birthdate = request.getParameter("birthDate");            
-            if(birthdate!=null){
-            Date parsed = format.parse(birthdate);
-            newMember.setBirthdate(parsed);
+            String birthdate = request.getParameter("birthDate");
+            if (birthdate != null) {
+                Date parsed = format.parse(birthdate);
+                newMember.setBirthdate(parsed);
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            response.sendRedirect("/signin.html");
+            //response.sendRedirect("/signin.html");
         }
 
         //-----------------------------------------------------------------------------------
@@ -108,29 +107,31 @@ public class RegisterationServlet extends HttpServlet {
             } else if (registerAck == Status.NOTOK) {
                 HttpSession session = request.getSession(false);
                 if (session == null) {
-                    response.sendRedirect("/signin.html");
+                    RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
+                        rd.forward(request, response);
                 } else {
                     String isAdmin = (String) session.getAttribute("isAdmin");
                     String loggedIn = (String) session.getAttribute("loggedIn");
                     if (!isAdmin.equalsIgnoreCase("true")) {//not admin
                         if (!loggedIn.equalsIgnoreCase("true")) {
-                            response.sendRedirect("signin.html");
+                            RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
+                            rd.forward(request, response);
 
                         } else {
-                            RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-                            rd.forward(request, response);
+                           RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+                           rd.forward(request, response);
                         }
 
                     } else {//admin
-                        response.sendRedirect("/adminpage.jsp");
+                       RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
+                       rd.forward(request, response);
                     }
                 }
             } else if (registerAck == Status.ERROR) {
-                response.sendRedirect("signup.html?Status=error&errormessage=Sorry-Error-in-connection-Try-again-later");
-            }
-        } else {
-            response.sendRedirect("signup.html?Status=error&errormessage=Wrong email or password");
-
+                response.sendRedirect("signin.html?Status=error&errormessage=Sorry Error-in-connection-Try-again-later");
+                }
+        }else {
+                response.sendRedirect("signin.html?Status=notok&errormessage=this email already exist");
         }
     }
 
