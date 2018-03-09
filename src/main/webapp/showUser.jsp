@@ -15,11 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-          <!-- jQuery Modal -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
         <link rel="stylesheet" href="styles/kendo.common.min.css"/>
         <link rel="stylesheet" href="styles/kendo.default.min.css"/>
         <link rel="stylesheet" href="styles/kendo.default.mobile.min.css"/>
@@ -33,16 +29,18 @@
         <link rel="stylesheet" href="css/pagination_styles.css">
 
         <link rel="stylesheet" type="text/css" href="cartincludes/css/main.css">
-      
 
-      
+
+
 
         <style>
 
             #user_profile{
                 position: relative;
                 float: right;
-                top:-150px;
+                top:-175px;
+                background: #fff;  
+
 
 
             }
@@ -52,10 +50,14 @@
                 margin: 0% 10%;
                 float: right;
 
+                background: #fff;
 
             }
             #user_profile_section{
-                margin: 10%;
+                min-height: 500px;
+                max-height: 500px;
+                overflow-y: auto;
+
             }
             .product_image img{
                 border-radius: 50%;
@@ -71,40 +73,53 @@
                 height: 300px;
             }
             .modal a.close-modal{
-             
+
                 top:-5px;
                 right:-3px;
             }
             #data2{
                 position: absolute;
-                top: 50%;
-                left: 47%;
-    transform: translateX(-50%) translateY(-50%);
-  
+                top: 10%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+
             }
             ::-webkit-scrollbar
-{
-  width: 5px;  /* for vertical scrollbars */
-  height: 12px; /* for horizontal scrollbars */
-  border-radius: 5%;
-}
+            {
+                width: 5px;  /* for vertical scrollbars */
+                height: 12px; /* for horizontal scrollbars */
+                border-radius: 5%;
+            }
 
-::-webkit-scrollbar-track
-{
-  background: rgba(0, 0, 0, 0.1);
-}
+            ::-webkit-scrollbar-track
+            {
+                background: rgba(0, 0, 0, 0.1);
+            }
 
-::-webkit-scrollbar-thumb
-{
-  background: rgba(0, 0, 0, 0.5);
-}
-.a:hover, .a:active {
-     
-    text-decoration: none;
-    text-align: none;
-    color: #333;
-}
+            ::-webkit-scrollbar-thumb
+            {
+                background: rgba(0, 0, 0, 0.5);
+            }
+            .a:hover, .a:active {
 
+                text-decoration: none;
+                text-align: none;
+                color: #333;
+            }
+
+            th,.headerColor{
+                color: #23527c;
+                font: bold;
+            }
+            thead{
+
+            }
+            #table_content{
+                width:50%;
+                margin-left:-5%;
+                max-height: 500px;
+                overflow-y: auto;
+            }
 
         </style>
     </head><!--/head-->
@@ -264,14 +279,14 @@
             <div style="margin-top: 200px;">
                 <section id="cart_items">
                     <div class="container">
-                        <div class="table-responsive cart_info table-hover" style="width:50%">
+                        <div class="table-responsive cart_info table-hover" id="table_content">
                             <table class="table table-condensed" >
-                                <thead>
+                                <thead class="thead-inverse">
                                     <tr class="cart_menu">
-                                        <td class="image">Name</td>
-                                        <td class="price">Email</td>
-                                        <td class="total">Total Price </td>
-                                        <td></td>
+                                        <th class="image">Name</th>
+                                        <th class="price">Email</th>
+                                        <th class="total">Total Price </th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="user_table">
@@ -283,102 +298,102 @@
 
                         </div>
                         <div id="user_profile" class="product-grid" style="width:50%"  >
-                             
+
                             <div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#">History</a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-block">
-     <div id="user_profile_section">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs">
+                                        <li class="nav-item " onclick="showUserProfile(0)">
+                                            <a class="nav-link headerColor" href="#" id="profile">Profile</a>
+                                        </li>
+                                        <li class="nav-item" onclick="showHistory2()">
+                                            <a class="nav-link headerColor " href="#" id="historySec">History</a>
+                                        </li>
+                                    </ul>
                                 </div>
-  </div>
-</div>
-                           
+                                <div class="card-block">
+                                    <div id="user_profile_section">
+                                    </div>
+                                </div>
                             </div>
-                            </section>
+
                         </div>
-                        <!-- Footer -->
+                </section>
+            </div>
+            <!-- Footer -->
 
-                        <footer class="footer">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                                            <ul class="footer_nav">
-                                                <li><a href="#">Blog</a></li>
-                                                <li><a href="#">FAQs</a></li>
-                                                <li><a href="contact.html">Contact us</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="footer_nav_container">
-                                            <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
-                                                                                                                      aria-hidden="true"></i>
-                                                by <a href="#">Colorlib</a></div>
-                                        </div>
-                                    </div>
-                                </div>
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                                <ul class="footer_nav">
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="contact.html">Contact us</a></li>
+                                </ul>
                             </div>
-                            <div id="ex1" class="modal">
-                                <div id="data" style="">
-                                <div class="table-responsive cart_info" style="width:100%">
-                                    <table class="table table-condensed" >
-                                        <thead>
-                                            <tr class="cart_menu">
-                                                <td class="image">Product</td>
-                                                <td class="price">Quantity</td>
-                                                <td class="total">Date</td>
-                                                <td>Price</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="history_table">
-
-
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                </ul>
                             </div>
-                            </div>
-                            <!-- Link to open the modal -->
-                        </footer>
-
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer_nav_container">
+                                <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
+                                                                                                          aria-hidden="true"></i>
+                                    by <a href="#">Colorlib</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ex1" class="modal">
+                    <div id="data" style="">
+                        <div class="table-responsive cart_info" style="width:100%">
+                            <table class="table table-condensed" >
+                                <thead>
+                                    <tr class="cart_menu">
+                                        <td class="image">Product</td>
+                                        <td class="price">Quantity</td>
+                                        <td class="total">Date</td>
+                                        <td>Price</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="history_table">
 
 
-                    <script src="js/jquery-3.2.1.min.js"></script>
-                    <script src="js/jquery.min.js"></script>
-                    <script src="js/kendo.all.min.js"></script>
-                    <script src="css/bootstrap4/popper.js"></script>
-                    <script src="css/bootstrap4/bootstrap.min.js"></script>
-                    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-                    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-                    <script src="plugins/easing/easing.js"></script>
-                    <script type="text/javascript" src="js/bootpag.js"></script>
-                    <script src="js/custom.js"></script>
-                    <script src="js/show_users.js"></script>
 
-                    </body>
-                    </html>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Link to open the modal -->
+            </footer>
+
+        </div>
+
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/kendo.all.min.js"></script>
+        <script src="css/bootstrap4/popper.js"></script>
+        <script src="css/bootstrap4/bootstrap.min.js"></script>
+        <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+        <script src="plugins/easing/easing.js"></script>
+        <script type="text/javascript" src="js/bootpag.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="js/show_users.js"></script>
+
+    </body>
+</html>

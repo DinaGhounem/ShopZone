@@ -5,10 +5,12 @@
  */
 var pageNum = 20;
 var categoryId = 0;
+currentPage = 1;
+var Cart=null
+getCart();
 getProductsCount(categoryId);
 getCategories();
-currentPage = 1;
-flag=null;
+
 
 function callback(response, statusTxt, xhr)
 {
@@ -30,16 +32,19 @@ function callback(response, statusTxt, xhr)
                 content += "<div class=\"product_info\">" +
                         "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
                         "<div class=\"product_price\">$" + object[i].price ;
-               /* if(flag!=null){
-                    content+= "<span>$590.00</span>" ;
-                }*/
+                for(j=0;j<Cart.length;j++){
+                    if(Cart[j].productsInfoEntity.productId==object[i].productId){
+                        
+                        if((Cart[j].quantity)>=object[i].quantity-1){
+                            
+                    content+= "<span>Out Of Stock</span>" ;
+                }
+                }
+                }
                   content+= "</div></div>" +
                         "</div>" +
                         "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct(" + object[i].productId + ")\">add to cart</div>" +
-                        "</div>";
-                /*  if (i % 4 == 0) {
-                 height += 400;
-                 }*/
+                        "</div>";            
             }
         }
         $(products).html(content);
@@ -51,10 +56,10 @@ function callback(response, statusTxt, xhr)
          */
     }
 }
-function getProducts(page, categoryId,response) {
+function getProducts(page, categoryId) {
 
     $.get("ShowProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
-    flag=response;
+  
 
 
 }
@@ -91,13 +96,14 @@ function ProductsCountcallback(response, statusTxt, xhr)
 function addProduct(productId) {
 
     $.post("AddProductToCart", {productId: productId}, showProductCallback);
+    getCart();
 
 }
 function showProductCallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
         getProductsCount(categoryId);
-        getProducts(currentPage, 0,response);
+        getProducts(currentPage, 0);
 
     }
 }
@@ -131,7 +137,21 @@ function getCategoriesCallBack(response, statusTxt, xhr)
 function changeCategory() {
     categoryId = document.getElementById("size").value;
     getProductsCount(categoryId);
-    getProducts(1, categoryId,null);
+    getProducts(1, categoryId);
 
 
 }  
+function getCart() {
+
+    $.get("CartProducts", getCartCallBack);
+
+
+}
+function getCartCallBack(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+
+       
+        Cart = JSON.parse(response);
+    }
+}

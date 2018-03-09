@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var selectedId=0;
 showUsers();
 
 function showUsers(){
@@ -25,8 +26,17 @@ function showUserCallBack(response, statusTxt, xhr)
         $(user_table).html(content);
     }}
 function showUserProfile(userId){
-     $.get("ShowUserToAdmin?userId="+userId,showUserProfileCallBack);
+    if(userId!=0){
+    selectedId=userId;
     
+ } 
+ $(profile).addClass("active");
+ 
+ if($(historySec).hasClass("active")){
+ $(historySec).removeClass("active");
+ }
+   
+     $.get("ShowUserToAdmin?userId="+selectedId,showUserProfileCallBack);  
 }
 function showUserProfileCallBack(response, statusTxt, xhr)
 {
@@ -35,19 +45,19 @@ function showUserProfileCallBack(response, statusTxt, xhr)
         object = JSON.parse(response);
         if( object!=null) {
             
-                content += "<div class=\"product-item men\" >" +
+                content += "<div class=\"product-item men\" style='margin:5% 25% 0% -10%' >" +
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +
-                        "<img src=\"img/" + object.userImg + "\" alt=\"\">" +
+                        "<img src=\"img/profile.png\" alt=\"\">" +
                         "</div>" ;
                
                 content += "<div class=\"product_info\">" +
-                        "<h6 class=\"product_price\">" + object.firstName + " "+object.lastName+"<br/>(" + object.email + ")</h6>" +
+                        "<h6 class=\" headerColor\">" + object.firstName + " "+object.lastName+"<br/>(" + object.email + ")</h6>" +
                         //"<div class=\"product_name\"><span class=\"product_price\">Job : </span>" + object.job + "</div>"  +
-                        "<div class=\"product_name\"><span class=\"product_price\">Address : </span>" + object.address + "</div>" +
-                        "<div class=\"product_name\"><span class=\"product_price\">Birth date : </span>"+object.birthdate + "</div>" ;
+                        "<div class=\"product_name\"><span class=\" headerColor\">Address : </span>" + object.address + "</div>" +
+                        "<div class=\"product_name\"><span class=\" headerColor\">Birth date : </span>"+object.birthdate + "</div>" ;
                         if(object.interests.length>0){
-                        content+="<div class=\"product_name\"><span class=\"product_price\">Interests :</div>" ;
+                        content+="<div class=\"product_name\"><span class=\" headerColor\">Interests :</div>" ;
                         for(j=0;j<object.interests.length;j++){
                          content+="<span class=\"product_name\">"+object.interests[j].interestName+"</span>";
                          if(j!=object.interests.length-1){
@@ -71,7 +81,12 @@ function showUserProfileCallBack(response, statusTxt, xhr)
 function clearFun(){
     $(user_profile_section).html("<div></div>");
 }
-
+function showHistory2(){
+     showHistory(selectedId,showUserHistoryCallBack);
+     $(profile).removeClass("active");
+    $(historySec).addClass("active");
+   
+}
 function showHistory(userId,showUserHistoryCallBack){
     
      $.get("UserHistory?userId="+userId,showUserHistoryCallBack)
@@ -83,13 +98,13 @@ function showUserHistoryCallBack(response, statusTxt, xhr)
           content="";
         if(object.length>0){
            
-        content="<div class=\"table-responsive cart_info table-hover\" style=\"width:100%\">"+
+        content="<div class=\"table-responsive cart_info table-hover\" id=\"history_table\" style=\"width:100%\">"+
                                    " <table class=\"table table-condensed\" >"+
                                         "<thead> <tr class=\"cart_menu\">"+
-                                               " <td class=\"image\">Product</td>"+
-                                               " <td class=\"price\">Quantity</td>"+
-                                                "<td class=\"total\">Date</td>"+
-                                                "<td>Price</td></tr> </thead><tbody id=\"history_table\">";
+                                               " <th class=\"image\">Product</th>"+
+                                               " <th class=\"price\">Quantity</th>"+
+                                                "<th class=\"total\">Date</th>"+
+                                                "<th>Price</th></tr> </thead><tbody id=\"history_table\">";
                                             
                                         
 
@@ -113,7 +128,7 @@ function showUserHistoryCallBack(response, statusTxt, xhr)
     else{
         content="<span id=\"data2\">No Data to show</span>";
     }
-    $(data).html(content);
+    $(user_profile_section).html(content);
 }
 
     }
