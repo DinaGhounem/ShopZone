@@ -129,13 +129,14 @@
                                                         <td>Credit Limit :</td>
                                                         <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
                                                     </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input id="button_submit" type="submit" class="newsletter_submit_btn trans_300" value="Save"/></td>
+                                                    </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                     </table>
-                                    <div>
-                                        <input id="button_submit" type="submit" class="btn btn-outline-danger my-2 my-sm-0" value="Save"/>
-                                    </div>
                                 </form>
                             </center>
                         </div>
