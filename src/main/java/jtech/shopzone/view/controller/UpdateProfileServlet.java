@@ -30,7 +30,7 @@ public class UpdateProfileServlet extends HttpServlet {
         /**
          * get user id from the session
          */
-        int userId = 1; //(int) request.getSession().getAttribute("userId");
+        int userId = (int) request.getSession().getAttribute("userId");
         
         /**
          * get user info from db
