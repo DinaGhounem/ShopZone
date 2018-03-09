@@ -221,6 +221,7 @@
 <script type="text/javascript" src="js/bootpag.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/show_product.js"></script>
+<script src="cartincludes/js/cartNotificationUpdater.js"></script>
 </body>
 
 </html>

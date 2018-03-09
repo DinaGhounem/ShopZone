@@ -191,6 +191,7 @@
         <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
         <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
         <script src="plugins/easing/easing.js"></script>
+        <script src="cartincludes/js/cartNotificationUpdater.js"></script>
 
     </body>
 </html>

@@ -131,6 +131,7 @@
                                     <p class="cart_price">
                                         <input type="text" class="cart_quantity_input qty" placeholder="3"
                                                value="${cartEntity.quantity}"
+                                               onblur="setProductQuantity(Event,${cartEntity.productsInfoEntity.productId})"
                                                onkeyup="setProductQuantity(Event,${cartEntity.productsInfoEntity.productId})"/>
                                         x $${cartEntity.productsInfoEntity.price}</p>
                                     <c:choose>
@@ -225,6 +226,7 @@
     <script src="js/custom.js"></script>
     <script src="js/show_product.js"></script>
     <script src="cartincludes/js/main.js"></script>
+    <script src="cartincludes/js/cartNotificationUpdater.js"></script>
 
 
 </body>
