@@ -8,6 +8,7 @@ package jtech.shopzone.view.controller;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,14 +68,14 @@ public class AdminEditProductServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-         PrintWriter out = response.getWriter();
-        int id=(int) request.getAttribute("productId");
+        throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        int id=Integer.parseInt(request.getParameter("productId").toString());
         ProductsInfoEntity product=productController.getProductInfo(id);
         Gson gson = new Gson();
         String jsonObject = gson.toJson(product);
         out.print(jsonObject);
-        
+                
     }
 
     /**

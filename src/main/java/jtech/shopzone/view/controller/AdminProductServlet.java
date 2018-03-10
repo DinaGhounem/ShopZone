@@ -5,6 +5,7 @@ package jtech.shopzone.view.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,11 +23,11 @@ import jtech.shopzone.model.entity.ProductsInfoEntity;
  *
  * @author Dell
  */
-@WebServlet(name = "AdminProductServlet", urlPatterns = {"/AdminProductServlet"})
+@WebServlet(urlPatterns = {"/AdminProductServlet"})
 public class AdminProductServlet extends HttpServlet {
 
     private ProductController productController;
-
+   
     @Override
     public void init() throws ServletException {
         productController = ProductControllerImpl.newInstance();
@@ -44,13 +45,12 @@ public class AdminProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+      PrintWriter out = response.getWriter();
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         products = productController.getProducts();
         Gson gson = new Gson();
         String jsonObject = gson.toJson(products);
         out.print(jsonObject);
-
     }
 
     /**
@@ -64,13 +64,7 @@ public class AdminProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        int id=(int) request.getAttribute("productId");
-        ProductsInfoEntity product=productController.getProductInfo(id);
-        Gson gson = new Gson();
-        String jsonObject = gson.toJson(product);
-        out.print(jsonObject);
-
+     
     }
 
     /**

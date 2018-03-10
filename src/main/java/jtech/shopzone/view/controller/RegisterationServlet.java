@@ -98,7 +98,7 @@ public class RegisterationServlet extends HttpServlet {
             //-----------------------create httpsession--------------------//
             if (registerAck == Status.OK) {
                 HttpSession session = request.getSession(true);
-                session.setAttribute("loggedIn", new String("true"));
+                session.setAttribute("loggedIn", new Boolean(true));
                 session.setAttribute("userEmail", newMember.getEmail());//
                 session.setAttribute("userId", userController.getUserId(newMember.getEmail()));
                 RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
@@ -110,10 +110,10 @@ public class RegisterationServlet extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
                         rd.forward(request, response);
                 } else {
-                    String isAdmin = (String) session.getAttribute("isAdmin");
-                    String loggedIn = (String) session.getAttribute("loggedIn");
-                    if (!isAdmin.equalsIgnoreCase("true")) {//not admin
-                        if (!loggedIn.equalsIgnoreCase("true")) {
+                    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+                    Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
+                    if (!isAdmin) {//not admin
+                        if (!loggedIn) {
                             RequestDispatcher rd = request.getRequestDispatcher("/signin.html");
                             rd.forward(request, response);
 
@@ -123,7 +123,7 @@ public class RegisterationServlet extends HttpServlet {
                         }
 
                     } else {//admin
-                       RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
+                       RequestDispatcher rd = request.getRequestDispatcher("/adminHome.jsp");
                        rd.forward(request, response);
                     }
                 }

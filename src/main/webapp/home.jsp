@@ -212,9 +212,12 @@ getCategories();">
             <script type="text/javascript" src="js/bootpag.js"></script>
             <script src="js/custom.js"></script>
             <script src="js/show_product.js"></script>
-
-
+            <script src="cartincludes/js/cartNotificationUpdater.js"></script>
+        </div>
     </body>
 
 </html>
+<<<<<<< HEAD
 
+=======
+>>>>>>> acab0d5e21c0bf66dbd990589fab8ea5442cc220

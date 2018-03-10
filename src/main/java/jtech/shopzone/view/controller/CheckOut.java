@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,12 +34,13 @@ public class CheckOut extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: get user id from session
-        int userId = 1;
-        ArrayList<TransactionReport>  transactionReports = transactionsController.checkOut(userId);
-       // Gson gson = new Gson();
-//        String transactionReportsJSON = gson.toJson(transactionReports);
-        request.getSession().setAttribute("transactions",transactionReports);
-        response.sendRedirect("/checkout.jsp");
+        HttpSession httpSession = request.getSession();
+        Integer userId = (Integer) httpSession.getAttribute("userId");
+        if(userId!=null)
+        {
+            ArrayList<TransactionReport>  transactionReports = transactionsController.checkOut(userId);
+            request.getSession().setAttribute("transactions",transactionReports);
+            response.sendRedirect("/checkout.jsp");
+        }
     }
 }
