@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * @author Muhammed Mahrous
  */
-@WebServlet(name = "LogOutServlet")
+@WebServlet(name = "LogOutServlet",urlPatterns={"/LogOutServlet"})
 public class LogOutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession();
