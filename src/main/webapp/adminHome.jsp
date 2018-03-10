@@ -170,7 +170,7 @@
                         <div class="col">
                             <div id="products" class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
 
-                                <h1>in test</h1>
+                                <h3>loading...</h3>
                             </div>
                         </div>
                     </div>
