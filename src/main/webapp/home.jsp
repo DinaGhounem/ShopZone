@@ -39,7 +39,8 @@
 
     </head>
 
-    <body onload="getProducts(1, 0)">
+    <body onload="getCart();getProducts(1, 0);getProductsCount(categoryId);
+getCategories();">
 
         <div class="super_container">
 
@@ -216,4 +217,4 @@
     </body>
 
 </html>
->>>>>>> 26d2c3a762de0b8a0de2dc623c0b5264fe632134
+

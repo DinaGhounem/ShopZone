@@ -6,10 +6,9 @@
 var pageNum = 20;
 var categoryId = 0;
 currentPage = 1;
-var Cart=null
+var Cart=null;
 getCart();
-getProductsCount(categoryId);
-getCategories();
+
 
 
 function callback(response, statusTxt, xhr)

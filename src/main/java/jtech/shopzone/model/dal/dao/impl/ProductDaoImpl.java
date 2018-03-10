@@ -390,7 +390,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts();
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;
@@ -405,7 +405,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts(categoryId);
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;
@@ -420,7 +420,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts(minPrice, maxPrice);
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;

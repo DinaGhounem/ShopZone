@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -76,6 +77,8 @@ public class ShowProductServlet extends HttpServlet {
         //processRequest(request, response);
         PrintWriter out = response.getWriter();
         String page = request.getParameter("page");
+        String from=request.getParameter("from");
+        String to =request.getParameter("to");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         if (page != null) {
 
@@ -83,6 +86,8 @@ public class ShowProductServlet extends HttpServlet {
             ArrayList<ProductsInfoEntity> products = new ArrayList<>();
             if (categoryId == 0) {
                 products = productController.getProductsBTWRange(pageNum);
+            }else if(to!=null&&from!=null){
+             products = productController.getProductsBTWRange(pageNum,Double.parseDouble(from),Double.parseDouble(to));
             } else {
 
                 products = productController.getProductsBTWRange(pageNum, categoryId);
