@@ -99,7 +99,7 @@ public class AddProduct extends HttpServlet {
         if (name != null && price != null && quantity != null && description != null && img != null && category != null) {
             ProductsInfoEntity product = new ProductsInfoEntity(0, name, Double.parseDouble(price), Integer.parseInt(quantity), description, Integer.parseInt(category), "img/" + img);
             productController.AddProduct(product);
-            response.sendRedirect("adminHome.jsp");
+            response.sendRedirect("/adminHome.jsp");
         } else {
             out.print(category);
 

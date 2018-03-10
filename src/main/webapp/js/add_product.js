@@ -14,11 +14,11 @@ function getCategoriesCallBack(response, statusTxt, xhr)
     if (statusTxt == "success") {
         object = JSON.parse(response);
        content="";
+        content+="<option disabled selected>Select Category</option>";
         for (i = 0; i < object.length; i++) {
             content += "<option value='"+object[i].categoryId+"'>" + object[i].categoryName + "</option>";
 
         }
-
         $("#size").html(content);
      
 
