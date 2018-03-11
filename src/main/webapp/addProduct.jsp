@@ -198,7 +198,8 @@
 
                             </select>
                             <br>
-                            <input type="submit" class="btn btn-success btn-block" value="Add Product"/>
+                            <input type="submit" class="btn btn-success btn-block" value="Add Product" onsubmit="validateImage()"/>
+                            <label id="imageError" style="color:#b72313;margin-left:5px;margin-top: 3px"></label>
                         </div>
                     </form>
                 </div>

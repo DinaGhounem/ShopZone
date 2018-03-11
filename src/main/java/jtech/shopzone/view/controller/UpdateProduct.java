@@ -57,18 +57,8 @@ public class UpdateProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out=response.getWriter();
-  
-        int id=Integer.parseInt(request.getParameter("Pid"));
-        String name=request.getParameter("name");
-        double price=Integer.parseInt(request.getParameter("price"));
-        int quantity=Integer.parseInt(request.getParameter("quantity"));
-        String description=request.getParameter("description");
-        int categoryId=Integer.parseInt(request.getParameter("categoryId"));
-        String img=request.getParameter("img");
-        ProductsInfoEntity product=new ProductsInfoEntity(id, name, price, quantity, description, categoryId, img);
-        productController.updateProduct(product);
-        out.print("done");
+
+
     }
 
     /**
@@ -82,7 +72,17 @@ public class UpdateProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out=response.getWriter();
+        int id=Integer.parseInt(request.getParameter("Pid"));
+        String name=request.getParameter("name");
+        double price=Integer.parseInt(request.getParameter("price"));
+        int quantity=Integer.parseInt(request.getParameter("quantity"));
+        String description=request.getParameter("description");
+        int categoryId=Integer.parseInt(request.getParameter("categoryId"));
+        String img=request.getParameter("img");
+        ProductsInfoEntity product=new ProductsInfoEntity(id, name, price, quantity, description, categoryId, img);
+        productController.updateProduct(product);
+        out.print("done");
     }
 
     /**

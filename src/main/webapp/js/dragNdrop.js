@@ -1,7 +1,7 @@
 var imageLoader;
 var dropbox;
 $(document).ready(function () {
-    imageLoader = document.getElementById('filePhoto');
+        imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
     dropbox = document.getElementById("uploader");
     dropbox.addEventListener("dragenter", dragenter, false);

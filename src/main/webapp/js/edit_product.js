@@ -34,6 +34,12 @@ function callback(response, statusTxt, xhr)
     }
 
 }
+function updateParams() {
+    productName=document.getElementById("name").value;
+    description=document.getElementById("description").value;
+    pPrice= document.getElementById("price").value;
+    pQuantity = document.getElementById("quantity").value
+}
 function setCategory(response, statusTxt, xhr) {
     if (statusTxt == "success") {
         object = JSON.parse(response);
@@ -51,6 +57,7 @@ $("#updateButton").click(function () {
     var formValid = $("#editform")[0].checkValidity();
     if(formValid)
     {
+        updateParams();
         var jsonData = {"Pid":Pid,"name": productName,"price": pPrice,"quantity": pQuantity,"description":description,"img": img,"categoryId":categoryId};
         $.post('UpdateProduct',jsonData,function (data)
         {

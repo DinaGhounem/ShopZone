@@ -120,7 +120,7 @@
                                       placeholder="Write product description here" required></textarea>
 
                             <label for="name" class="col-form-label">Product Category</label>
-                            <select id="category" name="categoryId" class="form-control" required>
+                            <select id="category" name="categoryId" class="form-control" required disabled>
 
                             </select>
                             <br>
