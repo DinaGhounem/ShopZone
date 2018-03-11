@@ -492,31 +492,8 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public int getProductCount() {
-        int productCount = 0;
-        String query = "select count(*) from PRODUCTS_INFO where DELETED_FLG=1 and QUANTITY!=0";
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                productCount = resultSet.getInt(1);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        int productCount = getAvaliableProducts().size();
+        
         return productCount;
     }
  @Override
@@ -571,7 +548,7 @@ public class ProductDaoImpl implements ProductDao {
 //       /* for (ProductsInfoEntity product1 : products) {
 //              System.out.println(product1.getPrice());
 //        }*/
-        System.out.println(pdi.getProducts().size());
+        System.out.println(pdi.getProductCount());
     }
 
 }

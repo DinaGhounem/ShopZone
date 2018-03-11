@@ -88,6 +88,7 @@ function getProductsCountBTWRang(categoryId) {
 function ProductsCountcallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
+        
         if (response % 8 == 0 || response % 8 >= 5 || response < 8) {
             pageNum = Math.round(response / 8);
         } else {
@@ -95,7 +96,7 @@ function ProductsCountcallback(response, statusTxt, xhr)
         }
         $('#pagination-here').bootpag({
             total: pageNum,
-            page: 1,
+            page: currentPage,
             maxVisible: 3,
             leaps: true,
             href: "#result-page-{{number}}",
