@@ -14,6 +14,7 @@ function loadData() {
             document.getElementById("input_date").value = userData.birthdate;
             document.getElementById("input_job").value = userData.job;
             document.getElementById("input_creditLimit").value = userData.creditLimit;
+            document.getElementById("input_interests").value = userData.interests;
 //            for(var i=0;i<userData.interests.length;i++)
 //            {
 //                if(userData.interests.interestName === "fashion")

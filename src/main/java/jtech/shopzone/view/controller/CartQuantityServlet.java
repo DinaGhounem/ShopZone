@@ -16,13 +16,8 @@ import java.io.IOException;
  */
 @WebServlet(name = "CartQuantityServlet", urlPatterns = "/CartQuantityServlet")
 public class CartQuantityServlet extends HttpServlet {
-    private CartController cartController;
+    private CartController cartController = CartControllerImpl.newInstance();;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        cartController = CartControllerImpl.newInstance();
-    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession();
