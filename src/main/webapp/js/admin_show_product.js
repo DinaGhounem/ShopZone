@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 function getProducts() {
-
     $.get("AdminProductServlet", callback);
-
-
 }
 function callback(response, statusTxt, xhr)
 {

@@ -190,7 +190,7 @@ public class ProductDaoImpl implements ProductDao {
     public Status deleteProduct(int productId) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = DbConnection.getPreparedStatement("delete from PRODUCTS_INFO where product_id='" + productId + "'");
+            preparedStatement = DbConnection.getPreparedStatement("update PRODUCTS_INFO set deleted_flg = 0 where product_id='" + productId + "'");
 
             if (preparedStatement.executeUpdate() > 0) {
                 return Status.OK;
@@ -494,19 +494,19 @@ public class ProductDaoImpl implements ProductDao {
     //just for test ^_^
     public static void main(String[] args) {
         ProductsInfoEntity product = new ProductsInfoEntity();
-        product.setProductId(2);
-        product.setProductName("nutall");
-        product.setCategoryId(1);
-        product.setDescription("choclate");
-        product.setPrice(100);
-        product.setQuantity(100);
-        product.setImg("product_5.png");
+//        product.setProductId(2);
+//        product.setProductName("nutall");
+//        product.setCategoryId(1);
+//        product.setDescription("choclate");
+//        product.setPrice(100);
+//        product.setQuantity(100);
+//        product.setImg("product_5.png");
         ProductDaoImpl pdi = new ProductDaoImpl();
-         //ArrayList<ProductsInfoEntity>products=pdi.getProducts(10,100);
-       /* for (ProductsInfoEntity product1 : products) {
-              System.out.println(product1.getPrice());
-        }*/
-        System.out.println(pdi.getMaxmimumPrice());
+//         //ArrayList<ProductsInfoEntity>products=pdi.getProducts(10,100);
+//       /* for (ProductsInfoEntity product1 : products) {
+//              System.out.println(product1.getPrice());
+//        }*/
+        System.out.println(pdi.deleteProduct(1));
     }
 
 }
