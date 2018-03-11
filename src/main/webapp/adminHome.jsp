@@ -13,6 +13,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="signincludes/images/icons/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <link rel="stylesheet" type="text/css" href="css/contact_styles.css">

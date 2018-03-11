@@ -18,6 +18,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="signincludes/images/icons/favicon.ico"/>
         <link rel="stylesheet" href="styles/kendo.common.min.css" />
         <link rel="stylesheet" href="styles/kendo.default.min.css" />
         <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
@@ -41,12 +42,12 @@
                 background: #fff;
                 padding: 0px;
                 border: none;
-                
+
             }
             input[type=number]{
-                 width: 80px;
-                 margin: 0% 5%;
-} 
+                width: 80px;
+                margin: 0% 5%;
+            } 
         </style>
 
     </head>
@@ -89,18 +90,18 @@
                                         <li><a href="home.jsp">Home</a></li>
                                         <li><a href="UserProfile.jsp">My Profile</a></li>
                                         <li><a href="cart.jsp">My Cart</a></li>
-                                       
+
                                         <li class="currency">
-									<a href="#">
-										Search
-										<i class="fa fa-angle-down"></i>
-									</a>
-									<ul class="currency_selection">
-										<li onclick="searchByCategory()"><a >Category</a></li>
-										<li onclick="searchByPriceAction()"><a >Price</a></li>
-										
-									</ul>
-								</li>
+                                            <a href="#">
+                                                Search
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <ul class="currency_selection">
+                                                <li onclick="searchByCategory()"><a >Category</a></li>
+                                                <li onclick="searchByPriceAction()"><a >Price</a></li>
+
+                                            </ul>
+                                        </li>
                                     </ul>
                                     <ul class="navbar_user">
                                         <li><a href="UserProfile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
@@ -134,9 +135,9 @@
                     <div class="row align-items-center fill_height">
                         <div class="col">
                             <div class="main_slider_content">
-                                <h6>Spring / Summer Collection 2017</h6>
+                                <h6>Spring / Summer Collection 2018</h6>
                                 <h1>Get up to 30% Off New Arrivals</h1>
-                                <div class="red_button shop_now_button"><a href="#">shop now</a></div>
+
                             </div>
                         </div>
                     </div>
@@ -230,7 +231,7 @@
             <script src="js/kendo.all.min.js"></script>
             <script src="css/bootstrap4/popper.js"></script>
             <script src="css/bootstrap4/bootstrap.min.js"></script>
-         
+
             <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
             <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
             <script src="plugins/easing/easing.js"></script>
