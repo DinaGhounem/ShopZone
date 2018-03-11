@@ -67,7 +67,7 @@
     var status = getParameterByName('Status'); // "lorem"
     var error = getParameterByName('errormessage'); // "" (present with empty value)
     if (status==="notok"){
-        alert(error);
+     
         $('#errorlable').html(error);
     }
     
