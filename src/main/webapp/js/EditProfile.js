@@ -14,15 +14,15 @@ function loadData() {
             document.getElementById("input_date").value = userData.birthdate;
             document.getElementById("input_job").value = userData.job;
             document.getElementById("input_creditLimit").value = userData.creditLimit;
-            document.getElementById("input_interests").append('<input type=checkbox name=interest value=fashion selected />Fashion');
-            //// = userData.interests;
-//            for(var i=0;i<userData.interests.length;i++)
-//            {
-//                if(userData.interests.interestName === "fashion")
-//                    document.getElementById("fashion").checked = true;
-//                else
-//                    document.getElementById("elcts").checked = true;
-//            }
+            
+            
+            for(var i=0;i<userData.interests.length;i++)
+            {
+                if(userData.interests[i].interestName === "fashion")
+                    $("#fashion").prop("checked",true);
+                else
+                    $("#labs").prop("checked",true);
+            }
         }
     });
 }
