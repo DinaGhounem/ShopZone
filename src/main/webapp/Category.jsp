@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="css/pagination_styles.css">
     </head>
 
-    <body onload="">
+    <body onload="loadCategoryData()">
 
         <div class="super_container">
 
@@ -79,9 +79,11 @@
             <div class="fs_menu_overlay"></div>
             <div class="hamburger_menu">
                 <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                <div class="hamburger_menu_content text-right"></div>
+                <div class="hamburger_menu_content text-right">
+                    Products Categories
+                </div>
             </div>
-
+            <br><br><br><br><br><br>
 
             <!-- Add Categories Part -->
 
@@ -94,8 +96,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            
+                        <div class="table-responsive cart_info table-hover" id="table_content">
+                            <table class="table table-condensed" >
+                                <thead class="thead-inverse">
+                                    <tr class="cart_menu">
+                                        <th class="image">Categories</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categories_section">
+
+
+
+                                </tbody>
+                            </table>
+                            <center>
+                                <div id="btns_section">
+                                    <button id="new_category_btn" class="newsletter_submit_btn trans_300" onclick="addNewProduct()">Add New Category</button>
+                                </div>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -146,5 +164,6 @@
         <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
         <script src="plugins/easing/easing.js"></script>
         <script src="js/custom.js"></script>
+        <script src="js/CategoryPage.js"></script>
     </body>
 </html>
