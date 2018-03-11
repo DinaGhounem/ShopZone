@@ -41,7 +41,7 @@ function callback(response, statusTxt, xhr) {
                     "<image src=\"img/x.png\" style=\"width:20px;height\" onclick=\"onclickEdit(" + object[i].productId + ")\"/>" +
                     "</span></div>" +
                     "<div class=\"product_info\">" +
-                    "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
+                    "<h6 class=\"product_name\"><a href=\"\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
                     "<div class=\"product_price\">$" + object[i].price + "<span>$590.00</span></div>" +
                     "</div>" +
                     "</div>" +

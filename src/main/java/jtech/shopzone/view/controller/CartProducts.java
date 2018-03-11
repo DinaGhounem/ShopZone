@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jtech.shopzone.controller.CartController;
 import jtech.shopzone.controller.impl.CartControllerImpl;
 import jtech.shopzone.model.entity.CartEntity;
@@ -72,14 +73,17 @@ public class CartProducts extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
 
-        //TO DO get user id
-        int userId = 1;
+         HttpSession httpSession = request.getSession();
+        if(httpSession!=null)
+        {
+            Integer userId = (Integer) httpSession.getAttribute("userId");
         ArrayList<CartEntity> cartEntities = cartController.getUserProducts(userId);
         Gson gson = new Gson();
         String jsonObject = gson.toJson(cartEntities);
+        System.out.println(cartEntities.size());
         out.print(jsonObject);
     }
-
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *

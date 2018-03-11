@@ -12,7 +12,6 @@ categoryPriceFlag = false;
 searchFrom = 0;
 searchTo = 0;
 
-getCart();
 getMaxPrice();
 
 
@@ -24,7 +23,7 @@ function callback(response, statusTxt, xhr)
         var content = "";
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
-            if (object[i].quantity > 0&&object[i].deletedFlg==1) {
+            if (object[i].quantity > 0 && object[i].deletedFlg == 1) {
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +
@@ -35,12 +34,13 @@ function callback(response, statusTxt, xhr)
                     content += "<div class=\"product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center\"><span>latest</span></div>";
                 }
                 content += "<div class=\"product_info\">" +
-                        "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
+                        "<h6 class=\"product_name\"><a href=\"\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
                         "<div class=\"product_price\">$" + object[i].price;
+
                 for (j = 0; j < Cart.length; j++) {
                     if (Cart[j].productsInfoEntity.productId == object[i].productId) {
 
-                        if ((Cart[j].quantity) >= object[i].quantity - 1) {
+                        if ((Cart[j].quantity) >= object[i].quantity) {
 
                             content += "<span>Out Of Stock</span>";
                         }
@@ -182,7 +182,7 @@ function searchByCategory() {
     getProducts(1, 0);
     getProductsCount(0);
     getCategories();
-    
+
 }
 
 function searchFun() {
