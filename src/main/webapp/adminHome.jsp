@@ -40,7 +40,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="top_nav_left">Welcome In Our Online Shopping website ShopZone :) </div>
+                                <div class="top_nav_left">Welcome Admin:) </div>
                             </div>
                             <>
                             <div class="top_nav_left" style="padding-left:35em;">
@@ -64,6 +64,7 @@
                                     <ul class="navbar_menu">
                                         <li><a href="adminHome.jsp">Home</a></li>
                                         <li><a href="Category.jsp">Categories</a></li>
+                                        <li><a href="addProduct.jsp">Add Products</a></li>
                                         <li><a href="showUser.jsp">Clients</a></li>
                                     </ul>
                                     <div class="hamburger_container">
