@@ -45,7 +45,7 @@
             }
             input[type=number]{
                  width: 80px;
-                 margin: 5%;
+                 margin: 0% 5%;
 } 
         </style>
 
@@ -230,6 +230,7 @@
             <script src="js/kendo.all.min.js"></script>
             <script src="css/bootstrap4/popper.js"></script>
             <script src="css/bootstrap4/bootstrap.min.js"></script>
+         
             <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
             <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
             <script src="plugins/easing/easing.js"></script>
@@ -241,7 +242,3 @@
     </body>
 
 </html>
-<<<<<<< HEAD
-
-=======
->>>>>>> acab0d5e21c0bf66dbd990589fab8ea5442cc220

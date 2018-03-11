@@ -38,7 +38,7 @@
             #user_profile{
                 position: relative;
                 float: right;
-                top:-175px;
+                top:-200px;
                 background: #fff;  
 
 
@@ -174,14 +174,18 @@
                 <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
                 <div class="hamburger_menu_content text-right"></div>
             </div>
-
-
-
             <!--/#cart_items-->
-
-            <div style="margin-top: 200px;">
+           
+            <div style="margin-top: 150px;">
                 <section id="cart_items">
                     <div class="container">
+                         <div class="row">
+                             <div class="col text-center" style="margin-bottom:50px;">
+                            <div class="section_title new_arrivals_title">
+                                <h2>Show Clients Profile & History</h2>
+                            </div>
+                        </div>
+                    </div>
                         <div class="table-responsive cart_info table-hover" id="table_content">
                             <table class="table table-condensed" >
                                 <thead class="thead-inverse">
