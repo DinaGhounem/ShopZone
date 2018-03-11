@@ -8,6 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>User Profile</title>
+        <link rel="icon" type="image/png" href="signincludes/images/icons/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
