@@ -159,7 +159,7 @@ public class ProductDaoImpl implements ProductDao {
 
             }
             try {
-                preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_INFO values(?,?,?,?,?,?,?)");
+                preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_INFO values(?,?,?,?,?,?,?,1)");
                 preparedStatement.setInt(1, productId);
                 preparedStatement.setString(2, product.getProductName());
                 preparedStatement.setDouble(3, product.getPrice());
