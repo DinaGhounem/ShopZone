@@ -45,29 +45,29 @@ function setCategory(response, statusTxt, xhr) {
         document.getElementById("category").innerHTML = content;
     }
 }
-        $("#updateButton").click(function () {
-            pPrice = $("#price").val();
-            pQuantity = $("#quantity").val();
-            if (pPrice == productPrice && pQuantity == productQuantity) {
-                $("#result").text("no changes in price or quantity to save");
-            } else {
-                var jsonData = {"Pid":Pid,"name": productName,"price": pPrice,"quantity": pQuantity,"description":description,"img": img,"categoryId":categoryId};
-                $.ajax({url: 'UpdateProduct',
-                    type: 'GET', //servlet request type
-                    contentType: 'application/json', //For input type
-                    data: jsonData, //input data
-                    dataType: 'json', //For output type
-                    success:function (data)
-                    {
-                       $("#result").text("data updated successfuly");
+$("#updateButton").click(function () {
+    pPrice = $("#price").val();
+    pQuantity = $("#quantity").val();
+    var formValid = $("#editform")[0].checkValidity();
+    if(formValid)
+    {
+        var jsonData = {"Pid":Pid,"name": productName,"price": pPrice,"quantity": pQuantity,"description":description,"img": img,"categoryId":categoryId};
+        $.post('UpdateProduct',jsonData,function (data)
+        {
+            $("#successUpdate")[0].innerHTML = "Successfully Updated Product!";
 
-                    }
-                });
-            }
         });
 
-        
-    
+    }
+
+    else
+    {
+        $("#successUpdate")[0].innerHTML = "*Please Enter right data!";
+    }
+});
+
+
+
 
 
 function updateCallback(response, statusTxt, xhr) {
