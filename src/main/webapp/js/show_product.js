@@ -6,8 +6,14 @@
 var pageNum = 20;
 var categoryId = 0;
 currentPage = 1;
-var Cart=null;
+var Cart = null;
+searchFlag = true;
+categoryPriceFlag = false;
+searchFrom = 0;
+searchTo = 0;
+
 getCart();
+getMaxPrice();
 
 
 
@@ -22,7 +28,7 @@ function callback(response, statusTxt, xhr)
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +
-                        "<img src=\""+ object[i].img + "\" alt=\"\">" +
+                        "<img src=\"" + object[i].img + "\" alt=\"\">" +
                         "</div>" +
                         "<div class=\"favorite favorite_left\"></div>";
                 if (object[i].quantity == 1) {
@@ -30,20 +36,20 @@ function callback(response, statusTxt, xhr)
                 }
                 content += "<div class=\"product_info\">" +
                         "<h6 class=\"product_name\"><a href=\"single.html\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
-                        "<div class=\"product_price\">$" + object[i].price ;
-                for(j=0;j<Cart.length;j++){
-                    if(Cart[j].productsInfoEntity.productId==object[i].productId){
-                        
-                        if((Cart[j].quantity)>=object[i].quantity-1){
-                            
-                    content+= "<span>Out Of Stock</span>" ;
+                        "<div class=\"product_price\">$" + object[i].price;
+                for (j = 0; j < Cart.length; j++) {
+                    if (Cart[j].productsInfoEntity.productId == object[i].productId) {
+
+                        if ((Cart[j].quantity) >= object[i].quantity - 1) {
+
+                            content += "<span>Out Of Stock</span>";
+                        }
+                    }
                 }
-                }
-                }
-                  content+= "</div></div>" +
+                content += "</div></div>" +
                         "</div>" +
                         "<div class=\"red_button add_to_cart_button\" onclick=\"addProduct(" + object[i].productId + ")\">add to cart</div>" +
-                        "</div>";            
+                        "</div>";
             }
         }
         $(products).html(content);
@@ -58,7 +64,7 @@ function callback(response, statusTxt, xhr)
 function getProducts(page, categoryId) {
 
     $.get("ShowProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
-  
+
 
 
 }
@@ -68,13 +74,19 @@ function getProductsCount(categoryId) {
 
 
 }
+function getProductsCountBTWRang(categoryId) {
+
+    $.get("ShowProductServlet?categoryId=" + categoryId + "&flag=true&from=" + searchFrom + "&to=" + searchTo, ProductsCountcallback);
+
+
+}
 function ProductsCountcallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
-        if (response % 8 == 0||response % 8>=5) {
+        if (response % 8 == 0 || response % 8 >= 5 || response < 8) {
             pageNum = Math.round(response / 8);
         } else {
-            pageNum = Math.round(response / 8)+1 ;
+            pageNum = Math.round(response / 8) + 1;
         }
         $('#pagination-here').bootpag({
             total: pageNum,
@@ -88,7 +100,11 @@ function ProductsCountcallback(response, statusTxt, xhr)
         $('#pagination-here').on("page", function (event, num) {
             //show / hide content or pull via ajax etc
             currentPage = num;
-            getProducts(num, categoryId);
+            if (searchFlag) {
+                getProducts(num, categoryId);
+            } else {
+                searchByPrice(num, searchFrom, searchTo);
+            }
         });
     }
 }
@@ -139,7 +155,7 @@ function changeCategory() {
     getProducts(1, categoryId);
 
 
-}  
+}
 function getCart() {
 
     $.get("CartProducts", getCartCallBack);
@@ -150,7 +166,51 @@ function getCartCallBack(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
 
-       
+
         Cart = JSON.parse(response);
+    }
+}
+
+function searchByPriceAction() {
+
+    $("#category").html("<h4 style='margin-top: 2em;'><label for='size'>Price</label></h4>From<input type='number'  id='from' onblur='searchFun()'/>To<input type='number' id='to' onblur='searchFun()'/>")
+
+}
+function searchByCategory() {
+    $("#category").html("<h4 style=\"margin-top: 2em;\"><label for=\"size\">Category</label></h4>" +
+            "<select id=\"size\" style=\"width: 100%;float: left\" onchange=\"changeCategory()\" ></select>");
+
+    getCategories();
+}
+
+function searchFun() {
+
+    var from = document.getElementById("from").value;
+    var to = document.getElementById("to").value;
+
+    searchFlag = false;
+    if (from == "") {
+        from = 0;
+    }
+    if (to == "") {
+        to = 100000000;
+    } else {
+
+    }
+    searchTo = to;
+    searchFrom = from;
+    getProductsCountBTWRang(0);
+    searchByPrice(1, from, to);
+}
+function searchByPrice(page, from, to) {
+    $.get("ShowProductServlet?page=" + page + "&categoryId=0&from=" + from + "&to=" + to, callback);
+}
+function getMaxPrice() {
+    $.get("MaxPrice", getMaxPriceCallBack);
+}
+function getMaxPriceCallBack(response, statusTxt, xhr)
+{
+    if (statusTxt == "success") {
+        to = response;
     }
 }
