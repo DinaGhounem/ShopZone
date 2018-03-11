@@ -34,4 +34,8 @@ public interface ProductController {
     int getProductCount();
 
     double getMaxmimumPrice();
+
+    ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range);
+
+    public int getProductCount2();
 }

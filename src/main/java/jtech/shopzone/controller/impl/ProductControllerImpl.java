@@ -91,4 +91,14 @@ public class ProductControllerImpl implements ProductController {
         return productDao.getMaxmimumPrice();
     }
 
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range) {
+        return productDao.getProductsBTWRange2(range);
+    }
+
+    @Override
+    public int getProductCount2() {
+        return productDao.getProductCount2();
+    }
+
 }

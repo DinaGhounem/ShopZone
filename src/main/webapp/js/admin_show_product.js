@@ -15,7 +15,7 @@ searchTo = 0;
 
 function getProducts(page, categoryId) {
 
-    $.get("ShowProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
+    $.get("AdminEditProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
 
 
 
@@ -61,17 +61,12 @@ function callback(response, statusTxt, xhr) {
 
 function getProductsCount(categoryId) {
 
-    $.get("ShowProductServlet?categoryId=" + categoryId, ProductsCountcallback);
+    $.get("AdminEditProductServlet?categoryId=" + categoryId, ProductsCountcallback);
 
 
 }
 
-function getProductsCountBTWRang(categoryId) {
 
-    $.get("ShowProductServlet?categoryId=" + categoryId + "&flag=true&from=" + searchFrom + "&to=" + searchTo, ProductsCountcallback);
-
-
-}
 
 function ProductsCountcallback(response, statusTxt, xhr) {
     if (statusTxt == "success") {
@@ -101,25 +96,13 @@ function ProductsCountcallback(response, statusTxt, xhr) {
     }
 }
 
-function addProduct(productId) {
 
-    $.post("AddProductToCart", {productId: productId}, showProductCallback);
-    getCart();
-
-}
-
-function showProductCallback(response, statusTxt, xhr) {
-    if (statusTxt == "success") {
-        getProductsCount(categoryId);
-        getProducts(currentPage, 0);
-
-    }
-}
 
 
 function onclickEdit(PID) {
     $.get("RemoveProduct?productId=" + PID);
-    getProductsCount(categoryId);
+        getProductsCount(categoryId);
+        alert(currentPage);
         getProducts(currentPage, 0);
 
 }

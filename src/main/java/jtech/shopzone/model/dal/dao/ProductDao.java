@@ -44,4 +44,7 @@ public interface ProductDao {
 
     double getMaxmimumPrice();
 
+    ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range);
+
+    public int getProductCount2();
 }

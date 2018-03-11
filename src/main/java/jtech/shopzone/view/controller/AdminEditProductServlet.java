@@ -58,12 +58,49 @@ public class AdminEditProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        int id=Integer.parseInt(request.getParameter("productId").toString());
-        ProductsInfoEntity product=productController.getProductInfo(id);
-        Gson gson = new Gson();
-        String jsonObject = gson.toJson(product);
-        out.print(jsonObject);
+         PrintWriter out = response.getWriter();
+        String page = request.getParameter("page");
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        if (page != null) {
+
+            int pageNum = Integer.parseInt(page);
+            ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+            if (categoryId == 0 && to == null && from == null) {
+
+                products = productController.getProductsBTWRange2(pageNum);
+            } else if (to != null && from != null) {
+
+                products = productController.getProductsBTWRange(pageNum, Double.parseDouble(from), Double.parseDouble(to));
+
+            } else {
+
+                products = productController.getProductsBTWRange(pageNum, categoryId);
+            }
+            Gson gson = new Gson();
+            String jsonObject = gson.toJson(products);
+            out.print(jsonObject);
+
+        } else {
+            String flag = request.getParameter("flag");
+            int productCount = 0;
+            if (flag == null) {
+                if (categoryId == 0) {
+                    productCount = productController.getProductCount2();
+                    
+                } else {
+
+                    productCount = productController.getProducts(categoryId).size();
+                }
+            } else {
+
+                productCount = productController.getProducts(Double.parseDouble(from), Double.parseDouble(to)).size();
+
+            }
+
+            out.print(productCount);
+        }
                 
     }
 

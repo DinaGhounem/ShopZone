@@ -14,7 +14,8 @@ import jtech.shopzone.model.dal.DbConnection;
 public class ProductDaoImpl implements ProductDao {
 
     Connection connection = null;
-    static int productStop=0;
+    static int productStop = 0;
+
     public ProductDaoImpl() {
         connection = DbConnection.getConnection();
     }
@@ -58,7 +59,7 @@ public class ProductDaoImpl implements ProductDao {
         return products;
     }
 
-     public ArrayList<ProductsInfoEntity> getAvaliableProducts() {
+    public ArrayList<ProductsInfoEntity> getAvaliableProducts() {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         String query = "SELECT * from PRODUCTS_INFO where DELETED_FLG=1 and QUANTITY!=0";
         PreparedStatement preparedStatement = null;
@@ -95,6 +96,7 @@ public class ProductDaoImpl implements ProductDao {
         }
         return products;
     }
+
     @Override
     public ArrayList<ProductsInfoEntity> getProducts(int categoryId) {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
@@ -114,7 +116,7 @@ public class ProductDaoImpl implements ProductDao {
                 product.setDescription(resultSet.getString("DESCRIPTION"));
                 product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
                 product.setImg(resultSet.getString("IMG"));
-                 product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
+                product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
                 products.add(product);
             }
 
@@ -154,7 +156,7 @@ public class ProductDaoImpl implements ProductDao {
                 product.setDescription(resultSet.getString("DESCRIPTION"));
                 product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
                 product.setImg(resultSet.getString("IMG"));
-                 product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
+                product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
                 products.add(product);
             }
 
@@ -432,9 +434,25 @@ public class ProductDaoImpl implements ProductDao {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         for (int i = ((range - 1) * 8), j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
-            if (product.getQuantity() == 0||product.getDeletedFlg()==0) {
+            if (product.getQuantity() == 0 || product.getDeletedFlg() == 0) {
                 i--;
-              
+
+            } else {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range) {
+        ArrayList<ProductsInfoEntity> allProducts = getProducts();
+        ArrayList<ProductsInfoEntity> products = new ArrayList<>();
+        for (int i = ((range - 1) * 8), j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
+            ProductsInfoEntity product = allProducts.get(j);
+            if (product.getQuantity() == 0 || product.getDeletedFlg() == 0) {
+                i--;
+
             } else {
                 products.add(product);
             }
@@ -448,7 +466,7 @@ public class ProductDaoImpl implements ProductDao {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
-            if (product.getQuantity() == 0||product.getDeletedFlg()==0) {
+            if (product.getQuantity() == 0 || product.getDeletedFlg() == 0) {
                 i--;;
             } else {
                 products.add(product);
@@ -463,7 +481,7 @@ public class ProductDaoImpl implements ProductDao {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
-            if (product.getQuantity() == 0||product.getDeletedFlg()==0) {
+            if (product.getQuantity() == 0 || product.getDeletedFlg() == 0) {
                 i--;
             } else {
                 products.add(product);
@@ -501,19 +519,48 @@ public class ProductDaoImpl implements ProductDao {
         }
         return productCount;
     }
-     @Override
-   public double getMaxmimumPrice(){
-   
-    String query = "SELECT max(price) from PRODUCTS_INFO";
+ @Override
+    public int getProductCount2() {
+        int productCount = 0;
+        String query = "select count(*) from PRODUCTS_INFO where DELETED_FLG=1";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        double maxPrice=0;
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                maxPrice=resultSet.getDouble(1);
-               
+                productCount = resultSet.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return productCount;
+    }
+    @Override
+    public double getMaxmimumPrice() {
+
+        String query = "SELECT max(price) from PRODUCTS_INFO";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        double maxPrice = 0;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                maxPrice = resultSet.getDouble(1);
+
             }
 
         } catch (SQLException ex) {
@@ -532,6 +579,7 @@ public class ProductDaoImpl implements ProductDao {
         }
         return maxPrice;
     }
+
     //just for test ^_^
     public static void main(String[] args) {
         ProductsInfoEntity product = new ProductsInfoEntity();
@@ -547,7 +595,7 @@ public class ProductDaoImpl implements ProductDao {
 //       /* for (ProductsInfoEntity product1 : products) {
 //              System.out.println(product1.getPrice());
 //        }*/
-        System.out.println(pdi.deleteProduct(1));
+        System.out.println(pdi.getProducts().size());
     }
 
 }
