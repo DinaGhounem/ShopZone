@@ -139,7 +139,12 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Interests :</td>
-                                                        <td id="display_interests"></td>
+                                                        <td>
+                                                            <div  id="display_interests">
+                                                                <input type=checkbox name=interest value=fashion id="fashion" />Fashion<br>
+                                                                <input type=checkbox name=interest value=labs id="labs" />Labtops and Electronics
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>

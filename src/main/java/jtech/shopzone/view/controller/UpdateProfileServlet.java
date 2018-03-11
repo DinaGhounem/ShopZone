@@ -7,6 +7,7 @@ package jtech.shopzone.view.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import jtech.shopzone.controller.UserController;
 import jtech.shopzone.controller.impl.UserControllerImpl;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.entity.UserInfoEntity;
+import jtech.shopzone.model.entity.UserInterestsEntity;
 
 /**
  *
@@ -45,7 +47,14 @@ public class UpdateProfileServlet extends HttpServlet {
         String address = request.getParameter("address");
         String job = request.getParameter("job");
         String  creditLimit = request.getParameter("credit");
+        String[]  interests = request.getParameterValues("interest");
         
+        ArrayList<UserInterestsEntity> interestsList = new ArrayList<>();
+        for(int i=0;i<interests.length;i++){
+            UserInterestsEntity e = new UserInterestsEntity(userId,interests[i]);
+            interestsList.add(e);
+        }
+            
         //String img = request.getParameter("img");
         
         user.setFirstName(fname);
@@ -54,6 +63,7 @@ public class UpdateProfileServlet extends HttpServlet {
         user.setAddress(address);
         user.setJob(job);
         user.setCreditLimit(Double.parseDouble(creditLimit));
+        user.setInterests(interestsList);
         
         Status states = ucontroller.updateUser(user);
         
