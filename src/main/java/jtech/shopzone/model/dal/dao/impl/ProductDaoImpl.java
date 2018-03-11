@@ -450,7 +450,7 @@ public class ProductDaoImpl implements ProductDao {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         for (int i = ((range - 1) * 8), j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
-            if (product.getQuantity() == 0 || product.getDeletedFlg() == 0) {
+            if (product.getDeletedFlg() == 0) {
                 i--;
 
             } else {
@@ -521,31 +521,7 @@ public class ProductDaoImpl implements ProductDao {
     }
  @Override
     public int getProductCount2() {
-        int productCount = 0;
-        String query = "select count(*) from PRODUCTS_INFO where DELETED_FLG=1";
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                productCount = resultSet.getInt(1);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        int productCount =getProducts().size();
         return productCount;
     }
     @Override

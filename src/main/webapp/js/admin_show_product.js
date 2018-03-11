@@ -77,7 +77,7 @@ function ProductsCountcallback(response, statusTxt, xhr) {
         }
         $('#pagination-here').bootpag({
             total: pageNum,
-            page: 1,
+            page: currentPage,
             maxVisible: 3,
             leaps: true,
             href: "#result-page-{{number}}",
@@ -102,8 +102,8 @@ function ProductsCountcallback(response, statusTxt, xhr) {
 function onclickEdit(PID) {
     $.get("RemoveProduct?productId=" + PID);
         getProductsCount(categoryId);
-        alert(currentPage);
         getProducts(currentPage, 0);
+       
 
 }
 
