@@ -82,9 +82,7 @@
             <div class="fs_menu_overlay"></div>
             <div class="hamburger_menu">
                 <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                <div class="hamburger_menu_content text-right">
-
-                </div>
+                <div class="hamburger_menu_content text-right"></div>
             </div>
 
             <!-- profile section-->
@@ -99,6 +97,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="table-responsive cart_info">
                             <center>
                                 <form action="UpdateProfileServlet" method="post" class="dark-matter">
@@ -139,10 +138,9 @@
                                                         <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
                                                     </tr>
                                                     <tr>
-                                                        <td> interests :</td>
-                                                        <td><input type="text" id="input_interests"></td>
+                                                        <td>Interests :</td>
+                                                        <td id="display_interests"></td>
                                                     </tr>
-
                                                 </table>
                                             </td>
                                         </tr>
