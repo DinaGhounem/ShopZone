@@ -32,7 +32,8 @@
         <link rel="stylesheet" href="css/pagination.css"/>
         <style>
             .product_bubble_right{
-                right: 0px;
+                right: -5px;
+                top: 5px;
             }
             .product_bubble_right:after{
                 color: transparent;
