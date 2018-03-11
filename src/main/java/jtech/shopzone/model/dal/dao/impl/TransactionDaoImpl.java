@@ -136,11 +136,5 @@ public class TransactionDaoImpl implements TransactionsDao {
         }
         return status;
     }
-    public static void main(String[] args) {
-        TransactionDaoImpl tdi=new TransactionDaoImpl();
-        ArrayList<UserProductsEntity> products=tdi.getUserHistory(1);
-        for (UserProductsEntity product : products) {
-            System.out.println(product.getProductName());
-        }
-    }
+
 }

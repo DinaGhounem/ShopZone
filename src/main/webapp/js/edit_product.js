@@ -5,8 +5,7 @@
  */
 
 
-productId =$("#productId").value;
-productId = 2;
+productId =$("#productId")[0].value;
 function getProduct() {
 
     $.get("AdminEditProductServlet", {productId: productId}, callback);

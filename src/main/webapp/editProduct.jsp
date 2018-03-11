@@ -25,9 +25,9 @@
         <%@page import="jtech.shopzone.view.controller.RemoveProduct"%>
     </head>
 
-    <body onload="getProduct()">    
-        <input type=number value="${requestScope['productId']}" id="productId"/>            
-        
+    <body onload="getProduct()">
+        <input type=number value="${param['productId']}" id="productId"/>
+
         <div class="super_container">
 
             <!-- Header -->
