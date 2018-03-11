@@ -408,7 +408,7 @@ public class ProductDaoImpl implements ProductDao {
         for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
-                i--;
+                i--;;
             } else {
                 products.add(product);
             }

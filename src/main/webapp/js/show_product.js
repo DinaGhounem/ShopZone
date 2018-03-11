@@ -173,7 +173,7 @@ function getCartCallBack(response, statusTxt, xhr)
 
 function searchByPriceAction() {
 
-    $("#category").html("<h4 style='margin-top: 2em;'><label for='size'>Price</label></h4>From<input type='number'  id='from' onblur='searchFun()'/>To<input type='number' id='to' onblur='searchFun()'/>")
+    $("#category").html("<h4 style='margin-top: 2em;'><label for='size' >Price</label></h4><label class='control-label' style='float:left'>From</label><input type='number' class='form-control' id='from' onblur='searchFun()' style='float:left'/><label class='control-label' style='float:left'>To</label><input type='number' class='form-control' id='to' onblur='searchFun()' style='float:left'/>")
 
 }
 function searchByCategory() {
@@ -195,7 +195,7 @@ function searchFun() {
         from = 0;
     }
     if (to == "") {
-        to = 100000000;
+        getMaxPrice();
     } else {
 
     }
