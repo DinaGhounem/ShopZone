@@ -92,7 +92,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col text-center">
-                            <div class="section_title new_arrivals_title">  
+                            <div class="section_title new_arrivals_title">
+                                <h2>Show Or Add New Category</h2>
                             </div>
                         </div>
                     </div>

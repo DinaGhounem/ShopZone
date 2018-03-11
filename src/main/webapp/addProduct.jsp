@@ -10,7 +10,7 @@
 <%@page import="jtech.shopzone.view.controller.AddProduct" %>
 <html lang="en">
 <head>
-    <title>Colo Shop</title>
+    <title>Shop Zone</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
