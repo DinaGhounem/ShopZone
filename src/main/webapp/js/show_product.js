@@ -30,9 +30,14 @@ function callback(response, statusTxt, xhr)
                         "<img src=\"" + object[i].img + "\" alt=\"\" class='img'>" +
                         "</div>" +
                         "<div class=\"favorite favorite_left\"></div>";
+                 
+
+                       
                 if (object[i].quantity == 1) {
-                    content += "<div class=\"product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center\"><span>latest</span></div>";
-                }
+                  content += "<div class=\"product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center\"><span>latest</span></div>";  
+                
+                } 
+                
                 content += "<div class=\"product_info\">" +
                         "<h6 class=\"product_name\"><a href=\"\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
                         "<div class=\"product_price\">$" + object[i].price;
@@ -40,7 +45,7 @@ function callback(response, statusTxt, xhr)
                 for (j = 0; j < Cart.length; j++) {
                     if (Cart[j].productsInfoEntity.productId == object[i].productId) {
 
-                        if ((Cart[j].quantity) >= object[i].quantity) {
+                        if ((Cart[j].quantity) >= object[i].quantity - 1) {
 
                             content += "<span>Out Of Stock</span>";
                         }
