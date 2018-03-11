@@ -1,13 +1,13 @@
 # ShopZone
 An online shopping Website with admin panel to control offered products. 
 
-# Technologies used
+## Technologies used
 1. Java Servlets & JSP.
 2. JDBC.
 2. Pure JS and jQuery.
 3. Oracle XE.
 
-#Deployment
+## Deployment
 1. execute the SQL script \ShopZone\Database\ShopZoneSchema.sql to Oracle XE database that resides 
 on the same machine as the Webserver on which this Web Application is deployed.
 2. deploy the Web Application on a Webserver that supports Java Servelts & JSP.
