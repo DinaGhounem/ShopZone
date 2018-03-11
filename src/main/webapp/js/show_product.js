@@ -28,7 +28,7 @@ function callback(response, statusTxt, xhr)
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +
-                        "<img src=\"" + object[i].img + "\" alt=\"\">" +
+                        "<img src=\"" + object[i].img + "\" alt=\"\" class='img'>" +
                         "</div>" +
                         "<div class=\"favorite favorite_left\"></div>";
                 if (object[i].quantity == 1) {

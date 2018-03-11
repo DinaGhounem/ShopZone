@@ -10,6 +10,7 @@
 <%@page import="jtech.shopzone.view.controller.ShowProductServlet" %>
 <%@page import="jtech.shopzone.view.controller.CartProducts" %>
 <%@page import="jtech.shopzone.view.controller.AddProductToCart" %>
+<%@page import="jtech.shopzone.view.controller.MaxPrice" %>
 <html lang="en">
     <head>
         <title>Colo Shop</title>
