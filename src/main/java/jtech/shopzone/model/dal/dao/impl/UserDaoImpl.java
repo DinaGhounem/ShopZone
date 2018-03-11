@@ -457,12 +457,4 @@ public class UserDaoImpl implements UserDao {
             }
         }
     }
-
-    public static void main(String[] args) {
-        UserDaoImpl userdao = new UserDaoImpl();
-//        System.out.println(userdao.checkEmail("dina@gmail.com"));
-//        UserInfoEntity user =  userdao.getUserInfo(1);
-//        System.out.println("id is "+user.getUserId());
-//        System.out.println("email is "+user.getEmail());
-    }
 }
