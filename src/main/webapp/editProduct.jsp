@@ -100,21 +100,26 @@
                             <center>
                                 <img src="img\x.jpeg" alt="Product image" id="productImage" class="img-thumbnail"/>
                             </center>
-                            <label id="img_error"></label>
+
+                            <label for="name" class="col-form-label">Product Name</label>
                             <input type="text" class="form-control" name="name" id="name"
                                    placeholder="Product name"
                                    required/>
-                            <label id="name_error"></label>
+
+                            <label for="name" class="col-form-label">Product Price</label>
                             <input type="number" class="form-control" name="Pid" id="price" placeholder="Price"
                                    min="1" required/>
-                            <label id="price_error"></label>
+
+                            <label for="name" class="col-form-label">Stock Quantity</label>
                             <input type="number" class="form-control" name="qty" id="quantity"
                                    placeholder="Quantity" min="1" required/>
-                            <label id="quantity_error"></label>
+
+                            <label for="name" class="col-form-label">Product Description</label>
                             <textarea class="form-control" name="description" id="description"
                                       rows="2"
                                       placeholder="Write product description here" required></textarea>
-                            <label id="description_error"></label>
+
+                            <label for="name" class="col-form-label">Product Category</label>
                             <select id="category" name="categoryId" class="form-control" required>
 
                             </select>
