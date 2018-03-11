@@ -169,7 +169,7 @@
             </div>
             <div class="row" style="margin-top: 50px">
                 <div class="col-sm-6 offset-3">
-                    <form action="AddProduct" class="form-horizontal" role="form" method="post"
+                        <form action="AddProduct" class="form-horizontal" role="form" method="post"
                           enctype="multipart/form-data">
 
                         <div class="form-group">
