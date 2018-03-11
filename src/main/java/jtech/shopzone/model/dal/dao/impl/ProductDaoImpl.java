@@ -37,6 +37,7 @@ public class ProductDaoImpl implements ProductDao {
                 product.setDescription(resultSet.getString("DESCRIPTION"));
                 product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
                 product.setImg(resultSet.getString("IMG"));
+                product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
                 products.add(product);
             }
 
@@ -76,6 +77,7 @@ public class ProductDaoImpl implements ProductDao {
                 product.setDescription(resultSet.getString("DESCRIPTION"));
                 product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
                 product.setImg(resultSet.getString("IMG"));
+                 product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
                 products.add(product);
             }
 
@@ -115,6 +117,7 @@ public class ProductDaoImpl implements ProductDao {
                 product.setDescription(resultSet.getString("DESCRIPTION"));
                 product.setCategoryId(resultSet.getInt("CATEGORY_ID"));
                 product.setImg(resultSet.getString("IMG"));
+                 product.setDeletedFlg(resultSet.getInt("DELETED_FLG"));
                 products.add(product);
             }
 

@@ -24,7 +24,7 @@ function callback(response, statusTxt, xhr)
         var content = "";
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
-            if (object[i].quantity > 0) {
+            if (object[i].quantity > 0&&object[i].deletedFlg==1) {
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                         "<div class=\"product discount product_filter\">" +
                         "<div class=\"product_image\">" +

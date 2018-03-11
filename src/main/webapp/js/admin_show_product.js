@@ -28,7 +28,7 @@ function callback(response, statusTxt, xhr) {
         var height = 0;
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
-            if (object[i].quantity > 0) {
+            if (object[i].deletedFlg==1) {
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                     "<form action=\"editProduct.jsp\"method='POST'>" +
                     "<input type=\"number\" name=\"productId\" value=" + object[i].productId + " hidden>" +
