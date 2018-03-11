@@ -30,13 +30,21 @@
         <link rel="stylesheet" href="css/pagination_styles.css">
        
         <link rel="stylesheet" href="css/pagination.css"/>
+        <style>
+            .product_bubble_right{
+                right: 0px;
+            }
+            .product_bubble_right:after{
+                color: transparent;
+            }
+        </style>
         <%@page import="jtech.shopzone.view.controller.AdminProductServlet" %>
     </head>
 
     <body onload="
             getProducts(1, 0);
             getProductsCount(categoryId);
-            getCategories();">
+            ">
 
         <div class="super_container">
 
@@ -83,20 +91,17 @@
                 </div>
 
             </header>
-            <div class="fs_menu_overlay"></div>
-            <div class="hamburger_menu">
-                <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                <div class="hamburger_menu_content text-right"></div>
-            </div>
+           
 
 
             <!-- New Arrivals -->
 
-            <div class="new_arrivals">
+            <div class="new_arrivals" style="margin-top:10%">
                 <div class="container">
                     <div class="row">
                         <div class="col text-center">
-                            <div class="section_title new_arrivals_title">  
+                            <div class="section_title new_arrivals_title"> 
+                                <h2> Products In Store</h2>
                             </div>
                         </div>
                     </div>
