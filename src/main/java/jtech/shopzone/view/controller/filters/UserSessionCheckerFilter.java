@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+/**
+ * @Author Muhammed Mahrous
+ */
 public class UserSessionCheckerFilter implements Filter {
     public void destroy() {
     }

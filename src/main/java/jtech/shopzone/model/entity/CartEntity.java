@@ -1,5 +1,7 @@
 package jtech.shopzone.model.entity;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 public class CartEntity {
     private Integer quantity;
     private ProductsInfoEntity productsInfoEntity;

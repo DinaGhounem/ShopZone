@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 @WebFilter(filterName = "WelcomePagesFilter")
 public class WelcomePagesFilter implements Filter {
     public void destroy() {

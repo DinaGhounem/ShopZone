@@ -16,7 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 public class TransactionDaoImpl implements TransactionsDao {
     @Override
     public ArrayList<UserProductsEntity> getUserHistory(int userId) {

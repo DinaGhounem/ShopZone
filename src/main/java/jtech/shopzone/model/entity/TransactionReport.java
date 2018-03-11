@@ -1,7 +1,9 @@
 package jtech.shopzone.model.entity;
 
 import jtech.shopzone.model.dal.Status;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 public class TransactionReport {
     private CartEntity cartEntity;
     private Status status;

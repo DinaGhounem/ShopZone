@@ -8,6 +8,9 @@ import jtech.shopzone.model.entity.UserProductsEntity;
 
 import java.util.ArrayList;
 
+/**
+ * @Author Muhammed Mahrous
+ */
 public class TransactionsControllerImpl implements TransactionsController {
     private TransactionsDao transactionsDao;
 

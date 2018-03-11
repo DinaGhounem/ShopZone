@@ -7,7 +7,9 @@ import jtech.shopzone.model.entity.UserProductsEntity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 public interface TransactionsDao {
 
     ArrayList<UserProductsEntity> getUserHistory(int userId);

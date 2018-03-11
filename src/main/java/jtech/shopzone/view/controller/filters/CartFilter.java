@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * @Author Muhammed Mahrous
+ */
 @WebFilter(filterName = "CartFilter", urlPatterns = "/cart.jsp")
 public class CartFilter implements Filter {
     public void destroy() {
