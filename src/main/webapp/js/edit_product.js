@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
+productId =$("#productId").value;
 productId = 2;
 function getProduct() {
 
@@ -24,7 +27,8 @@ function callback(response, statusTxt, xhr)
         document.getElementById("price").value = object.price;
         document.getElementById("quantity").value = object.quantity;
         description=document.getElementById("description").value = object.description;
-        img=document.getElementById("imglabel").innerHTML = object.img;
+        img=object.img;
+        document.getElementById("productImage").src=object.img;
         categoryId=document.getElementById("category").value = object.categoryId;
         productPrice = object.price;
         productQuantity = object.quantity;
@@ -37,31 +41,16 @@ function setCategory(response, statusTxt, xhr) {
         content = "";
 
         for (i = 0; i < object.length; i++) {
-            content += "<option value=\"" + object.categoryName + "\">" + object.categoryName + "</option>";
-//fill select with options
-//<option value="men">Men</option>
-//<option value="women">Women</option>
-//<option value="technology">Technology</option>
+            content += "<option value=\"" + object[i].categoryId + "\">" + object[i].categoryName + "</option>";
         }
         document.getElementById("category").innerHTML = content;
     }
 }
-//function updateProducte() {
-//    pPrice = document.getElementById("price").value.toString();
-//    pQuantity = document.getElementById("quantity").value;
-//    if (pPrice == productPrice && pQuantity == productQuantity) {
-//        alert("no change in data");
-//    } else {
-//        object.price = pPrice;
-//        object.quantity = pQuantity;
-//        //$.get("UpdateProduct", {Pid: object.productId}, {name: object.productName}, {price: pPrice}, {quantity: pQuantity}, {description: object.description}, {img: object.img}, {categoryId: object.categoryId}, updateCallback);
-
         $("#updateButton").click(function () {
-            alert("onclick");
             pPrice = $("#price").val();
             pQuantity = $("#quantity").val();
             if (pPrice == productPrice && pQuantity == productQuantity) {
-                alert("no change in data");
+                $("#result").text("no changes in price or quantity to save");
             } else {
                 var jsonData = {"Pid":Pid,"name": productName,"price": pPrice,"quantity": pQuantity,"description":description,"img": img,"categoryId":categoryId};
                 $.ajax({url: 'UpdateProduct',
@@ -69,10 +58,9 @@ function setCategory(response, statusTxt, xhr) {
                     contentType: 'application/json', //For input type
                     data: jsonData, //input data
                     dataType: 'json', //For output type
-                    success: function (data)
+                    success:function (data)
                     {
-                        alert("data upadeted");
-                       // $("myMessage").append(" ");
+                       $("#result").text("data updated successfuly");
 
                     }
                 });

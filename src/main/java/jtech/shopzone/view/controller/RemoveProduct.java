@@ -5,10 +5,8 @@
  */
 package jtech.shopzone.view.controller;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,15 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jtech.shopzone.controller.ProductController;
 import jtech.shopzone.controller.impl.ProductControllerImpl;
-import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name = "AdminEditProductServlet", urlPatterns = {"/AdminEditProductServlet"})
-public class AdminEditProductServlet extends HttpServlet {
-     private ProductController productController;
+@WebServlet(name = "RemoveProduct", urlPatterns = {"/RemoveProduct"})
+public class RemoveProduct extends HttpServlet {
+  private ProductController productController;
 
     @Override
     public void init() throws ServletException {
@@ -43,7 +40,18 @@ public class AdminEditProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RemoveProduct</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RemoveProduct at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,14 +65,9 @@ public class AdminEditProductServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        int id=Integer.parseInt(request.getParameter("productId").toString());
-        ProductsInfoEntity product=productController.getProductInfo(id);
-        Gson gson = new Gson();
-        String jsonObject = gson.toJson(product);
-        out.print(jsonObject);
-                
+            throws ServletException, IOException {
+       int id=Integer.parseInt(request.getParameter("productId").toString());
+       productController.deleteProduct(id);
     }
 
     /**
