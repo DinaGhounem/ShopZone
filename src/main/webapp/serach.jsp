@@ -1,20 +1,28 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- 
+    Document   : home
+    Created on : Mar 1, 2018, 4:24:16 AM
+    Author     : Hanaa
+--%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<%@page import="jtech.shopzone.view.controller.ShowProductServlet" %>
+<%@page import="jtech.shopzone.view.controller.CartProducts" %>
+<%@page import="jtech.shopzone.view.controller.AddProductToCart" %>
 <html lang="en">
     <head>
+        <title>Colo Shop</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>User Profile</title>
-        <link rel="stylesheet" type="text/css" href="css/main_styles.css">
-        <link rel="stylesheet" type="text/css" href="css/responsive.css">
-        <link rel="stylesheet" type="text/css" href="css/contact_styles.css">
-        <link rel="stylesheet" type="text/css" href="css/EditProfile.css">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Colo Shop Template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles/kendo.common.min.css" />
         <link rel="stylesheet" href="styles/kendo.default.min.css" />
         <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
+
+
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -23,13 +31,20 @@
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <link rel="stylesheet" href="css/pagination_styles.css">
-    </head><!--/head-->
 
-    <body onload="loadData()">
+
+        
+        <link rel="stylesheet" href="css/pagination.css"/>
+
+
+    </head>
+
+    <body onload="getCart();getProducts(1, 0);getProductsCount(0);">
+
         <div class="super_container">
-            <!-- Header -->
 
-            <header class="header trans_300">
+            <!-- Header -->
+<header class="header trans_300">
                 <div class="top_nav">
                     <div class="container">
                         <div class="row">
@@ -85,66 +100,70 @@
                 <div class="hamburger_menu_content text-right"></div>
             </div>
 
-            <!-- profile section-->
+            <!-- Slider -->
 
-            <div style="margin-top: 200px;">
-                <section id="profile_section">
-                    <div class="container">
-                        <div class="table-responsive cart_info">
-                            <center>
-                                <form action="UpdateProfileServlet" method="post" class="dark-matter">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>First Name:</td>
-                                                        <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname"  required="required" data-error="First Name is required."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Last Name:</td>
-                                                        <td><input id="input_lastname" class="form_input input_name input_ph" type="text" name="lname" required="required" data-error="Last Name is required."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Email :</td>
-                                                        <td><input id="input_email" class="form_input input_email input_ph" type="email" name="email" disabled="true"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Password :</td>
-                                                        <td><input id="input_password" class="form_input input_passwrd input_ph" type="password" name="password" required="required" data-error="Valid password is required."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Address :</td>
-                                                        <td><input type="text" id="input_address" class="form_input input_name input_ph" name="address" required data-error="Please, write Your Address."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Birth Date :</td>
-                                                        <td><input id="input_date" class="form_input input_date input_ph" type="text" name="bdate" disabled="true"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Job :</td>
-                                                        <td><input id="input_job" class="form_input input_job input_ph" type="text" name="job" required="required" data-error="Job is required."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Credit Limit :</td>
-                                                        <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td><input id="button_submit" type="submit" class="newsletter_submit_btn trans_300" value="Save"/></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
-                            </center>
+            <div class="main_slider" style="background-image:url(img/slider_1.jpg)">
+                <div class="container fill_height">
+                    <div class="row align-items-center fill_height">
+                        <div class="col">
+                            <div class="main_slider_content">
+                                <h6>Spring / Summer Collection 2017</h6>
+                                <h1>Get up to 30% Off New Arrivals</h1>
+                                <div class="red_button shop_now_button"><a href="#">shop now</a></div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
-            <br><br>
-            <!-- Footer -->
+
+
+            <!-- New Arrivals -->
+
+            <div class="new_arrivals">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="section_title new_arrivals_title">
+                                <h2>New Arrivals</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col text-center">
+                            <div class="new_arrivals_sorting">
+                                <div id="example">
+                                    <div id="category" class="demo-section k-content" style="width:200px;">
+
+
+                                        <h4 style="margin-top: 2em;"><label for="size">Search By</label></h4>
+                                        <select id="size" style="width: 100%;float: left" onchange="changeSerachApproach()">
+                                            <option value="1">Product Name </option>
+                                            <option value="2">Price</option>
+
+                                        </select>
+
+                                        <div style="margin: 10px;" id="searchField"><div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="products" class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+
+
+                                </div>
+                                <div class="wrapper">
+                                    <div class="container">
+                                        <div id="pagination-here"></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Footer -->
             <footer class="footer">
                 <div class="container">
                     <div class="row">
@@ -172,7 +191,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_nav_container">
-                                <div class="cr">�2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
+                                <div class="cr">?2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
                                                                                                           aria-hidden="true"></i>
                                     by <a>ShopZone</a></div>
                             </div>
@@ -180,18 +199,24 @@
                     </div>
                 </div>
             </footer>
+            </div>
 
-        </div>
-
-
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/EditProfile.js"></script>
-        <script src="css/bootstrap4/popper.js"></script>
-        <script src="css/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="cartincludes/js/cartNotificationUpdater.js"></script>
+            
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/kendo.all.min.js"></script>
+            <script src="css/bootstrap4/popper.js"></script>
+            <script src="css/bootstrap4/bootstrap.min.js"></script>
+            <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script type="text/javascript" src="js/bootpag.js"></script>
+            <script src="js/custom.js"></script>
+            <script src="js/show_product.js"></script>
+            <script src="js/search.js"></script>
+           
 
     </body>
+
 </html>
+

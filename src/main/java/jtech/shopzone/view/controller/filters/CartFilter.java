@@ -6,6 +6,8 @@ import jtech.shopzone.model.entity.CartEntity;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,12 +17,15 @@ public class CartFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        // TODO: Get id from session
-        int userId = 1;
-        CartController cartController = CartControllerImpl.newInstance();
-        ArrayList<CartEntity> cartEntities =  cartController.getUserProducts(userId);
-        req.setAttribute("cartEntities",cartEntities);
-        chain.doFilter(req, resp);
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpSession httpSession = (HttpSession) request.getSession();
+        Integer userId = (Integer) httpSession.getAttribute("userId");
+        if (userId != null) {
+            CartController cartController = CartControllerImpl.newInstance();
+            ArrayList<CartEntity> cartEntities = cartController.getUserProducts(userId);
+            req.setAttribute("cartEntities", cartEntities);
+            chain.doFilter(req, resp);
+        }
     }
 
     public void init(FilterConfig config) throws ServletException {

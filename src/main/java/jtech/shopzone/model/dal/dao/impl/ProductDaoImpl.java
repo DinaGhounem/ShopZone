@@ -390,7 +390,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts();
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;
@@ -405,7 +405,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts(categoryId);
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;
@@ -420,7 +420,7 @@ public class ProductDaoImpl implements ProductDao {
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice) {
         ArrayList<ProductsInfoEntity> allProducts = getProducts(minPrice, maxPrice);
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        for (int i = (range - 1) * 8, j = i; i < range * 8 && i < allProducts.size(); i++, j++) {
+        for (int i = (range - 1) * 8, j = i; i < range * 8 && j < allProducts.size(); i++, j++) {
             ProductsInfoEntity product = allProducts.get(j);
             if (product.getQuantity() == 0) {
                 i--;
@@ -460,7 +460,37 @@ public class ProductDaoImpl implements ProductDao {
         }
         return productCount;
     }
+     @Override
+   public double getMaxmimumPrice(){
+   
+    String query = "SELECT max(price) from PRODUCTS_INFO";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        double maxPrice=0;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                maxPrice=resultSet.getDouble(1);
+               
+            }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return maxPrice;
+    }
     //just for test ^_^
     public static void main(String[] args) {
         ProductsInfoEntity product = new ProductsInfoEntity();
@@ -472,11 +502,11 @@ public class ProductDaoImpl implements ProductDao {
         product.setQuantity(100);
         product.setImg("product_5.png");
         ProductDaoImpl pdi = new ProductDaoImpl();
-        /* ArrayList<ProductsInfoEntity>products=pdi.getProductsBTWRange(2);
-        for (ProductsInfoEntity product1 : products) {
-              System.out.println(product1.getProductName());
+         //ArrayList<ProductsInfoEntity>products=pdi.getProducts(10,100);
+       /* for (ProductsInfoEntity product1 : products) {
+              System.out.println(product1.getPrice());
         }*/
-
+        System.out.println(pdi.getMaxmimumPrice());
     }
 
 }

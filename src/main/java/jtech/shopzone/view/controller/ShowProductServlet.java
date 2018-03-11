@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -76,13 +77,20 @@ public class ShowProductServlet extends HttpServlet {
         //processRequest(request, response);
         PrintWriter out = response.getWriter();
         String page = request.getParameter("page");
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         if (page != null) {
 
             int pageNum = Integer.parseInt(page);
             ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-            if (categoryId == 0) {
+            if (categoryId == 0 && to == null && from == null) {
+
                 products = productController.getProductsBTWRange(pageNum);
+            } else if (to != null && from != null) {
+
+                products = productController.getProductsBTWRange(pageNum, Double.parseDouble(from), Double.parseDouble(to));
+
             } else {
 
                 products = productController.getProductsBTWRange(pageNum, categoryId);
@@ -92,12 +100,21 @@ public class ShowProductServlet extends HttpServlet {
             out.print(jsonObject);
 
         } else {
+            String flag = request.getParameter("flag");
             int productCount = 0;
-            if (categoryId == 0) {
-                productCount = productController.getProductCount();
+            if (flag == null) {
+                if (categoryId == 0) {
+                    productCount = productController.getProductCount();
+                } else {
+
+                    productCount = productController.getProducts(categoryId).size();
+                }
             } else {
-                productCount = productController.getProducts(categoryId).size();
+
+                productCount = productController.getProducts(Double.parseDouble(from), Double.parseDouble(to)).size();
+
             }
+
             out.print(productCount);
         }
     }
@@ -127,5 +144,3 @@ public class ShowProductServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-
-

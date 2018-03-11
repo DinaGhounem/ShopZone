@@ -33,18 +33,32 @@
         <link rel="stylesheet" href="css/pagination_styles.css">
 
 
-        
-        <link rel="stylesheet" href="css/pagination.css"/>
 
+        <link rel="stylesheet" href="css/pagination.css"/>
+        <style>
+            li.currency{
+                background: #fff;
+                padding: 0px;
+                border: none;
+                
+            }
+            input[type=number]{
+                 width: 80px;
+                 margin: 5%;
+} 
+        </style>
 
     </head>
 
-    <body onload="getProducts(1, 0)">
+    <body onload="getCart();
+            getProducts(1, 0);
+            getProductsCount(categoryId);
+            getCategories();">
 
         <div class="super_container">
 
             <!-- Header -->
-<header class="header trans_300">
+            <header class="header trans_300">
                 <div class="top_nav">
                     <div class="container">
                         <div class="row">
@@ -74,6 +88,18 @@
                                         <li><a href="home.jsp">Home</a></li>
                                         <li><a href="UserProfile.jsp">My Profile</a></li>
                                         <li><a href="cart.jsp">My Cart</a></li>
+                                       
+                                        <li class="currency">
+									<a href="#">
+										Search
+										<i class="fa fa-angle-down"></i>
+									</a>
+									<ul class="currency_selection">
+										<li onclick="searchByCategory()"><a >Category</a></li>
+										<li onclick="searchByPriceAction()"><a >Price</a></li>
+										
+									</ul>
+								</li>
                                     </ul>
                                     <ul class="navbar_user">
                                         <li><a href="UserProfile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
@@ -132,15 +158,13 @@
                         <div class="col text-center">
                             <div class="new_arrivals_sorting">
                                 <div id="example">
-                                    <div id="category" class="demo-section k-content" style="width:200px;">
+                                    <div id="category" class="demo-section k-content" style="width:300px;height: 100px;">
 
 
                                         <h4 style="margin-top: 2em;"><label for="size">Category</label></h4>
                                         <select id="size" style="width: 100%;float: left" onchange="changeCategory()" >
 
                                         </select>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -162,41 +186,41 @@
 
 
                 <!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                                <ul class="footer_nav">
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">Blog</a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">FAQs</a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone">Contact us</a></li>
-                                </ul>
+                <footer class="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                                    <ul class="footer_nav">
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone">Blog</a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone">FAQs</a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone">Contact us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                                    <ul>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                                <ul>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://github.com/MuhammedMahrous/ShopZone"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                </ul>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="footer_nav_container">
+                                    <div class="cr">?2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
+                                                                                                              aria-hidden="true"></i>
+                                        by <a>ShopZone</a></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer_nav_container">
-                                <div class="cr">?2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
-                                                                                                          aria-hidden="true"></i>
-                                    by <a>ShopZone</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+                </footer>
             </div>
 
 
@@ -211,9 +235,12 @@
             <script type="text/javascript" src="js/bootpag.js"></script>
             <script src="js/custom.js"></script>
             <script src="js/show_product.js"></script>
-
-
+            <script src="cartincludes/js/cartNotificationUpdater.js"></script>
+        </div>
     </body>
 
 </html>
->>>>>>> 26d2c3a762de0b8a0de2dc623c0b5264fe632134
+<<<<<<< HEAD
+
+=======
+>>>>>>> acab0d5e21c0bf66dbd990589fab8ea5442cc220

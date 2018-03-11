@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import jtech.shopzone.controller.UserController;
 import jtech.shopzone.controller.impl.UserControllerImpl;
 import jtech.shopzone.controller.impl.UserControllerImpl;
@@ -22,7 +23,6 @@ import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.entity.UserInfoEntity;
 
 /**
- *
  * @author sulta
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userController=UserControllerImpl.newInstance();
+        userController = UserControllerImpl.newInstance();
     }
 
     @Override
@@ -67,9 +67,9 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //----------------------if admin-------------------------------//
-        String email=request.getParameter("email");
-        String password=request.getParameter("password");
-        adminAck = userController.isAdmin(email,password);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        adminAck = userController.isAdmin(email, password);
         if (adminAck == Status.OK) {
             isAdmin = true;
             HttpSession session = request.getSession(true);
@@ -77,8 +77,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("isAdmin", new Boolean(true));
             session.setAttribute("adminEmail", request.getParameter("email"));//or give me in return user id to put it on the session
             session.setAttribute("adminId", userController.getAdminId(request.getParameter("email")));
-            RequestDispatcher rd = request.getRequestDispatcher("/adminpage.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("/adminHome.jsp");
+            //rd.forward(request, response);
 
         } else if (adminAck == Status.NOTOK) {
 
@@ -96,11 +96,12 @@ public class LoginServlet extends HttpServlet {
             if (loginAck == Status.OK) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("loggedIn", new Boolean(true));
-                 session.setAttribute("isAdmin", new Boolean(false));
+                session.setAttribute("isAdmin", new Boolean(false));
                 session.setAttribute("userEmail", request.getParameter("email"));//or give me in return user id to put it on the session
                 session.setAttribute("userId", userController.getUserId(request.getParameter("email")));
-                RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-                rd.forward(request, response);
+                response.sendRedirect("/home.jsp");
+                //RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+                //rd.forward(request, response);
             } else if (loginAck == Status.NOTOK) {
                 response.sendRedirect("signin.html?Status=notok&errormessage=Wrong email or password");
             } else if (loginAck == Status.ERROR) {

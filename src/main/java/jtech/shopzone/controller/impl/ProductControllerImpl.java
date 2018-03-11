@@ -86,4 +86,9 @@ public class ProductControllerImpl implements ProductController {
         return productDao.getProductCount();
     }
 
+    @Override
+    public double getMaxmimumPrice() {
+        return productDao.getMaxmimumPrice();
+    }
+
 }
