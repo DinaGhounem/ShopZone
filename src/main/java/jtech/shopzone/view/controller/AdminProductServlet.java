@@ -45,7 +45,7 @@ public class AdminProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
         products = productController.getProducts();
         Gson gson = new Gson();

@@ -49,7 +49,6 @@
         <url-pattern>/home.jsp</url-pattern>
         <url-pattern>/cart.jsp</url-pattern>
         <url-pattern>/checkout.jsp</url-pattern>
-        <url-pattern>/showUser.jsp</url-pattern>
         <url-pattern>/UserProfile.jsp</url-pattern>
     </filter-mapping>
 
@@ -60,8 +59,19 @@
     <filter-mapping>
         <filter-name>AdminSessionCheckerFilter</filter-name>
         <url-pattern>/adminHome.jsp</url-pattern>
+        <url-pattern>/addProduct.jsp</url-pattern>
         <url-pattern>/editProduct.jsp</url-pattern>
         <url-pattern>/Category.jsp</url-pattern>
+        <url-pattern>/showUser.jsp</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>WelcomePagesFilter</filter-name>
+        <filter-class>jtech.shopzone.view.controller.filters.WelcomePagesFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>WelcomePagesFilter</filter-name>
+        <url-pattern>/signin.html</url-pattern>
+        <url-pattern>/signup.html</url-pattern>
     </filter-mapping>
     <welcome-file-list>
         <welcome-file>home.jsp</welcome-file>

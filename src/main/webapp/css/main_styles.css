@@ -296,7 +296,7 @@ section
 	padding-right: 20px;
 	padding-left: 20px;
 	text-align: center;
-	vertical-align: middle;
+	
 	background: #1e1e27;
 }
 .currency > a
@@ -340,11 +340,10 @@ section
 }
 .currency_selection li
 {
-	padding-left: 10px;
-	padding-right: 10px;
-	line-height: 50px;
+	
+	
 }
-.currency_selection li a
+.currency_selection li 
 {
 	display: block;
 	color: #232530;
@@ -356,11 +355,18 @@ section
 	-ms-transition: opacity 0.3s ease;
 	-o-transition: opacity 0.3s ease;
 	transition: all 0.3s ease;
+        width: 100%;
+        
 }
-.currency_selection li a:hover
-{
-	color: #b5aec4;
+.currency_selection li :hover
+{	color: #b5aec4;
+        cursor:pointer;
+        background: #f8f9ff;
+      
+       
+	
 }
+
 .currency_selection li:last-child a
 {
 	border-bottom: none;

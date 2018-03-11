@@ -42,4 +42,6 @@ public interface ProductDao {
 
     int getProductCount();
 
+    double getMaxmimumPrice();
+
 }

@@ -23,19 +23,32 @@ import jtech.shopzone.model.entity.ProductCategoryEntity;
  */
 public class CategoryServlet extends HttpServlet {
 
-    CategoryController catController = CategoryControllerImpl.newInstance();;
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       ArrayList<ProductCategoryEntity> categories =  catController.getCategories();
-       Gson gson= new Gson();
-        PrintWriter out = response.getWriter();
-        out.println(gson.toJson(categories));
-    }
+    CategoryController catController = CategoryControllerImpl.newInstance();
+
+    ;
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<ProductCategoryEntity> categories = catController.getCategories();
+        Gson gson = new Gson();
+        PrintWriter out = response.getWriter();
+        out.println(gson.toJson(categories));
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String newCategory = request.getParameter("NewCateegory");
+        ProductCategoryEntity catEntity = new ProductCategoryEntity();
+        catEntity.setCategoryName(newCategory);
+        
+        if (newCategory.isEmpty()) {
+            
+        }
+        else{
+        catController.addCategory(catEntity);
+        }
+        
     }
 }

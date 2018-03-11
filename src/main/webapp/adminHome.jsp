@@ -4,7 +4,8 @@
     Author     : Hanaa
 --%>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
+<%@page import="jtech.shopzone.view.controller.ShowProductServlet" %>
 <html lang="en">
     <head>
         <title>Shop Zone </title>
@@ -27,10 +28,15 @@
         <link rel="stylesheet" type="text/css" href="css/main_styles.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <link rel="stylesheet" href="css/pagination_styles.css">
+       
+        <link rel="stylesheet" href="css/pagination.css"/>
         <%@page import="jtech.shopzone.view.controller.AdminProductServlet" %>
     </head>
 
-    <body onload="getProducts()">
+    <body onload="
+            getProducts(1, 0);
+            getProductsCount(categoryId);
+            getCategories();">
 
         <div class="super_container">
 
@@ -40,7 +46,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="top_nav_left">Welcome In Our Online Shopping website ShopZone :) </div>
+                                <div class="top_nav_left">Welcome Admin:) </div>
                             </div>
                             <>
                             <div class="top_nav_left" style="padding-left:35em;">
@@ -64,6 +70,7 @@
                                     <ul class="navbar_menu">
                                         <li><a href="adminHome.jsp">Home</a></li>
                                         <li><a href="Category.jsp">Categories</a></li>
+                                        <li><a href="addProduct.jsp">Add Products</a></li>
                                         <li><a href="showUser.jsp">Clients</a></li>
                                     </ul>
                                     <div class="hamburger_container">
@@ -99,6 +106,9 @@
 
                                 <h3>loading...</h3>
                             </div>
+                            <div class="wrapper">
+                                    <div class="container">
+                                        <div id="pagination-here"></div></div></div>
                         </div>
                     </div>
                 </div>
@@ -143,13 +153,17 @@
             </footer>
         </div>
 
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="css/bootstrap4/popper.js"></script>
-        <script src="css/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
+          <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/kendo.all.min.js"></script>
+            <script src="css/bootstrap4/popper.js"></script>
+            <script src="css/bootstrap4/bootstrap.min.js"></script>
+         
+            <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script type="text/javascript" src="js/bootpag.js"></script>
+            <script src="js/custom.js"></script>
         <script src="js/admin_show_product.js"></script>
     </body>
 

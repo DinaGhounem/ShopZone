@@ -90,15 +90,23 @@
             <div style="margin-top: 200px;">
                 <section id="profile_section">
                     <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="section_title new_arrivals_title">
+                                    <h2>My Profile</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         <div class="table-responsive cart_info">
                             <center>
                                 <form action="UpdateProfileServlet" method="post" class="dark-matter">
-                                    <table>
+                                    <table style="width: 100%;">
                                         <tr>
                                             <td>
-                                                <table>
+                                                <table style="width: 100%;">
                                                     <tr>
-                                                        <td>First Name:</td>
+                                                        <td style="width:10%;">First Name:</td>
                                                         <td><input id="input_firstname" class="form_input input_name input_ph" type="text" name="fname"  required="required" data-error="First Name is required."></td>
                                                     </tr>
                                                     <tr>
@@ -130,13 +138,14 @@
                                                         <td><input input id="input_creditLimit" type="number" min="1" max="200000" class="form_input input_name input_ph" name="credit" required="required" data-error="Credit Limit is required."></td>
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td><input id="button_submit" type="submit" class="newsletter_submit_btn trans_300" value="Save"/></td>
+                                                        <td>Interests :</td>
+                                                        <td id="display_interests"></td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                     </table>
+                                    <input id="button_submit" type="submit" class="newsletter_submit_btn trans_300" value="Save"/>
                                 </form>
                             </center>
                         </div>

@@ -18,6 +18,7 @@ public class ProductsInfoEntity {
     private String description;
     private int categoryId;
     private String img;
+    private int deletedFlg;
 
     public ProductsInfoEntity() {
     }
@@ -128,6 +129,14 @@ public class ProductsInfoEntity {
      */
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public void setDeletedFlg(int deletedFlg) {
+        this.deletedFlg = deletedFlg;
+    }
+
+    public int getDeletedFlg() {
+        return deletedFlg;
     }
 
     @Override
