@@ -179,8 +179,10 @@ function searchByPriceAction() {
 function searchByCategory() {
     $("#category").html("<h4 style=\"margin-top: 2em;\"><label for=\"size\">Category</label></h4>" +
             "<select id=\"size\" style=\"width: 100%;float: left\" onchange=\"changeCategory()\" ></select>");
-
+    getProducts(1, 0);
+    getProductsCount(0);
     getCategories();
+    
 }
 
 function searchFun() {
