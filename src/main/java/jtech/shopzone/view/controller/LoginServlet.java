@@ -48,6 +48,8 @@ public class LoginServlet extends HttpServlet {
             if (!loggedIn.equalsIgnoreCase("true")) {
                 response.sendRedirect("signin.html");
 
+            }else{
+                response.sendRedirect("home.jsp");
             }
         }
 
