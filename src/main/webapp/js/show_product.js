@@ -89,7 +89,7 @@ function ProductsCountcallback(response, statusTxt, xhr)
 {
     if (statusTxt == "success") {
         
-        if (response % 8 == 0 || response % 8 >= 5 || response < 8) {
+        if (response % 8 == 0 || response % 8 >= 4 || response < 8) {
             pageNum = Math.round(response / 8);
         } else {
             pageNum = Math.round(response / 8) + 1;
@@ -157,6 +157,7 @@ function getCategoriesCallBack(response, statusTxt, xhr)
 }
 function changeCategory() {
     categoryId = document.getElementById("size").value;
+      currentPage=1;
     getProductsCount(categoryId);
     getProducts(1, categoryId);
 
@@ -185,6 +186,7 @@ function searchByPriceAction() {
 function searchByCategory() {
     $("#category").html("<h4 style=\"margin-top: 2em;\"><label for=\"size\">Category</label></h4>" +
             "<select id=\"size\" style=\"width: 100%;float: left\" onchange=\"changeCategory()\" ></select>");
+    currentPage=1;
     getProducts(1, 0);
     getProductsCount(0);
     getCategories();
@@ -207,6 +209,7 @@ function searchFun() {
     }
     searchTo = to;
     searchFrom = from;
+    currentPage=1;
     getProductsCountBTWRang(0);
     searchByPrice(1, from, to);
 }

@@ -100,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public ArrayList<ProductsInfoEntity> getProducts(int categoryId) {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        String query = "SELECT * from PRODUCTS_INFO where CATEGORY_ID='" + categoryId + "'";
+        String query = "SELECT * from PRODUCTS_INFO where CATEGORY_ID='" + categoryId + "' and DELETED_FLG=1";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
@@ -140,7 +140,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public ArrayList<ProductsInfoEntity> getProducts(double minPrice, double maxPrice) {
         ArrayList<ProductsInfoEntity> products = new ArrayList<>();
-        String query = "SELECT * from PRODUCTS_INFO where PRICE between " + minPrice + " and " + maxPrice;
+        String query = "SELECT * from PRODUCTS_INFO where DELETED_FLG=1 and PRICE between " + minPrice + " and " + maxPrice;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
@@ -492,13 +492,63 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public int getProductCount() {
-        int productCount = getAvaliableProducts().size();
         
+        int productCount = 0;
+        String query = "select count(*) from PRODUCTS_INFO  where DELETED_FLG=1 and quantity!=0";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                productCount = resultSet.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return productCount;
     }
  @Override
     public int getProductCount2() {
-        int productCount =getProducts().size();
+        /*int productCount =getProducts().size();
+        return productCount;*/
+        int productCount = 0;
+        String query = "select count(*) from PRODUCTS_INFO  where DELETED_FLG=1";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                productCount = resultSet.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return productCount;
     }
     @Override
