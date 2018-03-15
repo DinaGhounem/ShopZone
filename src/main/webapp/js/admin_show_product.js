@@ -82,8 +82,12 @@ function ProductsCountcallback(response, statusTxt, xhr) {
         if(response%8==0&&currentPage-1==(pageNum)){
              
             getProducts(currentPage-1, 0);
+             currentPage--;
         }
-       
+       if(response==1){
+           pageMin=1;
+           currentPage--;
+       }
        
         $('#pagination-here').bootpag({
             total: pageNum,
@@ -95,6 +99,7 @@ function ProductsCountcallback(response, statusTxt, xhr) {
         
 
 //page click action
+    if(pageMin!=1){
         $('#pagination-here').on("page", function (event, num) {
             //show / hide content or pull via ajax etc
            
@@ -102,11 +107,12 @@ function ProductsCountcallback(response, statusTxt, xhr) {
             
         
             if (searchFlag) {
-                getProducts(num, categoryId);
+                getProducts(currentPage, categoryId);
             } else {
                 searchByPrice(num, searchFrom, searchTo);
             }
         });
+    }
     }
 }
 
@@ -115,9 +121,12 @@ function ProductsCountcallback(response, statusTxt, xhr) {
 
 function onclickEdit(PID) {
     $.get("RemoveProduct?productId=" + PID);
-   
         getProductsCount(categoryId);
         getProducts(currentPage-pageMin, 0);
+       
+       
+       pageMin=0;
+       
        
 
 }
