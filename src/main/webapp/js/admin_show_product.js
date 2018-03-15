@@ -17,7 +17,7 @@ deleteFlag=false;
 
 function getProducts(page, categoryId) {
 
-    $.get("AdminEditProductServlet?page=" + page + "&categoryId=" + categoryId, callback);
+    $.get("AdminProductServlet?page=" + page + "&categoryId=0", callback);
 
 
 
@@ -44,7 +44,7 @@ function callback(response, statusTxt, xhr) {
                     "</span></div>" +
                     "<div class=\"product_info\">" +
                     "<h6 class=\"product_name\"><a href=\"\">" + object[i].productName + "(" + object[i].description + ")</a></h6>" +
-                    "<div class=\"product_price\">$" + object[i].price + "<span>$590.00</span></div>" +
+                    "<div class=\"product_price\">$" + object[i].price + "</div>" +
                     "</div>" +
                     "</div>" +
                     "<div>" + "<button class=\"red_button add_to_cart_button\" onclick=\"setPID(" + object[i].productId + ")\" type=\"submit\">" + "Edit Product" + "</button></div>" +
@@ -63,7 +63,7 @@ function callback(response, statusTxt, xhr) {
 
 function getProductsCount(categoryId) {
 
-    $.get("AdminEditProductServlet?categoryId=" + categoryId, ProductsCountcallback);
+    $.get("AdminProductServlet?categoryId=0", ProductsCountcallback);
 
 
 }
