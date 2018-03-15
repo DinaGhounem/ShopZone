@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="jtech.shopzone.model.dal.beans.ProductsInfo" optimistic-lock="version" schema="SHOPPING" table="PRODUCTS_INFO">
+    <id name="productId" type="big_decimal">
+      <column name="PRODUCT_ID" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="jtech.shopzone.model.dal.beans.ProductsCategory" fetch="select" name="productsCategory">
+      <column name="CATEGORY_ID" precision="22" scale="0"/>
+    </many-to-one>
+    <property name="productName" type="string">
+      <column name="PRODUCT_NAME" not-null="true"/>
+    </property>
+    <property name="price" type="big_decimal">
+      <column name="PRICE" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="quantity" type="big_decimal">
+      <column name="QUANTITY" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="description" type="string">
+      <column name="DESCRIPTION"/>
+    </property>
+    <property name="img" type="string">
+      <column name="IMG"/>
+    </property>
+    <property name="deletedFlg" type="big_decimal">
+      <column name="DELETED_FLG" not-null="true" precision="22" scale="0"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="shoppingCarts" table="SHOPPING_CART">
+      <key>
+        <column name="PRODUCT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="jtech.shopzone.model.dal.beans.ShoppingCart"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="userProductses" table="USER_PRODUCTS">
+      <key>
+        <column name="PRODUCT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="jtech.shopzone.model.dal.beans.UserProducts"/>
+    </set>
+  </class>
+</hibernate-mapping>

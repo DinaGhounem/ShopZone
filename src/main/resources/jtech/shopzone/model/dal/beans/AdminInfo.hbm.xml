@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="jtech.shopzone.model.dal.beans.AdminInfo" optimistic-lock="version" schema="SHOPPING" table="ADMIN_INFO">
+    <id name="adminId" type="big_decimal">
+      <column name="ADMIN_ID" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="email" type="string">
+      <column name="EMAIL"/>
+    </property>
+    <property name="firstName" type="string">
+      <column name="FIRST_NAME"/>
+    </property>
+    <property name="lastName" type="string">
+      <column name="LAST_NAME"/>
+    </property>
+    <property name="password" type="string">
+      <column length="30" name="PASSWORD"/>
+    </property>
+  </class>
+</hibernate-mapping>
