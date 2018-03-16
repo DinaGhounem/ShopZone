@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 2:19:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="jtech.shopzone.controller.dal.bean.Userinfo" table="userinfo" catalog="shopping" optimistic-lock="version">
+        <id name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="firstName" type="string">
+            <column name="first_name" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="ADDRESS" />
+        </property>
+        <property name="birthdate" type="date">
+            <column name="BIRTHDATE" length="10" />
+        </property>
+        <property name="password" type="string">
+            <column name="PASSWORD" length="20" not-null="true" />
+        </property>
+        <property name="job" type="string">
+            <column name="JOB" />
+        </property>
+        <property name="creditLimit" type="java.lang.Long">
+            <column name="CREDIT_LIMIT" precision="15" scale="0" />
+        </property>
+        <property name="userImg" type="string">
+            <column name="USER_IMG" />
+        </property>
+        <set name="userProductses" table="user_products" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="jtech.shopzone.controller.dal.bean.UserProducts" />
+        </set>
+        <set name="shoppingCarts" table="shopping_cart" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="jtech.shopzone.controller.dal.bean.ShoppingCart" />
+        </set>
+        <set name="userInterestses" table="user_interests" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="jtech.shopzone.controller.dal.bean.UserInterests" />
+        </set>
+    </class>
+</hibernate-mapping>

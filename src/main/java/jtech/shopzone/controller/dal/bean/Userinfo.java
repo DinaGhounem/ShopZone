@@ -1,8 +1,7 @@
-package jtech.shopzone.model.dal.beans;
-// Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1
+package jtech.shopzone.controller.dal.bean;
+// Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +12,7 @@ import java.util.Set;
 public class Userinfo  implements java.io.Serializable {
 
 
-     private BigDecimal userId;
+     private Integer userId;
      private String firstName;
      private String lastName;
      private String email;
@@ -21,7 +20,7 @@ public class Userinfo  implements java.io.Serializable {
      private Date birthdate;
      private String password;
      private String job;
-     private BigDecimal creditLimit;
+     private Long creditLimit;
      private String userImg;
      private Set userProductses = new HashSet(0);
      private Set shoppingCarts = new HashSet(0);
@@ -31,13 +30,13 @@ public class Userinfo  implements java.io.Serializable {
     }
 
 	
-    public Userinfo(BigDecimal userId, String email, String password) {
-        this.userId = userId;
+    public Userinfo(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
-    public Userinfo(BigDecimal userId, String firstName, String lastName, String email, String address, Date birthdate, String password, String job, BigDecimal creditLimit, String userImg, Set userProductses, Set shoppingCarts, Set userInterestses) {
-       this.userId = userId;
+    public Userinfo(String firstName, String lastName, String email, String address, Date birthdate, String password, String job, Long creditLimit, String userImg, Set userProductses, Set shoppingCarts, Set userInterestses) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.email = email;
@@ -52,11 +51,11 @@ public class Userinfo  implements java.io.Serializable {
        this.userInterestses = userInterestses;
     }
    
-    public BigDecimal getUserId() {
+    public Integer getUserId() {
         return this.userId;
     }
     
-    public void setUserId(BigDecimal userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
     public String getFirstName() {
@@ -108,11 +107,11 @@ public class Userinfo  implements java.io.Serializable {
     public void setJob(String job) {
         this.job = job;
     }
-    public BigDecimal getCreditLimit() {
+    public Long getCreditLimit() {
         return this.creditLimit;
     }
     
-    public void setCreditLimit(BigDecimal creditLimit) {
+    public void setCreditLimit(Long creditLimit) {
         this.creditLimit = creditLimit;
     }
     public String getUserImg() {

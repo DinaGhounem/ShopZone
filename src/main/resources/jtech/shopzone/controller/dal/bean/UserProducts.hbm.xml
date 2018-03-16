@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 2:19:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="jtech.shopzone.controller.dal.bean.UserProducts" table="user_products" catalog="shopping" optimistic-lock="version">
+        <composite-id name="id" class="jtech.shopzone.controller.dal.bean.UserProductsId">
+            <key-property name="userId" type="int">
+                <column name="USER_ID" />
+            </key-property>
+            <key-property name="productId" type="int">
+                <column name="PRODUCT_ID" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="productsInfo" class="jtech.shopzone.controller.dal.bean.ProductsInfo" update="false" insert="false" fetch="select">
+            <column name="PRODUCT_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="userinfo" class="jtech.shopzone.controller.dal.bean.Userinfo" update="false" insert="false" fetch="select">
+            <column name="USER_ID" not-null="true" />
+        </many-to-one>
+        <property name="quantity" type="int">
+            <column name="QUANTITY" not-null="true" />
+        </property>
+        <property name="orderDate" type="date">
+            <column name="ORDER_DATE" length="10" />
+        </property>
+        <property name="price" type="long">
+            <column name="PRICE" precision="10" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

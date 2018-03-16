@@ -1,5 +1,5 @@
-package jtech.shopzone.model.dal.beans;
-// Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1
+package jtech.shopzone.controller.dal.bean;
+// Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
 

@@ -1,8 +1,7 @@
-package jtech.shopzone.model.dal.beans;
-// Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1
+package jtech.shopzone.controller.dal.bean;
+// Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +11,7 @@ import java.util.Set;
 public class ProductsCategory  implements java.io.Serializable {
 
 
-
-     private BigDecimal categoryId;
+     private Integer categoryId;
      private String categoryName;
      private Set productsInfos = new HashSet(0);
 
@@ -21,21 +19,19 @@ public class ProductsCategory  implements java.io.Serializable {
     }
 
 	
-    public ProductsCategory(BigDecimal categoryId, String categoryName) {
-        this.categoryId = categoryId;
+    public ProductsCategory(String categoryName) {
         this.categoryName = categoryName;
     }
-    public ProductsCategory(BigDecimal categoryId, String categoryName, Set productsInfos) {
-       this.categoryId = categoryId;
+    public ProductsCategory(String categoryName, Set productsInfos) {
        this.categoryName = categoryName;
        this.productsInfos = productsInfos;
     }
    
-    public BigDecimal getCategoryId() {
+    public Integer getCategoryId() {
         return this.categoryId;
     }
     
-    public void setCategoryId(BigDecimal categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
     public String getCategoryName() {

@@ -1,8 +1,7 @@
-package jtech.shopzone.model.dal.beans;
-// Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1
+package jtech.shopzone.controller.dal.bean;
+// Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,14 +11,14 @@ import java.util.Set;
 public class ProductsInfo  implements java.io.Serializable {
 
 
-     private BigDecimal productId;
+     private Integer productId;
      private ProductsCategory productsCategory;
      private String productName;
-     private BigDecimal price;
-     private BigDecimal quantity;
+     private long price;
+     private int quantity;
      private String description;
      private String img;
-     private BigDecimal deletedFlg;
+     private int deletedFlg;
      private Set shoppingCarts = new HashSet(0);
      private Set userProductses = new HashSet(0);
 
@@ -27,15 +26,14 @@ public class ProductsInfo  implements java.io.Serializable {
     }
 
 	
-    public ProductsInfo(BigDecimal productId, String productName, BigDecimal price, BigDecimal quantity, BigDecimal deletedFlg) {
-        this.productId = productId;
+    public ProductsInfo(ProductsCategory productsCategory, String productName, long price, int quantity, int deletedFlg) {
+        this.productsCategory = productsCategory;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
         this.deletedFlg = deletedFlg;
     }
-    public ProductsInfo(BigDecimal productId, ProductsCategory productsCategory, String productName, BigDecimal price, BigDecimal quantity, String description, String img, BigDecimal deletedFlg, Set shoppingCarts, Set userProductses) {
-       this.productId = productId;
+    public ProductsInfo(ProductsCategory productsCategory, String productName, long price, int quantity, String description, String img, int deletedFlg, Set shoppingCarts, Set userProductses) {
        this.productsCategory = productsCategory;
        this.productName = productName;
        this.price = price;
@@ -47,11 +45,11 @@ public class ProductsInfo  implements java.io.Serializable {
        this.userProductses = userProductses;
     }
    
-    public BigDecimal getProductId() {
+    public Integer getProductId() {
         return this.productId;
     }
     
-    public void setProductId(BigDecimal productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
     public ProductsCategory getProductsCategory() {
@@ -68,18 +66,18 @@ public class ProductsInfo  implements java.io.Serializable {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-    public BigDecimal getPrice() {
+    public long getPrice() {
         return this.price;
     }
     
-    public void setPrice(BigDecimal price) {
+    public void setPrice(long price) {
         this.price = price;
     }
-    public BigDecimal getQuantity() {
+    public int getQuantity() {
         return this.quantity;
     }
     
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
     public String getDescription() {
@@ -96,11 +94,11 @@ public class ProductsInfo  implements java.io.Serializable {
     public void setImg(String img) {
         this.img = img;
     }
-    public BigDecimal getDeletedFlg() {
+    public int getDeletedFlg() {
         return this.deletedFlg;
     }
     
-    public void setDeletedFlg(BigDecimal deletedFlg) {
+    public void setDeletedFlg(int deletedFlg) {
         this.deletedFlg = deletedFlg;
     }
     public Set getShoppingCarts() {

@@ -1,8 +1,7 @@
-package jtech.shopzone.model.dal.beans;
-// Generated Mar 16, 2018 1:04:09 AM by Hibernate Tools 4.3.1
+package jtech.shopzone.controller.dal.bean;
+// Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,20 +13,22 @@ public class UserProducts  implements java.io.Serializable {
      private UserProductsId id;
      private ProductsInfo productsInfo;
      private Userinfo userinfo;
-     private BigDecimal quantity;
+     private int quantity;
      private Date orderDate;
-     private BigDecimal price;
+     private long price;
 
     public UserProducts() {
     }
 
 	
-    public UserProducts(UserProductsId id, ProductsInfo productsInfo, Userinfo userinfo) {
+    public UserProducts(UserProductsId id, ProductsInfo productsInfo, Userinfo userinfo, int quantity, long price) {
         this.id = id;
         this.productsInfo = productsInfo;
         this.userinfo = userinfo;
+        this.quantity = quantity;
+        this.price = price;
     }
-    public UserProducts(UserProductsId id, ProductsInfo productsInfo, Userinfo userinfo, BigDecimal quantity, Date orderDate, BigDecimal price) {
+    public UserProducts(UserProductsId id, ProductsInfo productsInfo, Userinfo userinfo, int quantity, Date orderDate, long price) {
        this.id = id;
        this.productsInfo = productsInfo;
        this.userinfo = userinfo;
@@ -57,11 +58,11 @@ public class UserProducts  implements java.io.Serializable {
     public void setUserinfo(Userinfo userinfo) {
         this.userinfo = userinfo;
     }
-    public BigDecimal getQuantity() {
+    public int getQuantity() {
         return this.quantity;
     }
     
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
     public Date getOrderDate() {
@@ -71,11 +72,11 @@ public class UserProducts  implements java.io.Serializable {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
-    public BigDecimal getPrice() {
+    public long getPrice() {
         return this.price;
     }
     
-    public void setPrice(BigDecimal price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
