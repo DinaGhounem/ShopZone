@@ -8,19 +8,20 @@ public class MySessionFactory {
 
     private static MySessionFactory mySessionFactory;
     private static SessionFactory sessionFactory;
-    private static Session session;
 
-    private MySessionFactory(){}
-
-    public static MySessionFactory getMySessionFactory(){
-        sessionFactory = new Configuration()
-                .configure("/hibernate.cfg.xml").buildSessionFactory();
-        return mySessionFactory;
+    private MySessionFactory() {
+        if (sessionFactory == null)
+            sessionFactory = new Configuration()
+                    .configure("hibernate.cfg.xml").buildSessionFactory();
     }
 
-    public Session getSession(){
-        session = sessionFactory.openSession();
-        return session;
+    public static MySessionFactory getMySessionFactory() {
+        return new MySessionFactory();
+    }
+
+    public Session getSession() {
+        return sessionFactory.openSession();
+        
     }
 
 }

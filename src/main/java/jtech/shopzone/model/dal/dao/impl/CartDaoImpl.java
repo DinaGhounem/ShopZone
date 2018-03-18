@@ -1,25 +1,47 @@
 package jtech.shopzone.model.dal.dao.impl;
 
+import jtech.shopzone.controller.dal.bean.ProductsInfo;
+import jtech.shopzone.controller.dal.bean.Userinfo;
 import jtech.shopzone.model.dal.DbConnection;
+import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
+import org.hibernate.Session;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Mahrous
  */
 public class CartDaoImpl implements CartDao {
+    private Session session;
+
     @Override
     public Status addProduct(int userId, int productId) {
-        Status status;
-        String query = "INSERT INTO SHOPPING_CART VALUES(" + userId + "," + productId + ",1)";
-        status = execUpdate(query);
+        Status status = null;
+        Session session = MySessionFactory.getMySessionFactory().getSession();
+        Userinfo userinfo = session.load(Userinfo.class, userId);
+        ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
+        session.beginTransaction();
+        userinfo.getUserProductses().add(productsInfo);
+        session.persist(userinfo);
+
+        try {
+            session.getTransaction().commit();
+            status = Status.OK;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            status = Status.NOTOK;
+        }
+
+        session.close();
+
         return status;
     }
 
@@ -190,5 +212,4 @@ public class CartDaoImpl implements CartDao {
         }
         return status;
     }
-   
 }

@@ -6,6 +6,10 @@ import java.sql.*;
 /**
  * @author Mahrous
  */
+
+/**
+ * TODO: Remove this class when done migration to Hibernate
+ */
 public class DbConnection {
     private static Connection connection;
 

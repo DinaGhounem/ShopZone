@@ -2,6 +2,7 @@ package jtech.shopzone.view.controller;
 
 import jtech.shopzone.controller.CartController;
 import jtech.shopzone.controller.impl.CartControllerImpl;
+import org.hibernate.jpa.internal.EntityManagerImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +17,18 @@ import java.io.IOException;
  */
 @WebServlet(name = "CartQuantityServlet", urlPatterns = "/CartQuantityServlet")
 public class CartQuantityServlet extends HttpServlet {
-    private CartController cartController = CartControllerImpl.newInstance();;
+    
+    private CartController cartController = CartControllerImpl.newInstance();
+    ;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession();
-        if(httpSession!=null)
-        {
+        if (httpSession != null) {
             Integer userId = (Integer) httpSession.getAttribute("userId");
-            int itemCount = cartController.userItemCount(userId);
-            if(itemCount != -1)
-            {
+            int itemCount = 0;
+            //cartController.userItemCount(userId);
+            if (itemCount != -1) {
                 response.getWriter().write(String.valueOf(itemCount));
             }
         }
