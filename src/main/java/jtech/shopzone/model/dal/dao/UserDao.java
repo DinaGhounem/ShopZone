@@ -6,10 +6,9 @@
 package jtech.shopzone.model.dal.dao;
 
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
-
-import jtech.shopzone.model.entity.UserInfoEntity;
 
 /**
  * @author Hanaa
