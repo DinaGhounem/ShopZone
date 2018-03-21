@@ -1,12 +1,15 @@
 package jtech.shopzone.controller.impl;
 
 import jtech.shopzone.controller.CartController;
+import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
+
 import jtech.shopzone.model.dal.dao.impl.CartDaoImpl;
 import jtech.shopzone.model.entity.StockStatus;
 
@@ -37,7 +40,16 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public ArrayList<CartEntity> getUserProducts(int userId) {
-        return cartDao.getUserProducts(userId);
+        ArrayList<CartEntity> cartEntities = null;
+        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
+        if (shoppingCarts != null) {
+            cartEntities = new ArrayList<>();
+            for (ShoppingCart shoppingCart : shoppingCarts) {
+                StockStatus stockStatus = getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
+                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+            }
+        }
+        return cartEntities;
     }
 
     @Override
@@ -62,11 +74,11 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public int getQuantity(int userId, int productId) {
-        return cartDao.getQuantity(userId,productId);
+        return cartDao.getQuantity(userId, productId);
     }
 
     @Override
     public StockStatus getStockStatus(int productId, int quantity) {
-        return cartDao.getStockStatus(productId,quantity);
+        return cartDao.getStockStatus(productId, quantity);
     }
 }

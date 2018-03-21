@@ -26,8 +26,7 @@ public class CartQuantityServlet extends HttpServlet {
         HttpSession httpSession = request.getSession();
         if (httpSession != null) {
             Integer userId = (Integer) httpSession.getAttribute("userId");
-            int itemCount = 0;
-            //cartController.userItemCount(userId);
+            int itemCount = cartController.userItemCount(userId);
             if (itemCount != -1) {
                 response.getWriter().write(String.valueOf(itemCount));
             }

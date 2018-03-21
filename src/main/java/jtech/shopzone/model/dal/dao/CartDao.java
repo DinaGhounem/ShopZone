@@ -5,6 +5,7 @@
  */
 package jtech.shopzone.model.dal.dao;
 
+import jtech.shopzone.controller.dal.bean.ShoppingCart;
 import jtech.shopzone.model.dal.Status;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public interface CartDao {
 
     Status deleteProduct(int userId, int productId);
 
-    ArrayList<CartEntity> getUserProducts(int userId);
+    ArrayList<ShoppingCart> getUserProducts(int userId);
 
     Status updateProductQuantities(int userId, int productId, int quantities);
 

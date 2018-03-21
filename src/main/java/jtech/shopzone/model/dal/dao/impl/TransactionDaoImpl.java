@@ -1,6 +1,8 @@
 package jtech.shopzone.model.dal.dao.impl;
 
 import jtech.shopzone.controller.CartController;
+import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
 import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
@@ -16,6 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 /**
  * @Author Muhammed Mahrous
  */
@@ -26,7 +29,7 @@ public class TransactionDaoImpl implements TransactionsDao {
         ArrayList<UserProductsEntity> transactionsList = new ArrayList<>();
 
         try (Statement statement = DbConnection.getStatement()) {
-            String query = "select *  from  USER_PRODUCTS  userProduct , PRODUCTS_INFO  product where userProduct.PRODUCT_ID=product.PRODUCT_ID and USER_ID ="+userId;
+            String query = "select *  from  USER_PRODUCTS  userProduct , PRODUCTS_INFO  product where userProduct.PRODUCT_ID=product.PRODUCT_ID and USER_ID =" + userId;
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 UserProductsEntity userProductsEntity = new UserProductsEntity();
@@ -57,7 +60,17 @@ public class TransactionDaoImpl implements TransactionsDao {
 
         // Get cart content for that user
         CartDao cartDao = new CartDaoImpl();
-        ArrayList<CartEntity> cartEntities = cartDao.getUserProducts(userId);
+        ArrayList<CartEntity> cartEntities = null;
+
+        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
+        if (shoppingCarts != null) {
+            cartEntities = new ArrayList<>();
+            for (ShoppingCart shoppingCart : shoppingCarts) {
+                StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
+                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+            }
+        }
+
 
         // for each cart entry try to execute transaction
         // and add its full report into arraylist

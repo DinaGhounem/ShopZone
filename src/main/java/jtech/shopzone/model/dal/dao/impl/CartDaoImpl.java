@@ -1,6 +1,8 @@
 package jtech.shopzone.model.dal.dao.impl;
 
 import jtech.shopzone.controller.dal.bean.ProductsInfo;
+import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.controller.dal.bean.ShoppingCartId;
 import jtech.shopzone.controller.dal.bean.Userinfo;
 import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.MySessionFactory;
@@ -11,16 +13,19 @@ import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Mahrous
  */
 public class CartDaoImpl implements CartDao {
-    private Session session;
+    private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
+
 
     @Override
     public Status addProduct(int userId, int productId) {
@@ -28,9 +33,19 @@ public class CartDaoImpl implements CartDao {
         Session session = MySessionFactory.getMySessionFactory().getSession();
         Userinfo userinfo = session.load(Userinfo.class, userId);
         ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
+
+        ShoppingCartId shoppingCartId = new ShoppingCartId();
+        shoppingCartId.setProductId(productsInfo.getProductId());
+        shoppingCartId.setUserId(userinfo.getUserId());
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setId(shoppingCartId);
+        shoppingCart.setUserinfo(userinfo);
+        shoppingCart.setProductsInfo(productsInfo);
+        shoppingCart.setQuantity(1);
+
         session.beginTransaction();
-        userinfo.getUserProductses().add(productsInfo);
-        session.persist(userinfo);
+        session.persist(shoppingCart);
 
         try {
             session.getTransaction().commit();
@@ -48,55 +63,43 @@ public class CartDaoImpl implements CartDao {
     @Override
     public Status deleteProduct(int userId, int productId) {
         Status status;
-        String query = "DELETE FROM SHOPPING_CART WHERE USER_ID=" + userId + " and PRODUCT_ID=" + productId;
-        status = execUpdate(query);
+        Session session = MySessionFactory.getMySessionFactory().getSession();
+        Userinfo userinfo = session.load(Userinfo.class, userId);
+        ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
+        Query query = session.createQuery("FROM ShoppingCart s WHERE s.userinfo = :user and s.productsInfo = :product").setParameter("user", userinfo).setParameter("product", productsInfo);
+
+        ShoppingCart shoppingCart = (ShoppingCart) query.list().get(0);
+
+        try {
+            session.beginTransaction();
+            session.remove(shoppingCart);
+            session.getTransaction().commit();
+            status = Status.OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = Status.NOTOK;
+        }
+        session.close();
         return status;
     }
 
     @Override
-    public ArrayList<CartEntity> getUserProducts(int userId) {
+    public ArrayList<ShoppingCart> getUserProducts(int userId) {
 
-        // Init empty arraylist to fill products info in it
-        ArrayList<CartEntity> productsWithQuantity = new ArrayList<>();
-
-        try (Statement statement = DbConnection.getStatement()) {
-            // build Outer SQL string to get cart entities
-            String outerQuery = "select PRODUCT_ID , QUANTITY  from  shopping_cart where USER_ID =" + userId;
-
-            // get result set of cart entities
-            ResultSet resultSet = statement.executeQuery(outerQuery);
-
-            // loop on cart entitites
-            while (resultSet.next()) {
-                // get quantity of current product in cart
-                int productQuantity = resultSet.getInt("QUANTITY");
-
-                // get product id of current product in cart
-                int productID = resultSet.getInt("PRODUCT_ID");
-
-                // User product dao to get product info
-                ProductDao productDao = new ProductDaoImpl();
-                ProductsInfoEntity product = productDao.getProductInfo(productID);
-                if (product != null) {
-                    // set stock status
-                    StockStatus stockStatus = null;
-                    if (product.getQuantity() >= productQuantity) {
-                        stockStatus = StockStatus.IN_STOCK;
-                    } else {
-                        stockStatus = StockStatus.OUT_OF_STOCK;
-                    }
-                    // add the product to products with quantity list
-                    CartEntity cartEntity = new CartEntity(productQuantity, product, stockStatus);
-                    productsWithQuantity.add(cartEntity);
-
-                }
+        ArrayList<ShoppingCart> cartEntities = new ArrayList<>();
+        Userinfo userinfo = instanceSession.load(Userinfo.class, userId);
+        Query query = instanceSession.createQuery("FROM ShoppingCart s WHERE s.userinfo = :user")
+                .setParameter("user", userinfo);
+        try {
+            List result = query.list();
+            for (Object res : result) {
+                cartEntities.add((ShoppingCart) res);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            cartEntities = null;
             e.printStackTrace();
         }
-
-        // Return arraylist
-        return productsWithQuantity;
+        return cartEntities;
     }
 
     @Override
@@ -136,20 +139,19 @@ public class CartDaoImpl implements CartDao {
     @Override
     public int userItemCount(int userId) {
         int count;
+        Session session = MySessionFactory.getMySessionFactory().getSession();
+        Userinfo userinfo = session.load(Userinfo.class, userId);
+        Query query = session.createQuery("SELECT SUM(quantity) FROM ShoppingCart s WHERE s.userinfo = :user").setParameter("user", userinfo);
 
-        try (Statement statement = DbConnection.getStatement()) {
-            String sql = "SELECT SUM(QUANTITY) as itemCount FROM SHOPPING_CART WHERE USER_ID =" + userId;
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
-                count = resultSet.getInt("itemCount");
-            } else {
-                count = 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            List result = query.list();
+            Long productsCount = (Long) result.get(0);
+            count = productsCount.intValue();
+        } catch (Exception e) {
             count = -1;
+            e.printStackTrace();
         }
-
+        session.close();
         return count;
     }
 
