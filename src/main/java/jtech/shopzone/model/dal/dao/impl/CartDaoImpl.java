@@ -1,7 +1,7 @@
 package jtech.shopzone.model.dal.dao.impl;
 
-import jtech.shopzone.controller.dal.bean.ProductsInfo;
-import jtech.shopzone.controller.dal.bean.Userinfo;
+import jtech.shopzone.model.dal.bean.ProductsInfo;
+import jtech.shopzone.model.dal.bean.Userinfo;
 import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;

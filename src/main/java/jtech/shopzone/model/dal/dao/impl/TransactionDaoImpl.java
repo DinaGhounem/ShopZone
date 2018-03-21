@@ -71,7 +71,7 @@ public class TransactionDaoImpl implements TransactionsDao {
                 transactionReport.setStatus(Status.NOTOK);
                 transactionReport.setComment("Out Of Stock");
             } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
-                UserInfoEntity userInfoEntity = userDao.getUserInfo(userId);
+                UserInfoEntity userInfoEntity = null ;//= userDao.getUserInfo(userId);
                 // Check if user has enough money
                 double creditLimit = userInfoEntity.getCreditLimit();
                 double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();

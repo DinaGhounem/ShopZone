@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 16, 2018 2:19:45 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="jtech.shopzone.controller.dal.bean.ProductsCategory" table="products_category" catalog="shopping" optimistic-lock="version">
+    <class name="jtech.shopzone.model.dal.bean.ProductsCategory" table="products_category" catalog="shopping" optimistic-lock="version">
         <id name="categoryId" type="java.lang.Integer">
             <column name="CATEGORY_ID" />
             <generator class="identity" />
@@ -15,7 +15,7 @@
             <key>
                 <column name="CATEGORY_ID" not-null="true" />
             </key>
-            <one-to-many class="jtech.shopzone.controller.dal.bean.ProductsInfo" />
+            <one-to-many class="jtech.shopzone.model.dal.bean.ProductsInfo" />
         </set>
     </class>
 </hibernate-mapping>

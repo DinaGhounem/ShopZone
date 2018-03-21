@@ -6,22 +6,26 @@ import jtech.shopzone.model.dal.dao.UserDao;
 import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
+import jtech.shopzone.model.dal.bean.Userinfo;
 import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
 
 public class UserControllerImpl implements UserController {
-    private UserDao userDao ;
-    private UserControllerImpl(){
+
+    private UserDao userDao;
+
+    private UserControllerImpl() {
 
         userDao = new UserDaoImpl();
 
     }
 
     /**
-     * Represents factory method for user controller, this is the only
-     * method responsible for creating an instance from UserControllerImpl
+     * Represents factory method for user controller, this is the only method
+     * responsible for creating an instance from UserControllerImpl
+     *
      * @return
      */
-    public static UserControllerImpl newInstance(){
+    public static UserControllerImpl newInstance() {
         return new UserControllerImpl();
     }
 
@@ -32,17 +36,35 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public Status login(String email, String password) {
-        return userDao.login(email,password);
+        return userDao.login(email, password);
     }
 
     @Override
     public Status register(UserInfoEntity user) {
-        return userDao.register(user);
+        Userinfo userInfo = new Userinfo();
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setPassword(user.getPassword());
+        userInfo.setAddress(user.getAddress());
+        userInfo.setBirthdate(user.getBirthdate());
+        userInfo.setCreditLimit((long) user.getCreditLimit());
+        userInfo.setJob(user.getJob());
+        return userDao.register(userInfo);
     }
 
     @Override
     public Status updateUser(UserInfoEntity user) {
-        return userDao.updateUser(user);
+        Userinfo userInfo = new Userinfo();
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setPassword(user.getPassword());
+        userInfo.setAddress(user.getAddress());
+        userInfo.setBirthdate(user.getBirthdate());
+        userInfo.setCreditLimit((long) user.getCreditLimit());
+        userInfo.setJob(user.getJob());
+        return userDao.updateUser(userInfo);
     }
 
     @Override
@@ -52,17 +74,39 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserInfoEntity getUserInfo(int userId) {
-        return userDao.getUserInfo(userId);
+        Userinfo user = userDao.getUserInfo(userId);
+        UserInfoEntity userInfo = new UserInfoEntity();
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setPassword(user.getPassword());
+        userInfo.setAddress(user.getAddress());
+        userInfo.setBirthdate(user.getBirthdate());
+        userInfo.setCreditLimit((long) user.getCreditLimit());
+        userInfo.setJob(user.getJob());
+        return userInfo;
     }
 
     @Override
     public ArrayList<UserInfoEntity> getUsers() {
-        return userDao.getUsers();
+        ArrayList<UserInfoEntity> usersInfo = new ArrayList<>();
+        ArrayList<Userinfo> users = userDao.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            usersInfo.get(i).setFirstName(users.get(i).getFirstName());
+            usersInfo.get(i).setLastName(users.get(i).getLastName());
+            usersInfo.get(i).setEmail(users.get(i).getEmail());
+            usersInfo.get(i).setPassword(users.get(i).getPassword());
+            usersInfo.get(i).setAddress(users.get(i).getAddress());
+            usersInfo.get(i).setBirthdate(users.get(i).getBirthdate());
+            usersInfo.get(i).setCreditLimit((long) users.get(i).getCreditLimit());
+            usersInfo.get(i).setJob(users.get(i).getJob());
+        }
+        return usersInfo;
     }
 
     @Override
     public Status updateCreditLimit(int userId, Double value) {
-        return userDao.updateCreditLimit(userId,value);
+        return userDao.updateCreditLimit(userId, value);
     }
 
     @Override

@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 16, 2018 2:19:45 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="jtech.shopzone.controller.dal.bean.AdminInfo" table="admin_info" catalog="shopping" optimistic-lock="version">
+    <class name="jtech.shopzone.model.dal.bean.AdminInfo" table="admin_info" catalog="shopping" optimistic-lock="version">
         <id name="adminId" type="java.lang.Integer">
             <column name="ADMIN_ID" />
             <generator class="identity" />

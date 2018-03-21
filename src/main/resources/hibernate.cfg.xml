@@ -46,15 +46,16 @@ Contributor(s):
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/shopping</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">java</property>
+        <!--<property name="hibernate.connection.password">java</property>-->
+        <property name="hibernate.connection.password">root</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <mapping resource="jtech/shopzone/controller/dal/bean/UserProducts.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/AdminInfo.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/ProductsCategory.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/UserInterests.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/ProductsInfo.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/Userinfo.hbm.xml"/>
-        <mapping resource="jtech/shopzone/controller/dal/bean/ShoppingCart.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/UserProducts.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/AdminInfo.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/ProductsCategory.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/UserInterests.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/ProductsInfo.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/Userinfo.hbm.xml"/>
+        <mapping resource="jtech/shopzone/model/dal/bean/ShoppingCart.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
