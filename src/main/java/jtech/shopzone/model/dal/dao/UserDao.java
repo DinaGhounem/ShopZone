@@ -6,10 +6,10 @@
 package jtech.shopzone.model.dal.dao;
 
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
-
-import jtech.shopzone.model.entity.UserInfoEntity;
+import jtech.shopzone.model.dal.bean.Userinfo;
 
 /**
  * @author Hanaa
@@ -20,15 +20,15 @@ public interface UserDao {
 
     Status login(String email, String password);
 
-    Status register(UserInfoEntity user);
+    Status register(Userinfo user);
 
-    Status updateUser(UserInfoEntity user);
+    Status updateUser(Userinfo user);
 
     int getUserId(String email);
 
-    UserInfoEntity getUserInfo(int userId);
+    Userinfo getUserInfo(int userId);
 
-    ArrayList<UserInfoEntity> getUsers();
+    ArrayList<Userinfo> getUsers();
 
     Status updateCreditLimit(int userId, Double value);
     
