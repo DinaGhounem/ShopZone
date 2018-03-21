@@ -1,12 +1,12 @@
 package jtech.shopzone.controller.impl;
 
 import jtech.shopzone.controller.CartController;
-import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.model.dal.bean.ShoppingCart;
 import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.entity.CartEntity;
-import jtech.shopzone.model.entity.ProductsInfoEntity;
+
 
 import java.util.ArrayList;
 

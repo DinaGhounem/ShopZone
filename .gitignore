@@ -2,3 +2,4 @@
 nb-configuration.xml
 /.idea
 /target
+hibernate.cfg.xml

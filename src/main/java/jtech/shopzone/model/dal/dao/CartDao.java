@@ -5,7 +5,7 @@
  */
 package jtech.shopzone.model.dal.dao;
 
-import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.model.dal.bean.ShoppingCart;
 import jtech.shopzone.model.dal.Status;
 
 import java.util.ArrayList;

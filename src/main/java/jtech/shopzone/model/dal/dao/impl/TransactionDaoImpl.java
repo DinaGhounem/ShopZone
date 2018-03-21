@@ -1,7 +1,6 @@
 package jtech.shopzone.model.dal.dao.impl;
 
-import jtech.shopzone.controller.CartController;
-import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.model.dal.bean.ShoppingCart;
 import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
 import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.Status;
@@ -54,69 +53,70 @@ public class TransactionDaoImpl implements TransactionsDao {
 
     @Override
     public ArrayList<TransactionReport> checkOut(int userId) {
-        ProductDao productDao = new ProductDaoImpl();
-        UserDao userDao = new UserDaoImpl();
         ArrayList<TransactionReport> transactionReports = new ArrayList<>();
 
-        // Get cart content for that user
-        CartDao cartDao = new CartDaoImpl();
-        ArrayList<CartEntity> cartEntities = null;
-
-        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
-        if (shoppingCarts != null) {
-            cartEntities = new ArrayList<>();
-            for (ShoppingCart shoppingCart : shoppingCarts) {
-                StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
-                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
-            }
-        }
-
-
-        // for each cart entry try to execute transaction
-        // and add its full report into arraylist
-        for (CartEntity cartEntity : cartEntities) {
-            TransactionReport transactionReport = new TransactionReport();
-            transactionReport.setCartEntity(cartEntity);
-            // check if stock has enough quantity
-            if (cartEntity.getStockStatus().equals(StockStatus.OUT_OF_STOCK)) {
-                // Since stock is not enough then this transaction will not be
-                // completed
-                transactionReport.setStatus(Status.NOTOK);
-                transactionReport.setComment("Out Of Stock");
-            } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
-                UserInfoEntity userInfoEntity = userDao.getUserInfo(userId);
-                // Check if user has enough money
-                double creditLimit = userInfoEntity.getCreditLimit();
-                double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
-                if (creditLimit < totalPrice) {
-                    transactionReport.setComment("Not Enough Credit");
-                    transactionReport.setStatus(Status.NOTOK);
-                } else {
-                    // All set to execute the transaction
-
-                    // Cut price from user's credit limit
-                    userDao.updateCreditLimit(userId, totalPrice);
-
-                    // Cut product quantity from stock
-                    int newQuantity = cartEntity.getProductsInfoEntity().getQuantity() - cartEntity.getQuantity();
-                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(), newQuantity);
-
-                    // remove entry from cart
-                    cartDao.deleteProduct(userId, cartEntity.getProductsInfoEntity().getProductId());
-
-                    // Add to history
-                    addToHistory(userId, cartEntity);
-
-                    // Write report status
-                    transactionReport.setStatus(Status.OK);
-                }
-
-
-            }
-            transactionReports.add(transactionReport);
-        }
-
-
+        //        ProductDao productDao = new ProductDaoImpl();
+//        UserDao userDao = new UserDaoImpl();
+//
+//        // Get cart content for that user
+//        CartDao cartDao = new CartDaoImpl();
+//        ArrayList<CartEntity> cartEntities = null;
+//
+//        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
+//        if (shoppingCarts != null) {
+//            cartEntities = new ArrayList<>();
+//            for (ShoppingCart shoppingCart : shoppingCarts) {
+//                StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
+//                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+//            }
+//        }
+//
+//
+//        // for each cart entry try to execute transaction
+//        // and add its full report into arraylist
+//        for (CartEntity cartEntity : cartEntities) {
+//            TransactionReport transactionReport = new TransactionReport();
+//            transactionReport.setCartEntity(cartEntity);
+//            // check if stock has enough quantity
+//            if (cartEntity.getStockStatus().equals(StockStatus.OUT_OF_STOCK)) {
+//                // Since stock is not enough then this transaction will not be
+//                // completed
+//                transactionReport.setStatus(Status.NOTOK);
+//                transactionReport.setComment("Out Of Stock");
+//            } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
+//                UserInfoEntity userInfoEntity = userDao.getUserInfo(userId);
+//                // Check if user has enough money
+//                double creditLimit = userInfoEntity.getCreditLimit();
+//                double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
+//                if (creditLimit < totalPrice) {
+//                    transactionReport.setComment("Not Enough Credit");
+//                    transactionReport.setStatus(Status.NOTOK);
+//                } else {
+//                    // All set to execute the transaction
+//
+//                    // Cut price from user's credit limit
+//                    userDao.updateCreditLimit(userId, totalPrice);
+//
+//                    // Cut product quantity from stock
+//                    int newQuantity = cartEntity.getProductsInfoEntity().getQuantity() - cartEntity.getQuantity();
+//                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(), newQuantity);
+//
+//                    // remove entry from cart
+//                    cartDao.deleteProduct(userId, cartEntity.getProductsInfoEntity().getProductId());
+//
+//                    // Add to history
+//                    addToHistory(userId, cartEntity);
+//
+//                    // Write report status
+//                    transactionReport.setStatus(Status.OK);
+//                }
+//
+//
+//            }
+//            transactionReports.add(transactionReport);
+//        }
+//
+//
         return transactionReports;
     }
 

@@ -1,6 +1,6 @@
 package jtech.shopzone.controller.util;
 
-import jtech.shopzone.controller.dal.bean.ProductsInfo;
+import jtech.shopzone.model.dal.bean.ProductsInfo;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 public class ProductsInfoEntityAdapter {

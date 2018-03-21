@@ -1,6 +1,6 @@
 package jtech.shopzone.controller.util;
 
-import jtech.shopzone.controller.dal.bean.ShoppingCart;
+import jtech.shopzone.model.dal.bean.ShoppingCart;
 import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
