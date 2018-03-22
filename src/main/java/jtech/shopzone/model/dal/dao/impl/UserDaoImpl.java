@@ -37,7 +37,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Status checkEmail(String email) {
-        session.beginTransaction();
         Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "'");
         List<Userinfo> users = q1.list();
         if(users.size()>0)
@@ -48,7 +47,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Status login(String email, String password) {
-        session.beginTransaction();
         Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "' and a.password = '"+password+" '");
         List<Userinfo> user = q1.list();
         if(user.size()>0)
@@ -75,7 +73,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int getUserId(String email) {
-        session.beginTransaction();
         Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "'");
         Userinfo user = (Userinfo) q1.uniqueResult();
         int userId=0;
@@ -122,7 +119,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Status isAdmin(String email, String password) {
-        session.beginTransaction();
         Query q1 = session.createQuery("from AdminInfo a where a.email = '" + email + "' and a.password = '"+password+" '");
         List<AdminInfo> adminList = q1.list();
         if(adminList.size()>0)
@@ -133,7 +129,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int getAdminId(String email) {
-        session.beginTransaction();
         Query q1 = session.createQuery("from AdminInfo a where a.email = '" + email + "'");
         AdminInfo admin = (AdminInfo) q1.uniqueResult();
         int adminId=0;
