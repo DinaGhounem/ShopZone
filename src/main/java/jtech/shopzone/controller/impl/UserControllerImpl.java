@@ -6,8 +6,12 @@ import jtech.shopzone.model.dal.dao.UserDao;
 import jtech.shopzone.model.entity.UserInfoEntity;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import jtech.shopzone.model.dal.bean.Userinfo;
 import jtech.shopzone.model.dal.dao.impl.UserDaoImpl;
+import jtech.shopzone.model.entity.UserInterestsEntity;
 
 public class UserControllerImpl implements UserController {
 
@@ -49,7 +53,11 @@ public class UserControllerImpl implements UserController {
         userInfo.setAddress(user.getAddress());
         userInfo.setBirthdate(user.getBirthdate());
         userInfo.setCreditLimit((long) user.getCreditLimit());
-        userInfo.setJob(user.getJob());
+        userInfo.setJob(user.getJob());   
+        
+//        ArrayList<UserInterestsEntity> interests = new ArrayList<UserInterestsEntity>();
+//        interests =  user.getInterests();
+//        userInfo.setUserInterestses(interests);
         return userDao.register(userInfo);
     }
 
@@ -118,5 +126,17 @@ public class UserControllerImpl implements UserController {
     @Override
     public int getAdminId(String email) {
         return userDao.getAdminId(email);
+    }
+    public static void main(String[] args) {
+        UserControllerImpl ucon = new UserControllerImpl();
+        ArrayList<UserInterestsEntity> interests = new ArrayList<>();
+        UserInterestsEntity intre = new UserInterestsEntity(1,"fashon");
+        UserInterestsEntity intre1 = new UserInterestsEntity(1,"labs");
+        interests.add(intre);
+        interests.add(intre1);
+       UserInfoEntity user = new UserInfoEntity(1,"dodo","dodo","dodo_didid","egypt",
+               new Date(),"123","joooooo",2000,null);
+       user.setInterests(interests);
+        ucon.register(user);
     }
 }

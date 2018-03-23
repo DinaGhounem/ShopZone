@@ -91,6 +91,7 @@ public class ProductDaoImpl implements ProductDao {
         } else {
             status = Status.NOTOK;
         }
+        session.close();
         return status;
     }
 
@@ -111,6 +112,7 @@ public class ProductDaoImpl implements ProductDao {
             session.getTransaction().rollback();
             status = Status.ERROR;
         }
+        session.close();
         return status;
     }
 
@@ -130,7 +132,7 @@ public class ProductDaoImpl implements ProductDao {
             session.getTransaction().rollback();
             status = Status.ERROR;
         }
-
+        session.close();
         return status;
     }
 
@@ -163,7 +165,7 @@ public class ProductDaoImpl implements ProductDao {
         else{
             status=Status.NOTOK;
         }
-
+        session.close();
         return status;
     }
 

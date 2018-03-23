@@ -2,6 +2,7 @@ package jtech.shopzone.model.dal.bean;
 // Generated Mar 16, 2018 2:19:44 PM by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
