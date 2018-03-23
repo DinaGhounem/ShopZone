@@ -6,18 +6,19 @@
 package jtech.shopzone.model.dal.dao;
 
 import java.util.ArrayList;
+
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.dal.bean.ProductsCategory;
 import jtech.shopzone.model.entity.ProductCategoryEntity;
 
 /**
- *
  * @author Hanaa
  */
 public interface CategoryDao {
 
     Status addCategory(ProductCategoryEntity category);
 
-    ArrayList<ProductCategoryEntity> getCategories();
+    ArrayList<ProductsCategory> getCategories();
 
     int getCategoryByName(String categoryName);
 

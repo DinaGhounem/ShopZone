@@ -2,7 +2,7 @@ package jtech.shopzone.model.dal.dao.impl;
 
 import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.bean.*;
-import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
+import jtech.shopzone.controller.util.CartEntityAdaptor;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
@@ -59,7 +59,7 @@ public class TransactionDaoImpl implements TransactionsDao {
             cartEntities = new ArrayList<>();
             for (ShoppingCart shoppingCart : shoppingCarts) {
                 StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
-                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+                cartEntities.add(CartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
             }
         }
 

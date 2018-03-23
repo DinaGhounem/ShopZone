@@ -1,173 +1,96 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jtech.shopzone.model.dal.dao.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jtech.shopzone.model.dal.DbConnection;
+import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.dal.bean.ProductsCategory;
 import jtech.shopzone.model.dal.dao.CategoryDao;
 import jtech.shopzone.model.entity.ProductCategoryEntity;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
- *
- * @author Hanaa
+ * @author Mahrous
  */
 public class CategoryDaoImpl implements CategoryDao {
+    private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
 
     @Override
-    public ArrayList<ProductCategoryEntity> getCategories() {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        ArrayList<ProductCategoryEntity> categoryEntitys = new ArrayList<>();
+    public ArrayList<ProductsCategory> getCategories() {
+        ArrayList<ProductsCategory> productsCategories = null;
         try {
-
-            preparedStatement = DbConnection.getPreparedStatement("select * from PRODUCTS_CATEGORY");
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                ProductCategoryEntity category = new ProductCategoryEntity();
-                category.setCategoryId(resultSet.getInt("CATEGORY_ID"));
-                category.setCategoryName(resultSet.getString("CATEGORY_NAME"));
-                categoryEntitys.add(category);
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-
-        } finally {
-            try {
-                DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
-            } catch (SQLException ex) {
-                Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Query query = instanceSession.createQuery("FROM ProductsCategory");
+            productsCategories = new ArrayList<>(query.list());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return categoryEntitys;
+        return productsCategories;
     }
 
     @Override
     public int getCategoryByName(String categoryName) {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
+        int categoryId;
         try {
-
-            preparedStatement = DbConnection.getPreparedStatement("select CATEGORY_ID from PRODUCTS_CATEGORY where CATEGORY_NAME='" + categoryName + "'");
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-                return resultSet.getInt("CATEGORY_ID");
-
+            Query query = instanceSession
+                    .createQuery("SELECT p.categoryId FROM ProductsCategory p where p.categoryName= :name")
+                    .setParameter("name", categoryName);
+            List<Long> result = query.list();
+            if (result != null) {
+                categoryId = result.get(0).intValue();
             } else {
-                return -1;
+                categoryId = -1;
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -2;
-        } finally {
-            try {
-                DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
-            } catch (SQLException ex) {
-                Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            categoryId = -2;
         }
+        return categoryId;
     }
 
     @Override
     public String getCategortById(int categoryId) {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
+        String categoryName = null;
         try {
-
-            preparedStatement = DbConnection.getPreparedStatement("select CATEGORY_NAME from PRODUCTS_CATEGORY where CATEGORY_ID=" + categoryId);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-                return resultSet.getString("CATEGORY_NAME");
-
+            Query query = instanceSession
+                    .createQuery("SELECT p.categoryName FROM ProductsCategory p where p.categoryId= :id")
+                    .setParameter("id", categoryId);
+            List<String> result = query.list();
+            if (result != null) {
+                categoryName = result.get(0);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-
-        } finally {
-            try {
-                DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
-            } catch (SQLException ex) {
-                Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return null;
+        return categoryName;
     }
 
     @Override
     public Status addCategory(ProductCategoryEntity category) {
-        if (category.getCategoryName() != null) {
-            PreparedStatement preparedStatement = null;
-            ResultSet resultSet = null;
-            int categoryId = 0;
-            try {
-                preparedStatement = DbConnection.getPreparedStatement("select nvl(max(Category_id),0) from PRODUCTS_CATEGORY");
-                resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
+        Status status;
+        Session session = MySessionFactory.getMySessionFactory().getSession();
+        try {
+            session.beginTransaction();
+            ProductsCategory productsCategory = new ProductsCategory();
+            productsCategory.setCategoryName(category.getCategoryName());
+            session.persist(productsCategory);
+            session.getTransaction().commit();
+            status = Status.OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+            status = Status.ERROR;
 
-                    categoryId = resultSet.getInt(1) + 1;
-
-                } else {
-                    return Status.NOTOK;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return Status.ERROR;
-
-            }
-            try {
-                preparedStatement = DbConnection.getPreparedStatement("insert into PRODUCTS_CATEGORY values(?,?)");
-                preparedStatement.setInt(1, categoryId);
-                preparedStatement.setString(2, category.getCategoryName());
-
-                if (preparedStatement.executeUpdate() > 0) {
-                    return Status.OK;
-                } else {
-                    return Status.NOTOK;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return Status.ERROR;
-            } finally {
-                try {
-
-                    DbConnection.closeStatementAndResultSet(preparedStatement, resultSet);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
-        return Status.NOTOK;
+        return status;
+
     }
-    // just for testing :))
 
-    /*public static void main(String[] args) {
-        ProductCategoryEntity category = new ProductCategoryEntity();
-        category.setCategoryName("drinks");
-        CategoryDaoImpl cdi = new CategoryDaoImpl();
-        ArrayList<ProductCategoryEntity>arr=cdi.getCategories();
-        for (ProductCategoryEntity productCategoryEntity : arr) {
-             System.out.println(productCategoryEntity.getCategoryName());
-        }
-       
-
-    }*/
 }

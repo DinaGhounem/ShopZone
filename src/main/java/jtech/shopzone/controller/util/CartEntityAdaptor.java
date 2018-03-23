@@ -5,7 +5,7 @@ import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
 
-public class ShoppingCartToCartEntityAdaptor {
+public class CartEntityAdaptor {
 
     public static CartEntity toCartEntity(ShoppingCart shoppingCart, StockStatus stockStatus) {
         CartEntity cartEntity = new CartEntity();

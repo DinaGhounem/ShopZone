@@ -2,7 +2,7 @@ package jtech.shopzone.controller.impl;
 
 import jtech.shopzone.controller.CartController;
 import jtech.shopzone.model.dal.bean.ShoppingCart;
-import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
+import jtech.shopzone.controller.util.CartEntityAdaptor;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.entity.CartEntity;
@@ -46,7 +46,7 @@ public class CartControllerImpl implements CartController {
             cartEntities = new ArrayList<>();
             for (ShoppingCart shoppingCart : shoppingCarts) {
                 StockStatus stockStatus = getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
-                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+                cartEntities.add(CartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
             }
         }
         return cartEntities;
