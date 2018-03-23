@@ -56,6 +56,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public Status updateUser(UserInfoEntity user) {
         Userinfo userInfo = new Userinfo();
+        userInfo.setUserId(user.getUserId());
         userInfo.setFirstName(user.getFirstName());
         userInfo.setLastName(user.getLastName());
         userInfo.setEmail(user.getEmail());

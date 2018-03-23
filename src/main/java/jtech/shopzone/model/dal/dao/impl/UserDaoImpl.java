@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Status updateUser(Userinfo user) {
         session.beginTransaction();
-        session.persist(user);
+        session.update(user);
         session.getTransaction().commit();
         return Status.OK;
     }

@@ -1,14 +1,7 @@
 package jtech.shopzone.model.dal.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.bean.ProductsCategory;

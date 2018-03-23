@@ -4,7 +4,6 @@ import jtech.shopzone.model.dal.bean.ProductsInfo;
 import jtech.shopzone.model.dal.bean.ShoppingCart;
 import jtech.shopzone.model.dal.bean.ShoppingCartId;
 import jtech.shopzone.model.dal.bean.Userinfo;
-import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;

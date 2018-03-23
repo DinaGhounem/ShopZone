@@ -8,6 +8,7 @@ package jtech.shopzone.model.dal.dao;
 import jtech.shopzone.model.dal.Status;
 
 import java.util.ArrayList;
+import jtech.shopzone.model.dal.bean.ProductsInfo;
 
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
