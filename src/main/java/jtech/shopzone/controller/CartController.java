@@ -23,8 +23,6 @@ public interface CartController {
 
     int userItemCount(int userId);
 
-    Status restCart(int userId);
-
     int getQuantity(int userId, int productId);
 
     StockStatus getStockStatus(int productId, int quantity);

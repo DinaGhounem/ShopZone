@@ -1,50 +1,42 @@
 package jtech.shopzone.model.dal.dao.impl;
 
-import jtech.shopzone.model.dal.bean.ShoppingCart;
+import jtech.shopzone.model.dal.MySessionFactory;
+import jtech.shopzone.model.dal.bean.*;
 import jtech.shopzone.controller.util.ShoppingCartToCartEntityAdaptor;
-import jtech.shopzone.model.dal.DbConnection;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
 import jtech.shopzone.model.dal.dao.TransactionsDao;
 import jtech.shopzone.model.dal.dao.UserDao;
 import jtech.shopzone.model.entity.*;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author Muhammed Mahrous
  */
 public class TransactionDaoImpl implements TransactionsDao {
+    private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
+
     @Override
-    public ArrayList<UserProductsEntity> getUserHistory(int userId) {
-
-        ArrayList<UserProductsEntity> transactionsList = new ArrayList<>();
-
-        try (Statement statement = DbConnection.getStatement()) {
-            String query = "select *  from  USER_PRODUCTS  userProduct , PRODUCTS_INFO  product where userProduct.PRODUCT_ID=product.PRODUCT_ID and USER_ID =" + userId;
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                UserProductsEntity userProductsEntity = new UserProductsEntity();
-                userProductsEntity.setUserId(userId);
-                userProductsEntity.setProductId(resultSet.getInt("PRODUCT_ID"));
-                userProductsEntity.setQuantity(resultSet.getInt("QUANTITY"));
-                userProductsEntity.setDate(resultSet.getDate("ORDER_DATE"));
-                userProductsEntity.setPrice(resultSet.getInt("PRICE"));
-                userProductsEntity.setProductName(resultSet.getString("PRODUCT_NAME"));
-                transactionsList.add(userProductsEntity);
-
+    public ArrayList<UserProducts> getUserHistory(int userId) {
+        ArrayList<UserProducts> transactionsList = null;
+        try {
+            Userinfo userinfo = instanceSession.load(Userinfo.class, userId);
+            if (userinfo != null) {
+                Query query = instanceSession.createQuery("FROM UserProducts u WHERE u.userinfo = :user")
+                        .setParameter("user", userinfo);
+                List<UserProducts> userProducts = query.list();
+                transactionsList = new ArrayList<>(userProducts);
             }
-
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         // Return arraylist
         return transactionsList;
@@ -55,68 +47,68 @@ public class TransactionDaoImpl implements TransactionsDao {
     public ArrayList<TransactionReport> checkOut(int userId) {
         ArrayList<TransactionReport> transactionReports = new ArrayList<>();
 
-        //        ProductDao productDao = new ProductDaoImpl();
-//        UserDao userDao = new UserDaoImpl();
-//
-//        // Get cart content for that user
-//        CartDao cartDao = new CartDaoImpl();
-//        ArrayList<CartEntity> cartEntities = null;
-//
-//        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
-//        if (shoppingCarts != null) {
-//            cartEntities = new ArrayList<>();
-//            for (ShoppingCart shoppingCart : shoppingCarts) {
-//                StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
-//                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
-//            }
-//        }
-//
-//
-//        // for each cart entry try to execute transaction
-//        // and add its full report into arraylist
-//        for (CartEntity cartEntity : cartEntities) {
-//            TransactionReport transactionReport = new TransactionReport();
-//            transactionReport.setCartEntity(cartEntity);
-//            // check if stock has enough quantity
-//            if (cartEntity.getStockStatus().equals(StockStatus.OUT_OF_STOCK)) {
-//                // Since stock is not enough then this transaction will not be
-//                // completed
-//                transactionReport.setStatus(Status.NOTOK);
-//                transactionReport.setComment("Out Of Stock");
-//            } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
-//                UserInfoEntity userInfoEntity = userDao.getUserInfo(userId);
-//                // Check if user has enough money
-//                double creditLimit = userInfoEntity.getCreditLimit();
-//                double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
-//                if (creditLimit < totalPrice) {
-//                    transactionReport.setComment("Not Enough Credit");
-//                    transactionReport.setStatus(Status.NOTOK);
-//                } else {
-//                    // All set to execute the transaction
-//
-//                    // Cut price from user's credit limit
-//                    userDao.updateCreditLimit(userId, totalPrice);
-//
-//                    // Cut product quantity from stock
-//                    int newQuantity = cartEntity.getProductsInfoEntity().getQuantity() - cartEntity.getQuantity();
-//                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(), newQuantity);
-//
-//                    // remove entry from cart
-//                    cartDao.deleteProduct(userId, cartEntity.getProductsInfoEntity().getProductId());
-//
-//                    // Add to history
-//                    addToHistory(userId, cartEntity);
-//
-//                    // Write report status
-//                    transactionReport.setStatus(Status.OK);
-//                }
-//
-//
-//            }
-//            transactionReports.add(transactionReport);
-//        }
-//
-//
+        ProductDao productDao = new ProductDaoImpl();
+        UserDao userDao = new UserDaoImpl();
+
+        // Get cart content for that user
+        CartDao cartDao = new CartDaoImpl();
+        ArrayList<CartEntity> cartEntities = null;
+
+        ArrayList<ShoppingCart> shoppingCarts = cartDao.getUserProducts(userId);
+        if (shoppingCarts != null) {
+            cartEntities = new ArrayList<>();
+            for (ShoppingCart shoppingCart : shoppingCarts) {
+                StockStatus stockStatus = cartDao.getStockStatus(shoppingCart.getProductsInfo().getProductId(), shoppingCart.getQuantity());
+                cartEntities.add(ShoppingCartToCartEntityAdaptor.toCartEntity(shoppingCart, stockStatus));
+            }
+        }
+
+
+        // for each cart entry try to execute transaction
+        // and add its full report into arraylist
+        for (CartEntity cartEntity : cartEntities) {
+            TransactionReport transactionReport = new TransactionReport();
+            transactionReport.setCartEntity(cartEntity);
+            // check if stock has enough quantity
+            if (cartEntity.getStockStatus().equals(StockStatus.OUT_OF_STOCK)) {
+                // Since stock is not enough then this transaction will not be
+                // completed
+                transactionReport.setStatus(Status.NOTOK);
+                transactionReport.setComment("Out Of Stock");
+            } else if (cartEntity.getStockStatus().equals(StockStatus.IN_STOCK)) {
+                Userinfo userinfo = userDao.getUserInfo(userId);
+                // Check if user has enough money
+                double creditLimit = userinfo.getCreditLimit();
+                double totalPrice = cartEntity.getQuantity() * cartEntity.getProductsInfoEntity().getPrice();
+                if (creditLimit < totalPrice) {
+                    transactionReport.setComment("Not Enough Credit");
+                    transactionReport.setStatus(Status.NOTOK);
+                } else {
+                    // All set to execute the transaction
+
+                    // Cut price from user's credit limit
+                    userDao.updateCreditLimit(userId, totalPrice);
+
+                    // Cut product quantity from stock
+                    int newQuantity = cartEntity.getProductsInfoEntity().getQuantity() - cartEntity.getQuantity();
+                    productDao.updateProductQuantities(cartEntity.getProductsInfoEntity().getProductId(), newQuantity);
+
+                    // remove entry from cart
+                    cartDao.deleteProduct(userId, cartEntity.getProductsInfoEntity().getProductId());
+
+                    // Add to history
+                    addToHistory(userId, cartEntity);
+
+                    // Write report status
+                    transactionReport.setStatus(Status.OK);
+                }
+
+
+            }
+            transactionReports.add(transactionReport);
+        }
+
+
         return transactionReports;
     }
 
@@ -126,27 +118,31 @@ public class TransactionDaoImpl implements TransactionsDao {
         ProductsInfoEntity productsInfoEntity = cartEntity.getProductsInfoEntity();
         int quantity = cartEntity.getQuantity();
         double totalPrice = quantity * productsInfoEntity.getPrice();
-        Date date = new Date();
-        java.sql.Date sqlDateNow = new java.sql.Date(date.getTime());
+        Session session = MySessionFactory.getMySessionFactory().getSession();
 
-        String query = "INSERT INTO USER_PRODUCTS VALUES(?,?,?,?,?)";
-
-        try (PreparedStatement statement = DbConnection.getPreparedStatement(query)) {
-
-            statement.setInt(1, userId);
-            statement.setInt(2, productsInfoEntity.getProductId());
-            statement.setInt(3, quantity);
-            statement.setDate(4, sqlDateNow);
-            statement.setDouble(5, totalPrice);
-
-            int rowCount = statement.executeUpdate();
-            if (rowCount > 0) {
+        try {
+            instanceSession.beginTransaction();
+            ProductsInfo productsInfo = instanceSession.load(ProductsInfo.class, cartEntity.getProductsInfoEntity().getProductId());
+            Userinfo userinfo = instanceSession.load(Userinfo.class, userId);
+            if (productsInfo != null && userinfo != null) {
+                UserProducts userProducts = new UserProducts();
+                userProducts.setId(new UserProductsId(userId,productsInfo.getProductId()));
+                userProducts.setOrderDate(new Date());
+                userProducts.setPrice((long) totalPrice);
+                userProducts.setQuantity(cartEntity.getQuantity());
+                userProducts.setProductsInfo(productsInfo);
+                userProducts.setUserinfo(userinfo);
+                instanceSession.persist(userProducts);
                 status = Status.OK;
+                instanceSession.getTransaction().commit();
             } else {
                 status = Status.NOTOK;
+                instanceSession.getTransaction().rollback();
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
+            instanceSession.getTransaction().rollback();
             status = Status.ERROR;
         }
         return status;

@@ -169,7 +169,11 @@ public class CartDaoImpl implements CartDao {
         try {
             List result = query.list();
             Long productsCount = (Long) result.get(0);
-            count = productsCount.intValue();
+            if (productsCount == null) {
+                count = 0;
+            } else {
+                count = productsCount.intValue();
+            }
         } catch (Exception e) {
             count = -1;
             e.printStackTrace();
