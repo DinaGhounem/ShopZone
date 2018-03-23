@@ -9,7 +9,6 @@ import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.dao.CartDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
-import jtech.shopzone.model.entity.CartEntity;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
 import org.hibernate.Session;
@@ -17,7 +16,6 @@ import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public class CartDaoImpl implements CartDao {
     private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
-
+    private Session cartQuantityNotificationSession = MySessionFactory.getMySessionFactory().getSession();
 
     @Override
     public Status addProduct(int userId, int productId) {
@@ -64,20 +62,25 @@ public class CartDaoImpl implements CartDao {
     public Status deleteProduct(int userId, int productId) {
         Status status;
         Session session = MySessionFactory.getMySessionFactory().getSession();
-        Userinfo userinfo = session.load(Userinfo.class, userId);
-        ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
-        Query query = session.createQuery("FROM ShoppingCart s WHERE s.userinfo = :user and s.productsInfo = :product").setParameter("user", userinfo).setParameter("product", productsInfo);
-
-        ShoppingCart shoppingCart = (ShoppingCart) query.list().get(0);
-
         try {
-            session.beginTransaction();
-            session.remove(shoppingCart);
-            session.getTransaction().commit();
-            status = Status.OK;
+            Userinfo userinfo = session.load(Userinfo.class, userId);
+            ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
+
+            Query query = session.createQuery("FROM ShoppingCart s WHERE s.userinfo = :user and s.productsInfo = :product").setParameter("user", userinfo).setParameter("product", productsInfo);
+            if (productsInfo != null && userinfo != null) {
+                ShoppingCart shoppingCart = (ShoppingCart) query.list().get(0);
+                session.beginTransaction();
+                session.remove(shoppingCart);
+                session.getTransaction().commit();
+                status = Status.OK;
+            } else {
+                status = Status.NOTOK;
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
-            status = Status.NOTOK;
+            status = Status.ERROR;
         }
         session.close();
         return status;
@@ -105,30 +108,51 @@ public class CartDaoImpl implements CartDao {
     @Override
     public Status updateProductQuantities(int userId, int productId, int quantities) {
         Status status;
-        String query = "UPDATE SHOPPING_CART SET QUANTITY=" + quantities + " WHERE USER_ID=" + userId + " AND PRODUCT_ID=" + productId;
-        status = execUpdate(query);
+
+        Session session = MySessionFactory.getMySessionFactory().getSession();
+
+        try {
+            session.beginTransaction();
+            ProductsInfo productsInfo = session.load(ProductsInfo.class, productId);
+            Userinfo userinfo = session.load(Userinfo.class, userId);
+            if (productsInfo != null && userinfo != null) {
+                Query query = session
+                        .createQuery("FROM ShoppingCart WHERE userinfo= :user and productsInfo= :product")
+                        .setParameter("user", userinfo)
+                        .setParameter("product", productsInfo);
+                ShoppingCart shoppingCart = (ShoppingCart) query.list().get(0);
+                shoppingCart.setQuantity(quantities);
+                session.persist(shoppingCart);
+                session.getTransaction().commit();
+                status = Status.OK;
+            } else {
+                status = Status.NOTOK;
+            }
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            status = Status.ERROR;
+        }
+
+        session.close();
         return status;
     }
 
     @Override
-    public Status checkProductExistance(int userId, int productId) {
-        // Return object
-        Status status = Status.NOTOK;
+    public Status checkProductExistence(int userId, int productId) {
 
-        // Build product check select statement
-        String productQuery = "select * from  shopping_cart where USER_ID =" + userId + " and PRODUCT_ID =" + productId;
+        Status status;
 
-        // get new statement from the connection
-        try (Statement statement = DbConnection.getStatement()) {
-
-            // execute select statement and get results
-            ResultSet resultSet = statement.executeQuery(productQuery);
-
-            // if result exists then return
-            if (resultSet.next()) {
+        try {
+            ShoppingCartId shoppingCartId = new ShoppingCartId(userId, productId);
+            ShoppingCart shoppingCart = instanceSession.get(ShoppingCart.class, shoppingCartId);
+            if (shoppingCart != null) {
                 status = Status.OK;
+            } else {
+                status = Status.NOTOK;
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
             status = Status.ERROR;
         }
@@ -139,9 +163,8 @@ public class CartDaoImpl implements CartDao {
     @Override
     public int userItemCount(int userId) {
         int count;
-        Session session = MySessionFactory.getMySessionFactory().getSession();
-        Userinfo userinfo = session.load(Userinfo.class, userId);
-        Query query = session.createQuery("SELECT SUM(quantity) FROM ShoppingCart s WHERE s.userinfo = :user").setParameter("user", userinfo);
+        Userinfo userinfo = cartQuantityNotificationSession.load(Userinfo.class, userId);
+        Query query = cartQuantityNotificationSession.createQuery("SELECT SUM(quantity) FROM ShoppingCart s WHERE s.userinfo = :user").setParameter("user", userinfo);
 
         try {
             List result = query.list();
@@ -151,32 +174,29 @@ public class CartDaoImpl implements CartDao {
             count = -1;
             e.printStackTrace();
         }
-        session.close();
         return count;
     }
 
     @Override
-    public Status restCart(int userId) {
-        Status status;
-        String query = "DELETE FROM SHOPPING_CART WHERE USER_ID=" + userId;
-        status = execUpdate(query);
-        return status;
-    }
-
-    @Override
     public int getQuantity(int userId, int productId) {
-        int quantity = -1; // if this is returned then error happened
-        try (Statement statement = DbConnection.getStatement()) {
-            String query = "SELECT QUANTITY FROM SHOPPING_CART WHERE PRODUCT_ID=" + productId + " and USER_ID=" + userId;
-            ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                quantity = resultSet.getInt("QUANTITY");
+        int quantity;
+        try {
+            Userinfo userinfo = instanceSession.load(Userinfo.class, userId);
+            ProductsInfo productsInfo = instanceSession.load(ProductsInfo.class, productId);
+
+            if (userinfo != null && productsInfo != null) {
+                Query query = instanceSession.createQuery("SELECT SUM(s.quantity) FROM ShoppingCart s WHERE s.userinfo= :user and s.productsInfo = :product ")
+                        .setParameter("user", userinfo)
+                        .setParameter("product", productsInfo);
+                Long dbQuantity = (Long) query.list().get(0);
+                quantity = dbQuantity.intValue();
             } else {
                 quantity = 0;
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            quantity = -1;
         }
 
         return quantity;
@@ -199,19 +219,4 @@ public class CartDaoImpl implements CartDao {
 
     }
 
-    private Status execUpdate(String query) {
-        Status status;
-        try (Statement statement = DbConnection.getStatement()) {
-            int rowCount = statement.executeUpdate(query);
-            if (rowCount > 0) {
-                status = Status.OK;
-            } else {
-                status = Status.NOTOK;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            status = Status.ERROR;
-        }
-        return status;
-    }
 }

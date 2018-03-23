@@ -59,11 +59,11 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public Status checkProductExistance(int userId, int productId) {
-        return cartDao.checkProductExistance(userId, productId);
+        return cartDao.checkProductExistence(userId, productId);
     }
 
     @Override
-    public int userItemCount(int userId) {
+    public synchronized int userItemCount (int userId) {
         return cartDao.userItemCount(userId);
     }
 

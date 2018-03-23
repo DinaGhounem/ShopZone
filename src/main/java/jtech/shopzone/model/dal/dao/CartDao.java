@@ -10,8 +10,6 @@ import jtech.shopzone.model.dal.Status;
 
 import java.util.ArrayList;
 
-import jtech.shopzone.model.entity.CartEntity;
-import jtech.shopzone.model.entity.ProductsInfoEntity;
 import jtech.shopzone.model.entity.StockStatus;
 
 /**
@@ -36,16 +34,9 @@ public interface CartDao {
 
     Status updateProductQuantities(int userId, int productId, int quantities);
 
-    Status checkProductExistance(int userId, int productId);
+    Status checkProductExistence(int userId, int productId);
 
     int userItemCount(int userId);
-
-    /**
-     * Removes all in cart of a specific user
-     * @param userId
-     * @return
-     */
-    Status restCart(int userId);
 
     /**
      * gets quantity of a specific product in user's cart
