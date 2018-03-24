@@ -45,7 +45,6 @@
 
     <body onload="
             getProducts(1, 0);
-            getProductsCount(categoryId);
             ">
 
         <div class="super_container">

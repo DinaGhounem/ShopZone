@@ -142,8 +142,8 @@
                                                         <td>Interests :</td>
                                                         <td>
                                                             <div  id="display_interests">
-                                                                <input type=checkbox name=interest value=fashion id="fashion" />Fashion<br>
-                                                                <input type=checkbox name=interest value=labs id="labs" />Labtops and Electronics
+                                                                <input type=checkbox name=interest value=fashion id="fashion" checked/>Fashion<br>
+                                                                <input type=checkbox name=interest value=labs id="labs" checked/>Labtops and Electronics
                                                             </div>
                                                         </td>
                                                     </tr>

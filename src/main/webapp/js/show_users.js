@@ -56,7 +56,7 @@ function showUserProfileCallBack(response, statusTxt, xhr)
                         //"<div class=\"product_name\"><span class=\"product_price\">Job : </span>" + object.job + "</div>"  +
                         "<div class=\"product_name\"><span class=\" headerColor\">Address : </span>" + object.address + "</div>" +
                         "<div class=\"product_name\"><span class=\" headerColor\">Birth date : </span>"+object.birthdate + "</div>" ;
-                        if(object.interests.length>0){
+                        if(object.interests !=null && object.interests.length>0){
                         content+="<div class=\"product_name\"><span class=\" headerColor\">Interests :</div>" ;
                         for(j=0;j<object.interests.length;j++){
                          content+="<span class=\"product_name\">"+object.interests[j].interestName+"</span>";

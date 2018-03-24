@@ -19,19 +19,18 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 /**
- *
  * @author Dina PC
  */
 public class UserDaoImpl implements UserDao {
 
 
-    private static MySessionFactory sessionFactory ;
-    private static Session session ;
+    private static MySessionFactory sessionFactory;
+    private static Session session;
 
-    public UserDaoImpl(){
-        if(sessionFactory == null)
+    public UserDaoImpl() {
+        if (sessionFactory == null)
             sessionFactory = MySessionFactory.getMySessionFactory();
-        if(session == null)
+        if (session == null)
             session = sessionFactory.getSession();
     }
 
@@ -39,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     public Status checkEmail(String email) {
         Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "'");
         List<Userinfo> users = q1.list();
-        if(users.size()>0)
+        if (users.size() > 0)
             return Status.NOTOK;
         else
             return Status.OK;
@@ -47,9 +46,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Status login(String email, String password) {
-        Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "' and a.password = '"+password+" '");
+        Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "' and a.password = '" + password + " '");
         List<Userinfo> user = q1.list();
-        if(user.size()>0)
+        if (user.size() > 0)
             return Status.OK;
         else
             return Status.NOTOK;
@@ -66,7 +65,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Status updateUser(Userinfo user) {
         session.beginTransaction();
-        session.update(user);
+        session.merge(user);
         session.getTransaction().commit();
         return Status.OK;
     }
@@ -75,8 +74,8 @@ public class UserDaoImpl implements UserDao {
     public int getUserId(String email) {
         Query q1 = session.createQuery("from Userinfo a where a.email = '" + email + "'");
         Userinfo user = (Userinfo) q1.uniqueResult();
-        int userId=0;
-        if(user != null)
+        int userId = 0;
+        if (user != null)
             userId = user.getUserId();
         return userId;
     }
@@ -92,11 +91,8 @@ public class UserDaoImpl implements UserDao {
 
         ArrayList<UserInterestsEntity> interests = new ArrayList<>();
         ArrayList<Userinfo> users = new ArrayList<>();
-        session.beginTransaction();
         Query q1 = session.createQuery("from Userinfo");
         users = (ArrayList<Userinfo>) q1.list();
-        
-        
         return users;
     }
 
@@ -104,12 +100,12 @@ public class UserDaoImpl implements UserDao {
     public Status updateCreditLimit(int userId, Double value) {
         long oldCredit = 0, newCredit;
         session.beginTransaction();
-        Userinfo user = session.load(Userinfo.class,userId);
-        Query selectLimit = session.createQuery("select creditLimit from Userinfo where userId = "+ userId);
-        
+        Userinfo user = session.load(Userinfo.class, userId);
+        Query selectLimit = session.createQuery("select creditLimit from Userinfo where userId = " + userId);
+
         oldCredit = (long) selectLimit.uniqueResult();
         newCredit = (long) (oldCredit - value);
-        
+
         user.setCreditLimit(newCredit);
         session.persist(user);
         session.getTransaction().commit();
@@ -119,9 +115,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Status isAdmin(String email, String password) {
-        Query q1 = session.createQuery("from AdminInfo a where a.email = '" + email + "' and a.password = '"+password+" '");
+        Query q1 = session.createQuery("from AdminInfo a where a.email = '" + email + "' and a.password = '" + password + " '");
         List<AdminInfo> adminList = q1.list();
-        if(adminList.size()>0)
+        if (adminList.size() > 0)
             return Status.OK;
         else
             return Status.NOTOK;
@@ -131,13 +127,13 @@ public class UserDaoImpl implements UserDao {
     public int getAdminId(String email) {
         Query q1 = session.createQuery("from AdminInfo a where a.email = '" + email + "'");
         AdminInfo admin = (AdminInfo) q1.uniqueResult();
-        int adminId=0;
-        if(admin != null)
+        int adminId = 0;
+        if (admin != null)
             adminId = admin.getAdminId();
         return adminId;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         UserDaoImpl udao = new UserDaoImpl();
         Userinfo user = session.load(Userinfo.class, 1);
         user.setJob("javaDeveloper");

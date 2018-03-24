@@ -12,15 +12,13 @@ searchFlag = true;
 categoryPriceFlag = false;
 searchFrom = 0;
 searchTo = 0;
-pageMin=0;
-deleteFlag=false;
+pageMin = 0;
+deleteFlag = false;
+var init = true;
 
 function getProducts(page, categoryId) {
 
     $.get("AdminProductServlet?page=" + page + "&categoryId=0", callback);
-
-
-
 }
 
 function callback(response, statusTxt, xhr) {
@@ -30,7 +28,7 @@ function callback(response, statusTxt, xhr) {
         var height = 0;
         object = JSON.parse(response);
         for (i = 0; i < object.length; i++) {
-            if (object[i].deletedFlg==1) {
+            if (object[i].deletedFlg == 1) {
                 content += "<div class=\"product-item men\" style='float:left;margin:2%'>" +
                     "<form action=\"editProduct.jsp\"method='POST'>" +
                     "<input type=\"number\" name=\"productId\" value=" + object[i].productId + " hidden>" +
@@ -57,7 +55,9 @@ function callback(response, statusTxt, xhr) {
         }
         $(products).html(content);
         $(products).css("height", "800px");
-
+        if (init) {
+            getProductsCount(categoryId);
+        }
     }
 }
 
@@ -69,26 +69,25 @@ function getProductsCount(categoryId) {
 }
 
 
-
 function ProductsCountcallback(response, statusTxt, xhr) {
     if (statusTxt == "success") {
-        
+
         if (response % 8 == 0 || response % 8 >= 4 || response < 8) {
             pageNum = Math.round(response / 8);
         } else {
             pageNum = Math.round(response / 8) + 1;
         }
-       
-        if(response%8==0&&currentPage-1==(pageNum)){
-             
-            getProducts(currentPage-1, 0);
-             currentPage--;
+
+        if (response % 8 == 0 && currentPage - 1 == (pageNum)) {
+
+            getProducts(currentPage - 1, 0);
+            currentPage--;
         }
-       if(response==1){
-           pageMin=1;
-           currentPage--;
-       }
-       
+        if (response == 1) {
+            pageMin = 1;
+            currentPage--;
+        }
+
         $('#pagination-here').bootpag({
             total: pageNum,
             page: currentPage,
@@ -96,38 +95,38 @@ function ProductsCountcallback(response, statusTxt, xhr) {
             leaps: true,
             href: "#result-page-{{number}}",
         })
-        
+
 
 //page click action
-    if(pageMin!=1){
-        $('#pagination-here').on("page", function (event, num) {
-            //show / hide content or pull via ajax etc
-           
-            currentPage = num;
-            
-        
-            if (searchFlag) {
-                getProducts(currentPage, categoryId);
-            } else {
-                searchByPrice(num, searchFrom, searchTo);
-            }
-        });
-    }
+        if (pageMin != 1) {
+            $('#pagination-here').on("page", function (event, num) {
+                //show / hide content or pull via ajax etc
+
+                currentPage = num;
+
+
+                if (searchFlag) {
+                    getProducts(currentPage, categoryId);
+                } else {
+                    searchByPrice(num, searchFrom, searchTo);
+                }
+            });
+        }
+        if (init) {
+            init = false;
+        }
     }
 }
 
 
-
-
 function onclickEdit(PID) {
     $.get("RemoveProduct?productId=" + PID);
-        getProductsCount(categoryId);
-        getProducts(currentPage-pageMin, 0);
-       
-       
-       pageMin=0;
-       
-       
+    getProductsCount(categoryId);
+    getProducts(currentPage - pageMin, 0);
+
+
+    pageMin = 0;
+
 
 }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import jtech.shopzone.model.dal.bean.Userinfo;
 
 /**
- * @author Hanaa
+ * @author Dina
  */
 public interface UserDao {
 

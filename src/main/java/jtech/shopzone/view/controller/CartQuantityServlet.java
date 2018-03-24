@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 @WebServlet(name = "CartQuantityServlet", urlPatterns = "/CartQuantityServlet")
 public class CartQuantityServlet extends HttpServlet {
-    
+
     private CartController cartController = CartControllerImpl.newInstance();
     ;
 

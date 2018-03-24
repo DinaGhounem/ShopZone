@@ -56,7 +56,7 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     public String getCategortById(int categoryId) {
-        return categoryDao.getCategortById(categoryId);
+        return categoryDao.getCategortById(categoryId).getCategoryName();
     }
 
 }

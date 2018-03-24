@@ -1,19 +1,28 @@
 package jtech.shopzone.controller.impl;
 
 import jtech.shopzone.controller.ProductController;
+import jtech.shopzone.controller.util.ProductCategoryEntityAdaptor;
+import jtech.shopzone.controller.util.ProductsInfoEntityAdapter;
 import jtech.shopzone.model.dal.Status;
+import jtech.shopzone.model.dal.bean.ProductsCategory;
+import jtech.shopzone.model.dal.bean.ProductsInfo;
+import jtech.shopzone.model.dal.dao.CategoryDao;
 import jtech.shopzone.model.dal.dao.ProductDao;
+import jtech.shopzone.model.dal.dao.impl.CategoryDaoImpl;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 import java.util.ArrayList;
+
 import jtech.shopzone.model.dal.dao.impl.ProductDaoImpl;
 
 public class ProductControllerImpl implements ProductController {
 
     private ProductDao productDao;
+    private CategoryDao categoryDao;
 
     private ProductControllerImpl() {
         productDao = new ProductDaoImpl();
+        categoryDao = new CategoryDaoImpl();
     }
 
     public static ProductController newInstance() {
@@ -22,22 +31,29 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ArrayList<ProductsInfoEntity> getProducts() {
-        return productDao.getProducts();
+        ArrayList<ProductsInfo> productsInfos = productDao.getProducts();
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
     public ArrayList<ProductsInfoEntity> getProducts(int categoryId) {
-        return productDao.getProducts(categoryId);
+        ArrayList<ProductsInfo> productsInfos = productDao.getProducts(categoryId);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
     public ArrayList<ProductsInfoEntity> getProducts(double minPrice, double maxPrice) {
-        return productDao.getProducts(minPrice, maxPrice);
+        ArrayList<ProductsInfo> productsInfos = productDao.getProducts(minPrice, maxPrice);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
     public Status AddProduct(ProductsInfoEntity product) {
-        return productDao.addProduct(product);
+        ProductsCategory productsCategory = categoryDao.getCategortById(product.getCategoryId());
+        ProductsInfo productsInfo = ProductsInfoEntityAdapter.fromProductsInfoEntity(product);
+        productsInfo.setProductsCategory(productsCategory);
+        productsInfo.setDeletedFlg(1);
+        return productDao.addProduct(productsInfo);
     }
 
     @Override
@@ -47,7 +63,9 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public Status updateProduct(ProductsInfoEntity product) {
-        return productDao.updateProduct(product);
+        ProductsInfo productsInfo = productDao.getProductInfo(product.getProductId());
+        productsInfo = ProductsInfoEntityAdapter.updateProductsInfo(productsInfo, product);
+        return productDao.updateProduct(productsInfo);
     }
 
     @Override
@@ -62,23 +80,25 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductsInfoEntity getProductInfo(int productID) {
-        return productDao.getProductInfo(productID);
+        return ProductsInfoEntityAdapter.toProductsInfo(productDao.getProductInfo(productID));
     }
 
     @Override
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range) {
-        return productDao.getProductsBTWRange(range);
+        ArrayList<ProductsInfo> productsInfos = productDao.getProductsBTWRange(range);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId) {
-        return productDao.getProductsBTWRange(range, categoryId);
-
+        ArrayList<ProductsInfo> productsInfos = productDao.getProductsBTWRange(range, categoryId);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
     public ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice) {
-        return productDao.getProductsBTWRange(range, minPrice, maxPrice);
+        ArrayList<ProductsInfo> productsInfos = productDao.getProductsBTWRange(range, minPrice, maxPrice);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override
@@ -93,7 +113,8 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range) {
-        return productDao.getProductsBTWRange2(range);
+        ArrayList<ProductsInfo> productsInfos = productDao.getProductsBTWRange2(range);
+        return ProductsInfoEntityAdapter.toProductsInfoEntities(productsInfos);
     }
 
     @Override

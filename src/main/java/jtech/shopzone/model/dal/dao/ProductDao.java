@@ -13,39 +13,39 @@ import jtech.shopzone.model.dal.bean.ProductsInfo;
 import jtech.shopzone.model.entity.ProductsInfoEntity;
 
 /**
- * @author Hanaa
+ * @author Muhammed Mahrous and Dina
  */
 public interface ProductDao {
 
-    ArrayList<ProductsInfoEntity> getProducts();
+    ArrayList<ProductsInfo> getProducts();
 
-    ArrayList<ProductsInfoEntity> getProducts(int categoryId);
+    ArrayList<ProductsInfo> getProducts(int categoryId);
 
-    ArrayList<ProductsInfoEntity> getProducts(double minPrice, double maxPrice);
+    ArrayList<ProductsInfo> getProducts(double minPrice, double maxPrice);
 
-    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range);
+    ArrayList<ProductsInfo> getProductsBTWRange(int range);
 
-    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, int categoryId);
+    ArrayList<ProductsInfo> getProductsBTWRange(int range, int categoryId);
 
-    ArrayList<ProductsInfoEntity> getProductsBTWRange(int range, double minPrice, double maxPrice);
+    ArrayList<ProductsInfo> getProductsBTWRange(int range, double minPrice, double maxPrice);
 
-    Status addProduct(ProductsInfoEntity product);
+    Status addProduct(ProductsInfo product);
 
     Status deleteProduct(int productId);
 
-    Status updateProduct(ProductsInfoEntity product);
+    Status updateProduct(ProductsInfo product);
 
     int checkProductQuantities(int productId);
 
     Status updateProductQuantities(int productId, int quantities);
 
-    ProductsInfoEntity getProductInfo(int productID);
+    ProductsInfo getProductInfo(int productID);
 
     int getProductCount();
 
     double getMaxmimumPrice();
 
-    ArrayList<ProductsInfoEntity> getProductsBTWRange2(int range);
+    ArrayList<ProductsInfo> getProductsBTWRange2(int range);
 
     public int getProductCount2();
 }

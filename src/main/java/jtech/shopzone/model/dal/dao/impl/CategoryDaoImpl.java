@@ -2,6 +2,7 @@ package jtech.shopzone.model.dal.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jtech.shopzone.model.dal.MySessionFactory;
 import jtech.shopzone.model.dal.Status;
 import jtech.shopzone.model.dal.bean.ProductsCategory;
@@ -11,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 /**
- * @author Mahrous
+ * @author Muhammed Mahrous
  */
 public class CategoryDaoImpl implements CategoryDao {
     private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
@@ -49,20 +50,20 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public String getCategortById(int categoryId) {
-        String categoryName = null;
+    public ProductsCategory getCategortById(int categoryId) {
+        ProductsCategory productsCategory = null;
         try {
             Query query = instanceSession
-                    .createQuery("SELECT p.categoryName FROM ProductsCategory p where p.categoryId= :id")
+                    .createQuery("FROM ProductsCategory p where p.categoryId= :id")
                     .setParameter("id", categoryId);
-            List<String> result = query.list();
+            List<ProductsCategory> result = query.list();
             if (result != null) {
-                categoryName = result.get(0);
+                productsCategory = result.get(0);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return categoryName;
+        return productsCategory;
     }
 
     @Override

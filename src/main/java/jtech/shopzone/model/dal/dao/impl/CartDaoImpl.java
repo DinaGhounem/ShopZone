@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Mahrous
+ * @author Muhammed Mahrous
  */
 public class CartDaoImpl implements CartDao {
     private Session instanceSession = MySessionFactory.getMySessionFactory().getSession();
@@ -208,11 +208,10 @@ public class CartDaoImpl implements CartDao {
     @Override
     public StockStatus getStockStatus(int productId, int quantity) {
         StockStatus stockStatus = null;
-        // get product using product dao
         ProductDao productDao = new ProductDaoImpl();
-        ProductsInfoEntity productsInfoEntity = productDao.getProductInfo(productId);
+        ProductsInfo productsInfo = productDao.getProductInfo(productId);
 
-        if (productsInfoEntity.getQuantity() >= quantity) {
+        if (productsInfo.getQuantity() >= quantity) {
             stockStatus = StockStatus.IN_STOCK;
         } else {
             stockStatus = StockStatus.OUT_OF_STOCK;

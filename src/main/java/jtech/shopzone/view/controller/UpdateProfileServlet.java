@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import jtech.shopzone.controller.UserController;
 import jtech.shopzone.controller.impl.UserControllerImpl;
 import jtech.shopzone.model.dal.Status;
@@ -20,12 +21,18 @@ import jtech.shopzone.model.entity.UserInfoEntity;
 import jtech.shopzone.model.entity.UserInterestsEntity;
 
 /**
- *
  * @author Dina PC
  */
 public class UpdateProfileServlet extends HttpServlet {
 
-    UserController ucontroller;
+    private UserController ucontroller;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        ucontroller = UserControllerImpl.newInstance();
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,30 +40,30 @@ public class UpdateProfileServlet extends HttpServlet {
          * get user id from the session
          */
         int userId = (int) request.getSession().getAttribute("userId");
-        
+
         /**
          * get user info from db
          */
-        ucontroller = UserControllerImpl.newInstance();
-        
-        UserInfoEntity user =  ucontroller.getUserInfo(userId);
-       
+
+            UserInfoEntity user = ucontroller.getUserInfo(userId);
+
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String pass = request.getParameter("password");
         String address = request.getParameter("address");
         String job = request.getParameter("job");
-        String  creditLimit = request.getParameter("credit");
-        String[]  interests = request.getParameterValues("interest");
-        
+        String creditLimit = request.getParameter("credit");
+        String[] interests = request.getParameterValues("interest");
+
         ArrayList<UserInterestsEntity> interestsList = new ArrayList<>();
-        for(int i=0;i<interests.length;i++){
-            UserInterestsEntity e = new UserInterestsEntity(userId,interests[i]);
+        for (int i = 0; i < interests.length; i++) {
+            UserInterestsEntity e = new UserInterestsEntity(userId, interests[i]);
             interestsList.add(e);
         }
-            
+
         //String img = request.getParameter("img");
-        
+
+
         user.setFirstName(fname);
         user.setLastName(lname);
         user.setPassword(pass);
@@ -64,14 +71,14 @@ public class UpdateProfileServlet extends HttpServlet {
         user.setJob(job);
         user.setCreditLimit(Double.parseDouble(creditLimit));
         user.setInterests(interestsList);
-        
+
         Status states = ucontroller.updateUser(user);
-        
-        if(states == Status.OK)
+
+        if (states == Status.OK)
             response.sendRedirect("home.jsp");
         else
             response.sendRedirect("UserProfile.jsp");
-        
+
     }
 
 }

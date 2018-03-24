@@ -12,7 +12,7 @@ import jtech.shopzone.model.dal.bean.ProductsCategory;
 import jtech.shopzone.model.entity.ProductCategoryEntity;
 
 /**
- * @author Hanaa
+ * @author Muhammed Mahrous
  */
 public interface CategoryDao {
 
@@ -22,6 +22,6 @@ public interface CategoryDao {
 
     int getCategoryByName(String categoryName);
 
-    String getCategortById(int categoryId);
+    ProductsCategory getCategortById(int categoryId);
 
 }

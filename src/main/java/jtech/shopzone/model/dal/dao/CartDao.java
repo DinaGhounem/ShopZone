@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import jtech.shopzone.model.entity.StockStatus;
 
 /**
- * @author Hanaa
+ * @author Muhammed Mahrous
  */
 public interface CartDao {
 
